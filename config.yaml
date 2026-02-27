@@ -1,0 +1,177 @@
+# config.yaml — Engineering Metrics Dashboard Configuration
+# This is the single source of truth for all team/project/repo mappings.
+
+# ============================================================
+# Service Connections
+# ============================================================
+jira:
+  base_url: "https://your-company.atlassian.net"
+  # Auth via env vars: JIRA_EMAIL, JIRA_API_TOKEN
+
+github:
+  org: "your-org-name"
+  # Auth via env var: GITHUB_TOKEN
+
+jenkins:
+  base_url: "https://jenkins.your-company.com"
+  # Auth via env vars: JENKINS_USER, JENKINS_API_TOKEN
+  enabled: false  # Enable in Phase 3
+
+# ============================================================
+# Jira Status → Phase Mapping
+# ============================================================
+# Phases represent the value stream stages.
+# Map your Jira statuses to these phases.
+# Use "default" for the common mapping, "overrides" for per-project exceptions.
+
+phases:
+  - id: backlog
+    label: "Backlog"
+    description: "Not yet being worked on"
+    color: "#94a3b8"
+  - id: planning
+    label: "SA/SD"
+    description: "System analysis and design"
+    color: "#a78bfa"
+  - id: dev
+    label: "Development"
+    description: "Active coding"
+    color: "#60a5fa"
+  - id: review
+    label: "PR Review"
+    description: "Code review in progress"
+    color: "#34d399"
+  - id: dev_test
+    label: "RD Testing"
+    description: "Developer-side testing"
+    color: "#fbbf24"
+  - id: qa
+    label: "QA Testing"
+    description: "QA team testing"
+    color: "#f97316"
+  - id: staging
+    label: "Staging"
+    description: "Stage environment / regression"
+    color: "#f472b6"
+  - id: done
+    label: "Done"
+    description: "Released to production"
+    color: "#22c55e"
+
+status_mapping:
+  default:
+    backlog:
+      - "To Do"
+      - "Backlog"
+      - "Pending"
+      - "Open"
+      - "待處理"
+      - "Awaiting"
+    planning:
+      - "Analysis"
+      - "SA/SD"
+      - "In Analysis"
+      - "Design"
+      - "Planning"
+      - "System Design"
+      - "規劃中"
+      - "需求分析"
+      - "Requirement Review"
+    dev:
+      - "In Progress"
+      - "In Development"
+      - "Developing"
+      - "Coding"
+      - "開發中"
+    review:
+      - "In Review"
+      - "Code Review"
+      - "PR Review"
+      - "Peer Review"
+      - "審查中"
+    dev_test:
+      - "Dev Testing"
+      - "Dev Test"
+      - "RD Testing"
+      - "RD Test"
+      - "開發測試"
+      - "RD 測試中"
+    qa:
+      - "QA"
+      - "QA Testing"
+      - "In QA"
+      - "Quality Assurance"
+      - "QA 測試中"
+    staging:
+      - "Staging"
+      - "Regression"
+      - "UAT"
+      - "Stage"
+      - "Pre-Production"
+      - "Stage 環境"
+    done:
+      - "Done"
+      - "Released"
+      - "Closed"
+      - "Resolved"
+      - "已完成"
+      - "已上線"
+
+  # Per-project overrides — only specify the differences
+  overrides: {}
+  #  PROJ-A:
+  #    planning:
+  #      - "Requirement Review"
+  #      - "Architecture Design"
+
+# ============================================================
+# Teams
+# ============================================================
+teams:
+  - name: "Team Alpha"
+    id: "team-alpha"
+    jira_projects:
+      - "PROJ-A"
+    github_repos:
+      - "service-auth"
+      - "service-user"
+      - "lib-common"
+    jenkins_jobs: []
+
+  - name: "Team Beta"
+    id: "team-beta"
+    jira_projects:
+      - "PROJ-B"
+      - "PROJ-C"
+    github_repos:
+      - "service-payment"
+      - "service-billing"
+      - "service-invoice"
+    jenkins_jobs: []
+
+  # TODO: Add remaining 16 teams
+  # Tip: You can generate this section from a spreadsheet or script
+
+# ============================================================
+# Collection Settings
+# ============================================================
+collection:
+  lookback_days: 90
+  recent_days: 30
+  jira_jql_filter: "issuetype in (Story, Bug, Task, Sub-task)"
+  pr_issue_pattern: "([A-Z][A-Z0-9]+-\\d+)"
+  api_delay_seconds: 0.5  # Delay between API calls to avoid rate limiting
+  max_concurrent_requests: 5
+
+# ============================================================
+# Dashboard Settings
+# ============================================================
+dashboard:
+  # Thresholds for heatmap colors (in days)
+  cycle_time_thresholds:
+    good: 2.0      # Below this → green
+    warning: 5.0   # Below this → yellow, above → red
+  pr_pickup_thresholds:
+    good: 4.0      # Hours
+    warning: 12.0
+  large_pr_threshold: 400  # Lines changed
