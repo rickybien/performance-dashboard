@@ -174,7 +174,7 @@ def collect_jira(config: dict) -> list[IssueMetrics]:
     all_issues: list[IssueMetrics] = []
     now = datetime.now(timezone.utc)
 
-    search_url = f"{base_url}/rest/api/3/search"
+    search_url = f"{base_url}/rest/api/3/search/jql"
     auth = (email, api_token)
     headers = {"Accept": "application/json", "Content-Type": "application/json"}
 
@@ -189,34 +189,31 @@ def collect_jira(config: dict) -> list[IssueMetrics]:
             f"ORDER BY created DESC"
         )
 
-        start_at = 0
+        next_page_token: str | None = None
         page_size = 100
 
         while True:
+            payload: dict = {
+                "jql": jql,
+                "maxResults": page_size,
+                "expand": ["changelog"],
+                "fields": [
+                    "summary", "status", "issuetype", "assignee",
+                    "created", "resolutiondate", "customfield_10020",
+                ],
+            }
+            if next_page_token:
+                payload["nextPageToken"] = next_page_token
+
             try:
-                resp = requests.post(
-                    search_url,
-                    auth=auth,
-                    headers=headers,
-                    json={
-                        "jql": jql,
-                        "startAt": start_at,
-                        "maxResults": page_size,
-                        "expand": ["changelog"],
-                        "fields": [
-                            "summary", "status", "issuetype", "assignee",
-                            "created", "resolutiondate", "customfield_10020",
-                        ],
-                    },
-                    timeout=30,
-                )
+                resp = requests.post(search_url, auth=auth, headers=headers, json=payload, timeout=30)
                 resp.raise_for_status()
                 data = resp.json()
             except requests.HTTPError as e:
-                logger.error("Jira API 錯誤 (project=%s, startAt=%d): %s", project_key, start_at, e)
+                logger.error("Jira API 錯誤 (project=%s): %s", project_key, e)
                 break
             except requests.RequestException as e:
-                logger.error("Jira 連線錯誤 (project=%s, startAt=%d): %s", project_key, start_at, e)
+                logger.error("Jira 連線錯誤 (project=%s): %s", project_key, e)
                 break
 
             issues = data.get("issues", [])
@@ -230,10 +227,10 @@ def collect_jira(config: dict) -> list[IssueMetrics]:
                 except Exception as e:
                     logger.error("處理 issue %s 時發生錯誤: %s", issue.get("key"), e)
 
-            if len(issues) < page_size:
+            next_page_token = data.get("nextPageToken")
+            if not next_page_token:
                 break
 
-            start_at += page_size
             time.sleep(api_delay)
 
         time.sleep(api_delay)
