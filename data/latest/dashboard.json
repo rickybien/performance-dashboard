@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-02-28T16:43:20.290896+00:00",
+  "generated_at": "2026-02-28T18:35:40.161074+00:00",
   "period": {
     "start": "2025-09-01",
     "end": "2026-02-28"
@@ -43,11 +43,11 @@
     }
   },
   "summary": {
-    "total_completed_issues": 0,
-    "avg_cycle_time_days": null,
+    "total_completed_issues": 532,
+    "avg_cycle_time_days": 8.44,
     "avg_cycle_time_prev_period": null,
-    "total_prs_merged": null,
-    "avg_pr_pickup_hours": null
+    "total_prs_merged": 1425,
+    "avg_pr_pickup_hours": 0.5
   },
   "teams": {
     "team-product": {
@@ -56,9 +56,9 @@
         "BE2PROD": {
           "cycle_time": {
             "backlog": {
-              "p50": 0.0,
-              "p85": 0.0,
-              "count": 0
+              "p50": 0.07,
+              "p85": 7.92,
+              "count": 162
             },
             "planning": {
               "p50": 0.0,
@@ -66,49 +66,49 @@
               "count": 0
             },
             "dev": {
-              "p50": 0.0,
-              "p85": 0.0,
-              "count": 0
+              "p50": 0.01,
+              "p85": 3.11,
+              "count": 148
             },
             "review": {
-              "p50": 0.0,
-              "p85": 0.0,
-              "count": 0
+              "p50": 3.87,
+              "p85": 13.41,
+              "count": 145
             },
             "dev_test": {
               "p50": 0.0,
-              "p85": 0.0,
-              "count": 0
+              "p85": 0.04,
+              "count": 116
             },
             "qa": {
               "p50": 0.0,
-              "p85": 0.0,
-              "count": 0
+              "p85": 1.58,
+              "count": 27
             },
             "staging": {
-              "p50": 0.0,
-              "p85": 0.0,
-              "count": 0
+              "p50": 0.2,
+              "p85": 3.99,
+              "count": 133
             },
             "done": {
-              "p50": 0.0,
-              "p85": 0.0,
-              "count": 0
+              "p50": 68.66,
+              "p85": 135.64,
+              "count": 162
             },
             "total": {
-              "p50": 0.0,
-              "p85": 0.0,
-              "count": 0
+              "p50": 8.09,
+              "p85": 22.14,
+              "count": 148
             }
           },
           "throughput": {
-            "completed_issues": 0,
+            "completed_issues": 33,
             "story_points": null,
             "weekly_trend": [
+              2,
+              8,
               0,
-              0,
-              0,
-              0
+              21
             ]
           },
           "pr_metrics": null
@@ -117,9 +117,9 @@
       "aggregated": {
         "cycle_time": {
           "backlog": {
-            "p50": 0.0,
-            "p85": 0.0,
-            "count": 0
+            "p50": 0.07,
+            "p85": 7.92,
+            "count": 162
           },
           "planning": {
             "p50": 0.0,
@@ -127,52 +127,65 @@
             "count": 0
           },
           "dev": {
-            "p50": 0.0,
-            "p85": 0.0,
-            "count": 0
+            "p50": 0.01,
+            "p85": 3.11,
+            "count": 148
           },
           "review": {
-            "p50": 0.0,
-            "p85": 0.0,
-            "count": 0
+            "p50": 3.87,
+            "p85": 13.41,
+            "count": 145
           },
           "dev_test": {
             "p50": 0.0,
-            "p85": 0.0,
-            "count": 0
+            "p85": 0.04,
+            "count": 116
           },
           "qa": {
             "p50": 0.0,
-            "p85": 0.0,
-            "count": 0
+            "p85": 1.58,
+            "count": 27
           },
           "staging": {
-            "p50": 0.0,
-            "p85": 0.0,
-            "count": 0
+            "p50": 0.2,
+            "p85": 3.99,
+            "count": 133
           },
           "done": {
-            "p50": 0.0,
-            "p85": 0.0,
-            "count": 0
+            "p50": 68.66,
+            "p85": 135.64,
+            "count": 162
           },
           "total": {
-            "p50": 0.0,
-            "p85": 0.0,
-            "count": 0
+            "p50": 8.09,
+            "p85": 22.14,
+            "count": 148
           }
         },
         "throughput": {
-          "completed_issues": 0,
+          "completed_issues": 33,
           "story_points": null,
           "weekly_trend": [
+            2,
+            8,
             0,
-            0,
-            0,
-            0
+            21
           ]
         },
-        "pr_metrics": null,
+        "pr_metrics": {
+          "total_prs_merged": 513,
+          "pickup_hours": {
+            "p50": 0.5,
+            "p85": 75.9,
+            "count": 362
+          },
+          "merge_time_hours": {
+            "p50": 27.3,
+            "p85": 190.7,
+            "count": 513
+          },
+          "large_pr_pct": 33.7
+        },
         "build_metrics": null
       }
     },
@@ -182,24 +195,24 @@
         "ROB": {
           "cycle_time": {
             "backlog": {
-              "p50": 0.0,
-              "p85": 0.0,
-              "count": 0
+              "p50": 1.05,
+              "p85": 8.53,
+              "count": 370
             },
             "planning": {
               "p50": 0.0,
-              "p85": 0.0,
-              "count": 0
+              "p85": 2.17,
+              "count": 370
             },
             "dev": {
-              "p50": 0.0,
-              "p85": 0.0,
-              "count": 0
+              "p50": 0.01,
+              "p85": 2.0,
+              "count": 370
             },
             "review": {
-              "p50": 0.0,
-              "p85": 0.0,
-              "count": 0
+              "p50": 0.17,
+              "p85": 3.36,
+              "count": 272
             },
             "dev_test": {
               "p50": 0.0,
@@ -207,34 +220,34 @@
               "count": 0
             },
             "qa": {
-              "p50": 0.0,
-              "p85": 0.0,
-              "count": 0
+              "p50": 0.01,
+              "p85": 3.98,
+              "count": 309
             },
             "staging": {
-              "p50": 0.0,
-              "p85": 0.0,
-              "count": 0
+              "p50": 2.0,
+              "p85": 4.99,
+              "count": 189
             },
             "done": {
-              "p50": 0.0,
-              "p85": 0.0,
-              "count": 0
+              "p50": 89.58,
+              "p85": 149.42,
+              "count": 370
             },
             "total": {
-              "p50": 0.0,
-              "p85": 0.0,
-              "count": 0
+              "p50": 3.81,
+              "p85": 13.03,
+              "count": 370
             }
           },
           "throughput": {
-            "completed_issues": 0,
+            "completed_issues": 16,
             "story_points": null,
             "weekly_trend": [
+              4,
+              3,
               0,
-              0,
-              0,
-              0
+              4
             ]
           },
           "pr_metrics": null
@@ -243,24 +256,24 @@
       "aggregated": {
         "cycle_time": {
           "backlog": {
-            "p50": 0.0,
-            "p85": 0.0,
-            "count": 0
+            "p50": 1.05,
+            "p85": 8.53,
+            "count": 370
           },
           "planning": {
             "p50": 0.0,
-            "p85": 0.0,
-            "count": 0
+            "p85": 2.17,
+            "count": 370
           },
           "dev": {
-            "p50": 0.0,
-            "p85": 0.0,
-            "count": 0
+            "p50": 0.01,
+            "p85": 2.0,
+            "count": 370
           },
           "review": {
-            "p50": 0.0,
-            "p85": 0.0,
-            "count": 0
+            "p50": 0.17,
+            "p85": 3.36,
+            "count": 272
           },
           "dev_test": {
             "p50": 0.0,
@@ -268,37 +281,50 @@
             "count": 0
           },
           "qa": {
-            "p50": 0.0,
-            "p85": 0.0,
-            "count": 0
+            "p50": 0.01,
+            "p85": 3.98,
+            "count": 309
           },
           "staging": {
-            "p50": 0.0,
-            "p85": 0.0,
-            "count": 0
+            "p50": 2.0,
+            "p85": 4.99,
+            "count": 189
           },
           "done": {
-            "p50": 0.0,
-            "p85": 0.0,
-            "count": 0
+            "p50": 89.58,
+            "p85": 149.42,
+            "count": 370
           },
           "total": {
-            "p50": 0.0,
-            "p85": 0.0,
-            "count": 0
+            "p50": 3.81,
+            "p85": 13.03,
+            "count": 370
           }
         },
         "throughput": {
-          "completed_issues": 0,
+          "completed_issues": 16,
           "story_points": null,
           "weekly_trend": [
+            4,
+            3,
             0,
-            0,
-            0,
-            0
+            4
           ]
         },
-        "pr_metrics": null,
+        "pr_metrics": {
+          "total_prs_merged": 912,
+          "pickup_hours": {
+            "p50": 0.5,
+            "p85": 18.4,
+            "count": 392
+          },
+          "merge_time_hours": {
+            "p50": 1.7,
+            "p85": 35.6,
+            "count": 912
+          },
+          "large_pr_pct": 32.7
+        },
         "build_metrics": null
       }
     }
@@ -312,18 +338,18 @@
         "2026-W09"
       ],
       "cycle_time_p50": [
+        1.89,
+        6.03,
         null,
-        null,
-        null,
-        null
+        5.98
       ],
       "throughput": [
+        2,
+        8,
         0,
-        0,
-        0,
-        0
+        21
       ],
-      "pr_pickup_hours": null
+      "pr_pickup_hours": 0.5
     },
     "team-b2b": {
       "weeks": [
@@ -333,18 +359,18 @@
         "2026-W09"
       ],
       "cycle_time_p50": [
+        1.38,
+        0.76,
         null,
-        null,
-        null,
-        null
+        13.96
       ],
       "throughput": [
+        4,
+        3,
         0,
-        0,
-        0,
-        0
+        4
       ],
-      "pr_pickup_hours": null
+      "pr_pickup_hours": 0.5
     }
   }
 }
