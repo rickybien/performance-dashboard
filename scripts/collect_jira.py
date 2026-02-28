@@ -174,7 +174,7 @@ def collect_jira(config: dict) -> list[IssueMetrics]:
     all_issues: list[IssueMetrics] = []
     now = datetime.now(timezone.utc)
 
-    search_url = f"{base_url}/rest/api/3/search/jql"
+    search_url = f"{base_url}/rest/api/3/search"
     auth = (email, api_token)
     headers = {"Accept": "application/json", "Content-Type": "application/json"}
 

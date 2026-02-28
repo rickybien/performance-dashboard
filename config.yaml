@@ -172,7 +172,8 @@ collection:
   recent_days: 30
   jira_jql_filter: "issuetype in (Story, Bug, Task, Sub-task)"
   pr_issue_pattern: "([A-Z][A-Z0-9]+-\\d+)"
-  api_delay_seconds: 0.5  # Delay between API calls to avoid rate limiting
+  api_delay_seconds: 0.5       # Delay between Jira API calls (conservative, low rate limit)
+  github_api_delay_seconds: 0.1  # Delay between GitHub API calls (5000 req/hr allows ~1.4/sec)
   max_concurrent_requests: 5
 
 # ============================================================

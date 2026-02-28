@@ -84,7 +84,7 @@ def collect_github_prs(config: dict) -> list[PRMetrics]:
 
     collection_config = config.get("collection", {})
     lookback_days = collection_config.get("lookback_days", 90)
-    api_delay = collection_config.get("api_delay_seconds", 0.5)
+    api_delay = collection_config.get("github_api_delay_seconds", 0.1)
     jira_pattern = collection_config.get("pr_issue_pattern", r"([A-Z][A-Z0-9]+-\d+)")
 
     large_pr_threshold = config.get("dashboard", {}).get("large_pr_threshold", 400)
