@@ -5,15 +5,15 @@
 # Service Connections
 # ============================================================
 jira:
-  base_url: "https://your-company.atlassian.net"
+  base_url: "https://kkday.atlassian.net"
   # Auth via env vars: JIRA_EMAIL, JIRA_API_TOKEN
 
 github:
-  org: "your-org-name"
+  org: "kkday-it"
   # Auth via env var: GITHUB_TOKEN
 
 jenkins:
-  base_url: "https://jenkins.your-company.com"
+  base_url: "https://jenkins.kkday.com"
   # Auth via env vars: JENKINS_USER, JENKINS_API_TOKEN
   enabled: false  # Enable in Phase 3
 
@@ -128,25 +128,37 @@ status_mapping:
 # Teams
 # ============================================================
 teams:
-  - name: "Team Alpha"
-    id: "team-alpha"
+  - name: "Team product"
+    id: "team-product"
     jira_projects:
-      - "PROJ-A"
+      - "BE2PROD"
     github_repos:
-      - "service-auth"
-      - "service-user"
-      - "lib-common"
+      - "kkday-product-service"
+      - "kkday-be2-web"
+      - "katalyst"
+      - "kkday-psi-service"
+      - "kkday-pos-api"
+      - "kkday-psi-web"
+      - "kkday-pos-web"
+      - "kkday-commission-service"
+      - "kkday-be2-product"
+      - "kkday-be2-commission"
+      - "kkday-detective"
+      - "kkday-be2-detective"
+      - "kkday-product-external-api"
     jenkins_jobs: []
 
-  - name: "Team Beta"
-    id: "team-beta"
+  - name: "Team b2b"
+    id: "team-b2b"
     jira_projects:
-      - "PROJ-B"
-      - "PROJ-C"
+      - "ROB"
     github_repos:
-      - "service-payment"
-      - "service-billing"
-      - "service-invoice"
+      - "kkday-robot-order-api"
+      - "kkday-booking-robot"
+      - "kkday-be2-b2b"
+      - "kkday-psp"
+      - "kkday-booking-robot-for-windows"
+      - "kkday-b2b-api"
     jenkins_jobs: []
 
   # TODO: Add remaining 16 teams
@@ -156,7 +168,7 @@ teams:
 # Collection Settings
 # ============================================================
 collection:
-  lookback_days: 90
+  lookback_days: 180
   recent_days: 30
   jira_jql_filter: "issuetype in (Story, Bug, Task, Sub-task)"
   pr_issue_pattern: "([A-Z][A-Z0-9]+-\\d+)"
@@ -175,3 +187,4 @@ dashboard:
     good: 4.0      # Hours
     warning: 12.0
   large_pr_threshold: 400  # Lines changed
+
