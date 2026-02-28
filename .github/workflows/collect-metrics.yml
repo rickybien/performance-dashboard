@@ -1,0 +1,46 @@
+name: Collect Metrics
+
+on:
+  schedule:
+    # 每天 UTC 18:00（台灣時間 02:00）執行
+    - cron: '0 18 * * *'
+  workflow_dispatch:  # 允許手動觸發
+
+permissions:
+  contents: write  # 需要寫入 data/ 目錄
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install uv
+        run: pip install uv
+
+      - name: Install dependencies
+        run: uv pip install --system -r scripts/requirements.txt
+
+      - name: Run data pipeline
+        env:
+          JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
+          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.METRICS_GITHUB_TOKEN }}
+          JENKINS_USER: ${{ secrets.JENKINS_USER }}
+          JENKINS_API_TOKEN: ${{ secrets.JENKINS_API_TOKEN }}
+        run: uv run python scripts/main.py
+
+      - name: Commit data files
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'chore: 自動更新 metrics 資料'
+          file_pattern: 'data/**'
+          commit_user_name: 'github-actions[bot]'
+          commit_user_email: 'github-actions[bot]@users.noreply.github.com'

@@ -1,0 +1,156 @@
+{
+  "generated_at": "2026-02-27T00:00:00+00:00",
+  "period": {
+    "start": "2025-11-29",
+    "end": "2026-02-27"
+  },
+  "meta": {
+    "phases": [
+      {"id": "planning", "label": "SA/SD", "color": "#a78bfa"},
+      {"id": "dev", "label": "Development", "color": "#60a5fa"},
+      {"id": "review", "label": "PR Review", "color": "#34d399"},
+      {"id": "dev_test", "label": "RD Testing", "color": "#fbbf24"},
+      {"id": "qa", "label": "QA Testing", "color": "#f97316"},
+      {"id": "staging", "label": "Staging", "color": "#f472b6"}
+    ],
+    "thresholds": {
+      "good": 2.0,
+      "warning": 5.0
+    }
+  },
+  "summary": {
+    "total_completed_issues": 47,
+    "avg_cycle_time_days": 10.2,
+    "avg_cycle_time_prev_period": null,
+    "total_prs_merged": 40,
+    "avg_pr_pickup_hours": 4.5
+  },
+  "teams": {
+    "team-alpha": {
+      "name": "Team Alpha",
+      "projects": {
+        "PROJ-A": {
+          "cycle_time": {
+            "planning": {"p50": 1.5, "p85": 2.8, "count": 15},
+            "dev": {"p50": 3.2, "p85": 5.1, "count": 15},
+            "review": {"p50": 0.8, "p85": 1.5, "count": 12},
+            "dev_test": {"p50": 1.1, "p85": 2.0, "count": 10},
+            "qa": {"p50": 1.8, "p85": 3.5, "count": 14},
+            "staging": {"p50": 0.5, "p85": 1.0, "count": 12},
+            "total": {"p50": 7.8, "p85": 12.3, "count": 15}
+          },
+          "throughput": {
+            "completed_issues": 15,
+            "story_points": null,
+            "weekly_trend": [3, 4, 5, 3]
+          },
+          "pr_metrics": null
+        }
+      },
+      "aggregated": {
+        "cycle_time": {
+          "planning": {"p50": 1.5, "p85": 2.8, "count": 15},
+          "dev": {"p50": 3.2, "p85": 5.1, "count": 15},
+          "review": {"p50": 0.8, "p85": 1.5, "count": 12},
+          "dev_test": {"p50": 1.1, "p85": 2.0, "count": 10},
+          "qa": {"p50": 1.8, "p85": 3.5, "count": 14},
+          "staging": {"p50": 0.5, "p85": 1.0, "count": 12},
+          "total": {"p50": 7.8, "p85": 12.3, "count": 15}
+        },
+        "throughput": {
+          "completed_issues": 15,
+          "story_points": null,
+          "weekly_trend": [3, 4, 5, 3]
+        },
+        "pr_metrics": {
+          "total_prs_merged": 12,
+          "pickup_hours": {"p50": 3.5, "p85": 8.2, "count": 10},
+          "merge_time_hours": {"p50": 18.5, "p85": 36.2, "count": 12},
+          "large_pr_pct": 16.7
+        },
+        "build_metrics": null
+      }
+    },
+    "team-beta": {
+      "name": "Team Beta",
+      "projects": {
+        "PROJ-B": {
+          "cycle_time": {
+            "planning": {"p50": 0.8, "p85": 1.5, "count": 18},
+            "dev": {"p50": 5.5, "p85": 8.2, "count": 18},
+            "review": {"p50": 1.2, "p85": 2.5, "count": 16},
+            "dev_test": {"p50": 0.5, "p85": 1.0, "count": 14},
+            "qa": {"p50": 6.8, "p85": 10.2, "count": 17},
+            "staging": {"p50": 1.5, "p85": 3.0, "count": 15},
+            "total": {"p50": 14.2, "p85": 20.5, "count": 18}
+          },
+          "throughput": {
+            "completed_issues": 18,
+            "story_points": null,
+            "weekly_trend": [4, 5, 4, 5]
+          },
+          "pr_metrics": null
+        },
+        "PROJ-C": {
+          "cycle_time": {
+            "planning": {"p50": 1.0, "p85": 2.0, "count": 14},
+            "dev": {"p50": 4.2, "p85": 7.0, "count": 14},
+            "review": {"p50": 0.9, "p85": 1.8, "count": 12},
+            "dev_test": {"p50": 0.8, "p85": 1.5, "count": 10},
+            "qa": {"p50": 3.5, "p85": 6.0, "count": 13},
+            "staging": {"p50": 1.0, "p85": 2.0, "count": 11},
+            "total": {"p50": 10.5, "p85": 16.8, "count": 14}
+          },
+          "throughput": {
+            "completed_issues": 14,
+            "story_points": null,
+            "weekly_trend": [3, 4, 3, 4]
+          },
+          "pr_metrics": null
+        }
+      },
+      "aggregated": {
+        "cycle_time": {
+          "planning": {"p50": 0.9, "p85": 1.8, "count": 32},
+          "dev": {"p50": 4.9, "p85": 7.8, "count": 32},
+          "review": {"p50": 1.0, "p85": 2.2, "count": 28},
+          "dev_test": {"p50": 0.6, "p85": 1.2, "count": 24},
+          "qa": {"p50": 5.2, "p85": 8.5, "count": 30},
+          "staging": {"p50": 1.2, "p85": 2.5, "count": 26},
+          "total": {"p50": 12.5, "p85": 18.5, "count": 32}
+        },
+        "throughput": {
+          "completed_issues": 32,
+          "story_points": null,
+          "weekly_trend": [7, 9, 7, 9]
+        },
+        "pr_metrics": {
+          "total_prs_merged": 28,
+          "pickup_hours": {"p50": 5.2, "p85": 12.5, "count": 24},
+          "merge_time_hours": {"p50": 24.8, "p85": 48.3, "count": 28},
+          "large_pr_pct": 28.6
+        },
+        "build_metrics": {
+          "success_rate": 78.5,
+          "avg_duration_mins": 12.3,
+          "total_builds": 96,
+          "weekly_trend": [22, 25, 24, 25]
+        }
+      }
+    }
+  },
+  "trends": {
+    "team-alpha": {
+      "weeks": ["2026-W05", "2026-W06", "2026-W07", "2026-W08"],
+      "cycle_time_p50": [7.5, 8.0, 7.8, 7.4],
+      "throughput": [3, 4, 5, 3],
+      "pr_pickup_hours": null
+    },
+    "team-beta": {
+      "weeks": ["2026-W05", "2026-W06", "2026-W07", "2026-W08"],
+      "cycle_time_p50": [13.5, 12.8, 12.5, 11.9],
+      "throughput": [7, 9, 7, 9],
+      "pr_pickup_hours": null
+    }
+  }
+}

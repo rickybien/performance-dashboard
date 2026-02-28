@@ -1,0 +1,120 @@
+/* Engineering Metrics Dashboard — CSS Variables & Base Styles */
+
+:root {
+  /* Background */
+  --bg-primary: #0f172a;
+  --bg-card: #1e293b;
+  --bg-card-hover: #263348;
+
+  /* Text */
+  --text-primary: #f1f5f9;
+  --text-muted: #94a3b8;
+  --text-header: #e2e8f0;
+
+  /* Borders */
+  --border: #334155;
+  --border-light: #1e293b;
+
+  /* Phase colors (從 config.yaml 對應) */
+  --phase-planning: #a78bfa;
+  --phase-dev: #60a5fa;
+  --phase-review: #34d399;
+  --phase-dev_test: #fbbf24;
+  --phase-qa: #f97316;
+  --phase-staging: #f472b6;
+
+  /* Heatmap cell colors */
+  --heatmap-good: #14532d;
+  --heatmap-good-text: #86efac;
+  --heatmap-warning: #713f12;
+  --heatmap-warning-text: #fde68a;
+  --heatmap-bad: #7f1d1d;
+  --heatmap-bad-text: #fca5a5;
+  --heatmap-empty: #1e293b;
+  --heatmap-empty-text: #475569;
+
+  /* Accent */
+  --accent: #3b82f6;
+  --accent-hover: #2563eb;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+#app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Typography */
+h1 { font-size: 1.5rem; font-weight: 700; }
+h2 { font-size: 1.25rem; font-weight: 600; }
+h3 { font-size: 1rem; font-weight: 600; }
+
+/* Card */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+}
+
+/* Loading / Error states */
+.state-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+/* Select */
+select {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  outline: none;
+}
+
+select:focus {
+  border-color: var(--accent);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}

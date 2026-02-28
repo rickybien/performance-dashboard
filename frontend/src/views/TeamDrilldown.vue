@@ -1,0 +1,195 @@
+<template>
+  <div>
+    <div v-if="loading" class="state-container">載入中…</div>
+    <div v-else-if="error" class="state-container" style="color: #f87171">
+      載入失敗：{{ error }}
+    </div>
+
+    <template v-else-if="data">
+      <div class="drilldown-header">
+        <router-link to="/" class="back-link">← Overview</router-link>
+        <h1>{{ currentTeam?.name ?? teamId }}</h1>
+      </div>
+
+      <!-- Team / Project Selector -->
+      <TeamSelector
+        :teams="data.teams"
+        v-model:teamId="selectedTeamId"
+        v-model:projectKey="selectedProjectKey"
+      />
+
+      <div class="charts-grid">
+        <!-- Cycle Time Breakdown -->
+        <section class="card chart-card">
+          <h3>Cycle Time Breakdown (p50)</h3>
+          <p class="chart-subtitle">Stacked by phase, per project</p>
+          <CycleTimeChart
+            :projects="displayProjects"
+            :phases="data.meta.phases"
+          />
+        </section>
+
+        <!-- Throughput Trend -->
+        <section class="card chart-card">
+          <h3>Weekly Throughput Trend</h3>
+          <p class="chart-subtitle">Completed issues + cycle time p50</p>
+          <ThroughputChart
+            :weeks="teamTrend?.weeks ?? []"
+            :throughput="teamTrend?.throughput ?? []"
+            :cycle-time-p50="teamTrend?.cycle_time_p50 ?? []"
+          />
+        </section>
+      </div>
+
+      <!-- Bottleneck Highlight -->
+      <section v-if="bottleneck" class="card bottleneck-card">
+        <h3>Bottleneck</h3>
+        <p class="bottleneck-content">
+          <span class="phase-badge" :style="{ background: bottleneck.color + '33', color: bottleneck.color }">
+            {{ bottleneck.label }}
+          </span>
+          is the slowest phase with p50
+          <strong>{{ bottleneck.p50 }}d</strong>
+          (p85: {{ bottleneck.p85 }}d, n={{ bottleneck.count }})
+        </p>
+      </section>
+
+      <!-- PR Metrics -->
+      <section class="card" style="margin-top: 1rem">
+        <h3>PR Metrics</h3>
+        <PrMetricsCard :pr-metrics="currentTeam?.aggregated.pr_metrics ?? null" />
+      </section>
+
+      <!-- Build Metrics（只在有資料時顯示） -->
+      <section v-if="currentTeam?.aggregated.build_metrics" class="card" style="margin-top: 1rem">
+        <h3>Build Metrics</h3>
+        <BuildMetricsCard :build-metrics="currentTeam.aggregated.build_metrics" />
+      </section>
+    </template>
+  </div>
+</template>
+
+<script setup>
+import { ref, computed, watch } from 'vue'
+import { useMetrics } from '../composables/useMetrics.js'
+import TeamSelector from '../components/TeamSelector.vue'
+import CycleTimeChart from '../components/CycleTimeChart.vue'
+import ThroughputChart from '../components/ThroughputChart.vue'
+import PrMetricsCard from '../components/PrMetricsCard.vue'
+import BuildMetricsCard from '../components/BuildMetricsCard.vue'
+
+const props = defineProps({
+  teamId: { type: String, required: true },
+})
+
+const { data, loading, error } = useMetrics()
+
+const selectedTeamId = ref(props.teamId)
+const selectedProjectKey = ref('')
+
+// 切換 team 時清空 project 選擇
+watch(selectedTeamId, () => { selectedProjectKey.value = '' })
+
+const currentTeam = computed(() =>
+  data.value ? data.value.teams[selectedTeamId.value] : null,
+)
+
+const teamTrend = computed(() =>
+  data.value ? data.value.trends[selectedTeamId.value] : null,
+)
+
+// 依選擇的 project 篩選，或顯示所有 project
+const displayProjects = computed(() => {
+  if (!currentTeam.value) return {}
+  const projects = currentTeam.value.projects
+  if (selectedProjectKey.value && projects[selectedProjectKey.value]) {
+    return { [selectedProjectKey.value]: projects[selectedProjectKey.value] }
+  }
+  return projects
+})
+
+// 找出 p50 最高的 phase（排除 total）
+const bottleneck = computed(() => {
+  if (!currentTeam.value || !data.value) return null
+
+  const ct = currentTeam.value.aggregated.cycle_time
+  const phases = data.value.meta.phases
+
+  let maxPhase = null
+  let maxP50 = 0
+
+  for (const phase of phases) {
+    const stat = ct[phase.id]
+    if (stat && stat.count > 0 && stat.p50 > maxP50) {
+      maxP50 = stat.p50
+      maxPhase = { ...phase, ...stat }
+    }
+  }
+
+  return maxPhase
+})
+</script>
+
+<style scoped>
+.drilldown-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.back-link {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: color 0.15s;
+}
+
+.back-link:hover {
+  color: var(--text-primary);
+}
+
+.charts-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+
+@media (max-width: 768px) {
+  .charts-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.chart-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.chart-subtitle {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+}
+
+.bottleneck-card {
+  margin-top: 1rem;
+}
+
+.bottleneck-content {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--text-primary);
+}
+
+.phase-badge {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.8125rem;
+  margin-right: 0.25rem;
+}
+</style>
