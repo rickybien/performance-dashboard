@@ -1,0 +1,5 @@
+jira==3.8.0
+pyyaml==6.0.1
+requests==2.32.3
+python-dateutil==2.9.0
+PyGithub==2.5.0
