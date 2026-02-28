@@ -1,6 +1,7 @@
 """collect_jira.py — Jira 資料收集模組
 
 從 Jira Cloud 收集 issue 的 changelog，計算各階段停留時間。
+使用 /rest/api/3/search/jql（Jira Cloud v3 API）。
 """
 
 import logging
@@ -9,8 +10,7 @@ from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from typing import Optional
 
-from jira import JIRA
-from jira.exceptions import JIRAError
+import requests
 
 logger = logging.getLogger(__name__)
 
@@ -140,31 +140,6 @@ def _parse_jira_datetime(dt_str: str) -> datetime:
     return dt
 
 
-def _get_resolved_time(issue) -> Optional[datetime]:
-    """從 issue 欄位取得解決時間。"""
-    resolutiondate = getattr(issue.fields, "resolutiondate", None)
-    if resolutiondate:
-        return _parse_jira_datetime(resolutiondate)
-    return None
-
-
-def _get_sprint_name(issue) -> Optional[str]:
-    """嘗試從 customfield_10020（Sprint）取得衝刺名稱。"""
-    sprint_field = getattr(issue.fields, "customfield_10020", None)
-    if sprint_field and isinstance(sprint_field, list) and sprint_field:
-        sprint = sprint_field[-1]
-        # Sprint 物件可能有 name 屬性或以字串形式存在
-        if hasattr(sprint, "name"):
-            return sprint.name
-        if isinstance(sprint, str) and "name=" in sprint:
-            # 解析 "com.atlassian.greenhopper.service.sprint.Sprint@...[...name=Sprint 1,...]"
-            import re
-            match = re.search(r"name=([^,\]]+)", sprint)
-            if match:
-                return match.group(1)
-    return None
-
-
 def collect_jira(config: dict) -> list[IssueMetrics]:
     """從 Jira 收集所有團隊、專案的 issue 效能指標。
 
@@ -186,11 +161,6 @@ def collect_jira(config: dict) -> list[IssueMetrics]:
             "缺少 Jira 認證設定。請確認環境變數 JIRA_BASE_URL、JIRA_EMAIL、JIRA_API_TOKEN 已設定。"
         )
 
-    jira_client = JIRA(
-        server=base_url,
-        basic_auth=(email, api_token),
-    )
-
     collection_config = config.get("collection", {})
     lookback_days = collection_config.get("lookback_days", 90)
     jql_filter = collection_config.get("jira_jql_filter", "issuetype in (Story, Bug, Task, Sub-task)")
@@ -203,6 +173,10 @@ def collect_jira(config: dict) -> list[IssueMetrics]:
 
     all_issues: list[IssueMetrics] = []
     now = datetime.now(timezone.utc)
+
+    search_url = f"{base_url}/rest/api/3/search/jql"
+    auth = (email, api_token)
+    headers = {"Accept": "application/json", "Content-Type": "application/json"}
 
     for project_key in all_projects:
         logger.info("收集 Jira 專案: %s", project_key)
@@ -220,16 +194,32 @@ def collect_jira(config: dict) -> list[IssueMetrics]:
 
         while True:
             try:
-                issues = jira_client.search_issues(
-                    jql,
-                    startAt=start_at,
-                    maxResults=page_size,
-                    expand="changelog",
+                resp = requests.post(
+                    search_url,
+                    auth=auth,
+                    headers=headers,
+                    json={
+                        "jql": jql,
+                        "startAt": start_at,
+                        "maxResults": page_size,
+                        "expand": ["changelog"],
+                        "fields": [
+                            "summary", "status", "issuetype", "assignee",
+                            "created", "resolutiondate", "customfield_10020",
+                        ],
+                    },
+                    timeout=30,
                 )
-            except JIRAError as e:
+                resp.raise_for_status()
+                data = resp.json()
+            except requests.HTTPError as e:
                 logger.error("Jira API 錯誤 (project=%s, startAt=%d): %s", project_key, start_at, e)
                 break
+            except requests.RequestException as e:
+                logger.error("Jira 連線錯誤 (project=%s, startAt=%d): %s", project_key, start_at, e)
+                break
 
+            issues = data.get("issues", [])
             if not issues:
                 break
 
@@ -238,7 +228,7 @@ def collect_jira(config: dict) -> list[IssueMetrics]:
                     metrics = _process_issue(issue, project_key, status_lookup, now)
                     all_issues.append(metrics)
                 except Exception as e:
-                    logger.error("處理 issue %s 時發生錯誤: %s", issue.key, e)
+                    logger.error("處理 issue %s 時發生錯誤: %s", issue.get("key"), e)
 
             if len(issues) < page_size:
                 break
@@ -252,46 +242,44 @@ def collect_jira(config: dict) -> list[IssueMetrics]:
     return all_issues
 
 
-def _process_issue(issue, project_key: str, status_lookup: dict[str, str], now: datetime) -> IssueMetrics:
-    """將單一 Jira issue 轉換為 IssueMetrics。"""
-    fields = issue.fields
+def _process_issue(issue: dict, project_key: str, status_lookup: dict[str, str], now: datetime) -> IssueMetrics:
+    """將單一 Jira issue（dict）轉換為 IssueMetrics。"""
+    fields = issue.get("fields", {})
 
-    created = _parse_jira_datetime(fields.created)
-    resolved = _get_resolved_time(issue)
+    created = _parse_jira_datetime(fields["created"])
+
+    resolved = None
+    if fields.get("resolutiondate"):
+        resolved = _parse_jira_datetime(fields["resolutiondate"])
 
     assignee = None
-    if hasattr(fields, "assignee") and fields.assignee:
-        assignee = getattr(fields.assignee, "displayName", None)
+    if fields.get("assignee"):
+        assignee = fields["assignee"].get("displayName")
 
-    issue_type = "Unknown"
-    if hasattr(fields, "issuetype") and fields.issuetype:
-        issue_type = getattr(fields.issuetype, "name", "Unknown")
+    issue_type = fields.get("issuetype", {}).get("name", "Unknown")
+    current_status = fields.get("status", {}).get("name", "Unknown")
 
-    current_status = "Unknown"
-    if hasattr(fields, "status") and fields.status:
-        current_status = getattr(fields.status, "name", "Unknown")
+    sprint_name = _get_sprint_name_from_field(fields.get("customfield_10020"))
 
-    # 取得 changelog entries
     changelog_entries: list[dict] = []
-    if hasattr(issue, "changelog") and issue.changelog:
-        for history in issue.changelog.histories:
-            entry = {
-                "created": history.created,
-                "items": [
-                    {
-                        "field": item.field,
-                        "fromString": item.fromString,
-                        "toString": item.toString,
-                    }
-                    for item in history.items
-                ],
-            }
-            changelog_entries.append(entry)
+    for history in issue.get("changelog", {}).get("histories", []):
+        entry = {
+            "created": history["created"],
+            "items": [
+                {
+                    "field": item.get("field"),
+                    "fromString": item.get("fromString"),
+                    "toString": item.get("toString"),
+                }
+                for item in history.get("items", [])
+            ],
+        }
+        changelog_entries.append(entry)
 
     phase_durations = parse_changelog(changelog_entries, status_lookup, created, now)
 
     return IssueMetrics(
-        key=issue.key,
+        key=issue["key"],
         project=project_key,
         issue_type=issue_type,
         created=created,
@@ -299,5 +287,20 @@ def _process_issue(issue, project_key: str, status_lookup: dict[str, str], now: 
         phase_durations=phase_durations,
         current_status=current_status,
         assignee=assignee,
-        sprint_name=_get_sprint_name(issue),
+        sprint_name=sprint_name,
     )
+
+
+def _get_sprint_name_from_field(sprint_field) -> Optional[str]:
+    """從 customfield_10020（Sprint）取得衝刺名稱。"""
+    if not sprint_field or not isinstance(sprint_field, list):
+        return None
+    sprint = sprint_field[-1]
+    if isinstance(sprint, dict):
+        return sprint.get("name")
+    if isinstance(sprint, str) and "name=" in sprint:
+        import re
+        match = re.search(r"name=([^,\]]+)", sprint)
+        if match:
+            return match.group(1)
+    return None
