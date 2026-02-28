@@ -165,6 +165,7 @@ def collect_jira(config: dict) -> list[IssueMetrics]:
     lookback_days = collection_config.get("lookback_days", 90)
     jql_filter = collection_config.get("jira_jql_filter", "issuetype in (Story, Bug, Task, Sub-task)")
     api_delay = collection_config.get("api_delay_seconds", 0.5)
+    changelog_delay = collection_config.get("jira_changelog_api_delay_seconds", 0.1)
 
     teams = config.get("teams", [])
     all_projects: list[str] = []
@@ -196,7 +197,6 @@ def collect_jira(config: dict) -> list[IssueMetrics]:
             payload: dict = {
                 "jql": jql,
                 "maxResults": page_size,
-                "expand": ["changelog"],
                 "fields": [
                     "summary", "status", "issuetype", "assignee",
                     "created", "resolutiondate", "customfield_10020",
@@ -223,6 +223,9 @@ def collect_jira(config: dict) -> list[IssueMetrics]:
 
             for issue in issues:
                 try:
+                    changelog_values = _fetch_issue_changelog(base_url, auth, issue["key"])
+                    issue["changelog"] = {"histories": changelog_values}
+                    time.sleep(changelog_delay)
                     metrics = _process_issue(issue, project_key, status_lookup, now)
                     all_issues.append(metrics)
                 except Exception as e:
@@ -238,6 +241,37 @@ def collect_jira(config: dict) -> list[IssueMetrics]:
 
     logger.info("共收集 %d 個 issue", len(all_issues))
     return all_issues
+
+
+def _fetch_issue_changelog(base_url: str, auth: tuple, issue_key: str) -> list[dict]:
+    """呼叫 /rest/api/3/issue/{key}/changelog，回傳 changelog entries。
+
+    回傳格式與 search 嵌入式 changelog.histories 相容，
+    每筆含 created 與 items[]{field, fromString, toString}。
+    """
+    url = f"{base_url}/rest/api/3/issue/{issue_key}/changelog"
+    get_headers = {"Accept": "application/json"}
+    entries: list[dict] = []
+    start_at = 0
+    page_size = 100
+
+    while True:
+        resp = requests.get(
+            url,
+            auth=auth,
+            headers=get_headers,
+            params={"startAt": start_at, "maxResults": page_size},
+            timeout=30,
+        )
+        resp.raise_for_status()
+        data = resp.json()
+        values = data.get("values", [])
+        entries.extend(values)
+        if data.get("isLast", True) or len(values) < page_size:
+            break
+        start_at += page_size
+
+    return entries
 
 
 def _process_issue(issue: dict, project_key: str, status_lookup: dict[str, str], now: datetime) -> IssueMetrics:
