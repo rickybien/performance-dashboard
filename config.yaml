@@ -62,6 +62,7 @@ status_mapping:
   default:
     backlog:
       - "To Do"
+      - "TODO"
       - "Backlog"
       - "Pending"
       - "Open"
@@ -87,6 +88,7 @@ status_mapping:
       - "In Review"
       - "Code Review"
       - "PR Review"
+      - "PR Merged"
       - "Peer Review"
       - "審查中"
     dev_test:
@@ -100,10 +102,13 @@ status_mapping:
       - "QA"
       - "QA Testing"
       - "In QA"
+      - "Waiting for QA"
       - "Quality Assurance"
       - "QA 測試中"
     staging:
       - "Staging"
+      - "Waiting for Stage"
+      - "Waiting for Release"
       - "Regression"
       - "UAT"
       - "Stage"
