@@ -210,7 +210,8 @@ def collect_jira(config: dict) -> list[IssueMetrics]:
                 resp.raise_for_status()
                 data = resp.json()
             except requests.HTTPError as e:
-                logger.error("Jira API 錯誤 (project=%s): %s", project_key, e)
+                body = e.response.text if e.response is not None else ""
+                logger.error("Jira API 錯誤 (project=%s): %s | response: %s", project_key, e, body)
                 break
             except requests.RequestException as e:
                 logger.error("Jira 連線錯誤 (project=%s): %s", project_key, e)
