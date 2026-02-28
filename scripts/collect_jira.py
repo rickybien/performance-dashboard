@@ -140,11 +140,13 @@ def _parse_jira_datetime(dt_str: str) -> datetime:
     return dt
 
 
-def collect_jira(config: dict) -> list[IssueMetrics]:
+def collect_jira(config: dict, since_hours: Optional[int] = None) -> list[IssueMetrics]:
     """從 Jira 收集所有團隊、專案的 issue 效能指標。
 
     Args:
         config: 完整 config.yaml 內容
+        since_hours: 若指定，只收集最近 N 小時內有更新的 issue（增量模式）。
+                     None 表示全量模式，收集 lookback_days 天內建立的所有 issue。
 
     Returns:
         所有成功收集的 IssueMetrics 列表
@@ -183,12 +185,20 @@ def collect_jira(config: dict) -> list[IssueMetrics]:
         logger.info("收集 Jira 專案: %s", project_key)
         status_lookup = build_status_lookup(config, project_key)
 
-        jql = (
-            f"project = {project_key} "
-            f"AND {jql_filter} "
-            f"AND created >= -{lookback_days}d "
-            f"ORDER BY created DESC"
-        )
+        if since_hours is not None:
+            jql = (
+                f"project = {project_key} "
+                f"AND {jql_filter} "
+                f"AND updated >= -{since_hours}h "
+                f"ORDER BY updated DESC"
+            )
+        else:
+            jql = (
+                f"project = {project_key} "
+                f"AND {jql_filter} "
+                f"AND created >= -{lookback_days}d "
+                f"ORDER BY created DESC"
+            )
 
         next_page_token: str | None = None
         page_size = 100

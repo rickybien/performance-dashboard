@@ -186,6 +186,7 @@ collection:
   pr_issue_pattern: "([A-Z][A-Z0-9]+-\\d+)"
   api_delay_seconds: 0.5              # Delay between Jira search API calls (between pages/projects)
   jira_changelog_api_delay_seconds: 0.1  # Delay between per-issue changelog API calls
+  incremental_overlap_hours: 25       # 增量模式：只收集最近 N 小時有更新的 issue（25h > 24h 確保不漏）
   github_api_delay_seconds: 0.1       # Delay between GitHub API calls (5000 req/hr allows ~1.4/sec)
   max_concurrent_requests: 5
 

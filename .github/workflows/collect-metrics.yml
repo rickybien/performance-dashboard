@@ -4,7 +4,13 @@ on:
   schedule:
     # 每天 UTC 18:00（台灣時間 02:00）執行
     - cron: '0 18 * * *'
-  workflow_dispatch:  # 允許手動觸發
+  workflow_dispatch:
+    inputs:
+      force_full_refresh:
+        description: '強制完整重新收集（忽略 cache，重抓 lookback_days 天資料）'
+        required: false
+        default: 'false'
+        type: boolean
 
 permissions:
   contents: write  # 需要寫入 data/ 目錄
@@ -35,6 +41,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.METRICS_GITHUB_TOKEN }}
           JENKINS_USER: ${{ secrets.JENKINS_USER }}
           JENKINS_API_TOKEN: ${{ secrets.JENKINS_API_TOKEN }}
+          FORCE_FULL_REFRESH: ${{ github.event.inputs.force_full_refresh || 'false' }}
         run: uv run python scripts/main.py
 
       - name: Commit data files
