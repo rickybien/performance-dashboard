@@ -3,9 +3,14 @@
 讀取 config.yaml，執行資料收集與聚合，寫入 dashboard.json。
 不含業務邏輯，只負責協調各模組。
 
-增量模式：若 data/cache/issues.json 存在且 FORCE_FULL_REFRESH != true，
+增量模式：若 data/cache/issues.json 存在且未強制刷新，
 只收集最近 incremental_overlap_hours 小時內有更新的 issue，與 cache 合併後聚合。
-全量模式：cache 不存在或 FORCE_FULL_REFRESH=true 時，重新收集完整 lookback_days 天的資料。
+全量模式：cache 不存在或強制刷新時，重新收集完整 lookback_days 天的資料。
+
+環境變數控制：
+- FORCE_FULL_REFRESH=true → 全部資料來源都全量重抓
+- FORCE_JIRA_REFRESH=true → 僅 Jira cache 全量重抓
+- FORCE_PR_REFRESH=true → 僅 PR cache 全量重抓
 """
 
 import json
@@ -184,10 +189,12 @@ def main() -> None:
     lookback_days = collection_config.get("lookback_days", 180)
     overlap_hours = collection_config.get("incremental_overlap_hours", 25)
     force_full = os.environ.get("FORCE_FULL_REFRESH", "false").lower() == "true"
+    force_jira = force_full or os.environ.get("FORCE_JIRA_REFRESH", "false").lower() == "true"
+    force_pr = force_full or os.environ.get("FORCE_PR_REFRESH", "false").lower() == "true"
     now = datetime.now(timezone.utc)
 
     # ── Jira 資料收集（增量或全量）──────────────────────────────────────────
-    cache = {} if force_full else load_issues_cache()
+    cache = {} if force_jira else load_issues_cache()
 
     if cache:
         logger.info("增量模式：抓取最近 %d 小時內有更新的 issue", overlap_hours)
@@ -211,7 +218,7 @@ def main() -> None:
 
         logger.info("cache 合併後共 %d 筆 issue", len(cache))
     else:
-        mode = "強制全量" if force_full else "首次執行（無 cache）"
+        mode = "強制 Jira 全量" if force_jira else "首次執行（無 cache）"
         logger.info("%s：收集 %d 天內的 issue", mode, lookback_days)
         all_issues = collect_jira(config)
         logger.info("全量收集完成，共 %d 筆", len(all_issues))
@@ -222,7 +229,7 @@ def main() -> None:
     logger.info("Jira 資料準備完成，共 %d 筆", len(jira_data))
 
     # ── GitHub PR 資料收集（增量或全量）─────────────────────────────────────
-    pr_cache = {} if force_full else load_prs_cache()
+    pr_cache = {} if force_pr else load_prs_cache()
 
     if pr_cache:
         logger.info("PR 增量模式：抓取最近 %d 小時內有更新的 PR", overlap_hours)
@@ -246,7 +253,7 @@ def main() -> None:
 
         logger.info("PR cache 合併後共 %d 筆", len(pr_cache))
     else:
-        mode = "強制全量" if force_full else "首次執行（無 PR cache）"
+        mode = "強制 PR 全量" if force_pr else "首次執行（無 PR cache）"
         logger.info("%s：收集 %d 天內的 merged PR", mode, lookback_days)
         all_prs = collect_github_prs(config)
         logger.info("PR 全量收集完成，共 %d 筆", len(all_prs))

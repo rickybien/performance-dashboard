@@ -7,7 +7,17 @@ on:
   workflow_dispatch:
     inputs:
       force_full_refresh:
-        description: '強制完整重新收集（忽略 cache，重抓 lookback_days 天資料）'
+        description: '強制完整重新收集所有資料來源'
+        required: false
+        default: 'false'
+        type: boolean
+      force_jira_refresh:
+        description: '僅強制重新收集 Jira 資料（不影響 PR cache）'
+        required: false
+        default: 'false'
+        type: boolean
+      force_pr_refresh:
+        description: '僅強制重新收集 GitHub PR 資料（不影響 Jira cache）'
         required: false
         default: 'false'
         type: boolean
@@ -45,6 +55,8 @@ jobs:
           JENKINS_USER: ${{ secrets.JENKINS_USER }}
           JENKINS_API_TOKEN: ${{ secrets.JENKINS_API_TOKEN }}
           FORCE_FULL_REFRESH: ${{ github.event.inputs.force_full_refresh || 'false' }}
+          FORCE_JIRA_REFRESH: ${{ github.event.inputs.force_jira_refresh || 'false' }}
+          FORCE_PR_REFRESH: ${{ github.event.inputs.force_pr_refresh || 'false' }}
         run: uv run python scripts/main.py
 
       - name: Commit data files
