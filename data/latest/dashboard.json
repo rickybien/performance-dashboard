@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-01T06:02:24.494277+00:00",
+  "generated_at": "2026-03-01T11:39:44.418671+00:00",
   "period": {
     "start": "2025-09-02",
     "end": "2026-03-01"
@@ -43,11 +43,11 @@
     }
   },
   "summary": {
-    "total_completed_issues": 531,
-    "avg_cycle_time_days": 8.49,
+    "total_completed_issues": 1000,
+    "avg_cycle_time_days": 11.43,
     "avg_cycle_time_prev_period": null,
-    "total_prs_merged": 1410,
-    "avg_pr_pickup_hours": 0.5
+    "total_prs_merged": 2064,
+    "avg_pr_pickup_hours": 0.2
   },
   "teams": {
     "team-product": {
@@ -57,8 +57,8 @@
           "cycle_time": {
             "backlog": {
               "p50": 0.07,
-              "p85": 6.4,
-              "count": 160
+              "p85": 7.38,
+              "count": 157
             },
             "planning": {
               "p50": 0.0,
@@ -68,17 +68,17 @@
             "dev": {
               "p50": 0.01,
               "p85": 2.86,
-              "count": 146
+              "count": 143
             },
             "review": {
-              "p50": 3.82,
-              "p85": 13.03,
-              "count": 143
+              "p50": 3.79,
+              "p85": 11.96,
+              "count": 140
             },
             "dev_test": {
               "p50": 0.0,
-              "p85": 0.04,
-              "count": 115
+              "p85": 0.06,
+              "count": 114
             },
             "qa": {
               "p50": 0.0,
@@ -88,21 +88,21 @@
             "staging": {
               "p50": 0.2,
               "p85": 3.99,
-              "count": 132
+              "count": 131
             },
             "done": {
-              "p50": 68.66,
-              "p85": 135.63,
-              "count": 160
+              "p50": 0.26,
+              "p85": 47.51,
+              "count": 157
             },
             "total": {
-              "p50": 7.96,
-              "p85": 22.1,
-              "count": 146
+              "p50": 7.76,
+              "p85": 19.6,
+              "count": 143
             }
           },
           "throughput": {
-            "completed_issues": 33,
+            "completed_issues": 31,
             "story_points": null,
             "weekly_trend": [
               2,
@@ -118,8 +118,8 @@
         "cycle_time": {
           "backlog": {
             "p50": 0.07,
-            "p85": 6.4,
-            "count": 160
+            "p85": 7.38,
+            "count": 157
           },
           "planning": {
             "p50": 0.0,
@@ -129,17 +129,17 @@
           "dev": {
             "p50": 0.01,
             "p85": 2.86,
-            "count": 146
+            "count": 143
           },
           "review": {
-            "p50": 3.82,
-            "p85": 13.03,
-            "count": 143
+            "p50": 3.79,
+            "p85": 11.96,
+            "count": 140
           },
           "dev_test": {
             "p50": 0.0,
-            "p85": 0.04,
-            "count": 115
+            "p85": 0.06,
+            "count": 114
           },
           "qa": {
             "p50": 0.0,
@@ -149,21 +149,21 @@
           "staging": {
             "p50": 0.2,
             "p85": 3.99,
-            "count": 132
+            "count": 131
           },
           "done": {
-            "p50": 68.66,
-            "p85": 135.63,
-            "count": 160
+            "p50": 0.26,
+            "p85": 47.51,
+            "count": 157
           },
           "total": {
-            "p50": 7.96,
-            "p85": 22.1,
-            "count": 146
+            "p50": 7.76,
+            "p85": 19.6,
+            "count": 143
           }
         },
         "throughput": {
-          "completed_issues": 33,
+          "completed_issues": 31,
           "story_points": null,
           "weekly_trend": [
             2,
@@ -173,20 +173,103 @@
           ]
         },
         "pr_metrics": {
-          "total_prs_merged": 507,
+          "total_prs_merged": 506,
           "pickup_hours": {
             "p50": 0.4,
-            "p85": 71.8,
-            "count": 356
+            "p85": 71.9,
+            "count": 355
           },
           "merge_time_hours": {
-            "p50": 26.6,
-            "p85": 190.4,
-            "count": 507
+            "p50": 26.8,
+            "p85": 190.5,
+            "count": 506
           },
-          "large_pr_pct": 33.5
+          "large_pr_pct": 33.6
         },
-        "build_metrics": null
+        "build_metrics": null,
+        "bottleneck_phase": "review",
+        "bottleneck_issues": [
+          {
+            "key": "BE2PROD-5500",
+            "summary": "[be2-web] TOUR 下放",
+            "parent_key": "BE2PROD-5520",
+            "parent_summary": "[Prod]  地點 / 行程模組下放 Pkg 層級 （ 因應 tour prod page 特化）",
+            "phase_duration_days": 57.06,
+            "url": "https://kkday.atlassian.net/browse/BE2PROD-5500"
+          },
+          {
+            "key": "BE2PROD-5429",
+            "summary": "[be2-product] 調整 b2cbe 同步活動時的時間差錯誤訊息",
+            "parent_key": "BE2PROD-5138",
+            "parent_summary": "[be2-product] 新增商品行銷標籤管理頁面",
+            "phase_duration_days": 52.81,
+            "url": "https://kkday.atlassian.net/browse/BE2PROD-5429"
+          },
+          {
+            "key": "BE2PROD-5529",
+            "summary": "[product-api] 行程地點模組下放",
+            "parent_key": "BE2PROD-5520",
+            "parent_summary": "[Prod]  地點 / 行程模組下放 Pkg 層級 （ 因應 tour prod page 特化）",
+            "phase_duration_days": 42.2,
+            "url": "https://kkday.atlassian.net/browse/BE2PROD-5529"
+          },
+          {
+            "key": "BE2PROD-5423",
+            "summary": "[be2-product] 新增 Mixpanel Session Replay",
+            "parent_key": null,
+            "parent_summary": null,
+            "phase_duration_days": 40.8,
+            "url": "https://kkday.atlassian.net/browse/BE2PROD-5423"
+          },
+          {
+            "key": "BE2PROD-5487",
+            "summary": "[be2-product] 修正 mkt tag 顯示問題",
+            "parent_key": "BE2PROD-5138",
+            "parent_summary": "[be2-product] 新增商品行銷標籤管理頁面",
+            "phase_duration_days": 29.72,
+            "url": "https://kkday.atlassian.net/browse/BE2PROD-5487"
+          },
+          {
+            "key": "BE2PROD-5443",
+            "summary": "[product-api]增加儲存影片連結",
+            "parent_key": "PROD-20",
+            "parent_summary": "[Product] Hook GAI video for Category Lists & Search Result Lists",
+            "phase_duration_days": 27.26,
+            "url": "https://kkday.atlassian.net/browse/BE2PROD-5443"
+          },
+          {
+            "key": "BE2PROD-5404",
+            "summary": "[product-external-api] 位控 BY SKU 模式下多個 SKU 查詢時，只有最後一個 SKU 會往下查詢",
+            "parent_key": null,
+            "parent_summary": null,
+            "phase_duration_days": 23.96,
+            "url": "https://kkday.atlassian.net/browse/BE2PROD-5404"
+          },
+          {
+            "key": "BE2PROD-5454",
+            "summary": "[product-api] 組合商品後台api 移除 vertical 檢查",
+            "parent_key": null,
+            "parent_summary": null,
+            "phase_duration_days": 23.95,
+            "url": "https://kkday.atlassian.net/browse/BE2PROD-5454"
+          },
+          {
+            "key": "BE2PROD-5451",
+            "summary": "[product-api] 混合型月曆模式 定版檢查 Open date 不能設定延後出票 - 檢查方案層",
+            "parent_key": null,
+            "parent_summary": null,
+            "phase_duration_days": 23.81,
+            "url": "https://kkday.atlassian.net/browse/BE2PROD-5451"
+          },
+          {
+            "key": "BE2PROD-5647",
+            "summary": "[be2-web] 修正地點庫同步資料問題",
+            "parent_key": "BE2PROD-5500",
+            "parent_summary": "[be2-web] TOUR 下放",
+            "phase_duration_days": 22.08,
+            "url": "https://kkday.atlassian.net/browse/BE2PROD-5647"
+          }
+        ]
       }
     },
     "team-b2b": {
@@ -196,18 +279,18 @@
           "cycle_time": {
             "backlog": {
               "p50": 1.09,
-              "p85": 8.43,
-              "count": 371
+              "p85": 8.53,
+              "count": 370
             },
             "planning": {
               "p50": 0.0,
-              "p85": 2.04,
-              "count": 371
+              "p85": 2.05,
+              "count": 370
             },
             "dev": {
               "p50": 0.01,
-              "p85": 1.92,
-              "count": 371
+              "p85": 1.94,
+              "count": 370
             },
             "review": {
               "p50": 0.2,
@@ -230,14 +313,14 @@
               "count": 190
             },
             "done": {
-              "p50": 89.45,
-              "p85": 146.82,
-              "count": 371
+              "p50": 0.0,
+              "p85": 0.63,
+              "count": 12
             },
             "total": {
               "p50": 3.82,
-              "p85": 13.77,
-              "count": 371
+              "p85": 13.78,
+              "count": 370
             }
           },
           "throughput": {
@@ -257,18 +340,18 @@
         "cycle_time": {
           "backlog": {
             "p50": 1.09,
-            "p85": 8.43,
-            "count": 371
+            "p85": 8.53,
+            "count": 370
           },
           "planning": {
             "p50": 0.0,
-            "p85": 2.04,
-            "count": 371
+            "p85": 2.05,
+            "count": 370
           },
           "dev": {
             "p50": 0.01,
-            "p85": 1.92,
-            "count": 371
+            "p85": 1.94,
+            "count": 370
           },
           "review": {
             "p50": 0.2,
@@ -291,14 +374,14 @@
             "count": 190
           },
           "done": {
-            "p50": 89.45,
-            "p85": 146.82,
-            "count": 371
+            "p50": 0.0,
+            "p85": 0.63,
+            "count": 12
           },
           "total": {
             "p50": 3.82,
-            "p85": 13.77,
-            "count": 371
+            "p85": 13.78,
+            "count": 370
           }
         },
         "throughput": {
@@ -312,20 +395,103 @@
           ]
         },
         "pr_metrics": {
-          "total_prs_merged": 903,
+          "total_prs_merged": 901,
           "pickup_hours": {
             "p50": 0.6,
-            "p85": 18.5,
-            "count": 389
+            "p85": 18.6,
+            "count": 388
           },
           "merge_time_hours": {
             "p50": 1.7,
-            "p85": 40.1,
-            "count": 903
+            "p85": 37.5,
+            "count": 901
           },
-          "large_pr_pct": 32.8
+          "large_pr_pct": 32.7
         },
-        "build_metrics": null
+        "build_metrics": null,
+        "bottleneck_phase": "staging",
+        "bottleneck_issues": [
+          {
+            "key": "ROB-3723",
+            "summary": "JTR | 搬家 B2B | 開發 | B2B 串接 JTR",
+            "parent_key": "ROB-1415",
+            "parent_summary": "JTR",
+            "phase_duration_days": 14.05,
+            "url": "https://kkday.atlassian.net/browse/ROB-3723"
+          },
+          {
+            "key": "ROB-3770",
+            "summary": "Asoview｜首次串接｜供應商報報",
+            "parent_key": "ROB-3694",
+            "parent_summary": "Asoview｜首次串接",
+            "phase_duration_days": 14.0,
+            "url": "https://kkday.atlassian.net/browse/ROB-3770"
+          },
+          {
+            "key": "ROB-3829",
+            "summary": "Tabelog｜2025 12 更新",
+            "parent_key": "KBP-667",
+            "parent_summary": "Tabelog｜上線後更新",
+            "phase_duration_days": 12.01,
+            "url": "https://kkday.atlassian.net/browse/ROB-3829"
+          },
+          {
+            "key": "ROB-3893",
+            "summary": "KMAG｜修改｜redis 轉 valkey 調整相關設定檔",
+            "parent_key": "ROB-1339",
+            "parent_summary": "b2b-api 基礎建設",
+            "phase_duration_days": 11.91,
+            "url": "https://kkday.atlassian.net/browse/ROB-3893"
+          },
+          {
+            "key": "ROB-3775",
+            "summary": "PSP GUI v2｜調整｜畫面 Layer Setting 挖字",
+            "parent_key": "ROB-3450",
+            "parent_summary": "proj-PSP GUI [version 2]",
+            "phase_duration_days": 9.87,
+            "url": "https://kkday.atlassian.net/browse/ROB-3775"
+          },
+          {
+            "key": "ROB-3942",
+            "summary": "Merlin｜修正｜價格查詢空白區間應關閉月曆並跳過繼續執行",
+            "parent_key": "ROB-2187",
+            "parent_summary": "Merlin｜首次串接",
+            "phase_duration_days": 6.91,
+            "url": "https://kkday.atlassian.net/browse/ROB-3942"
+          },
+          {
+            "key": "ROB-3782",
+            "summary": "PSP GUI v2｜新增｜Layer 更改歷史紀錄",
+            "parent_key": "ROB-3450",
+            "parent_summary": "proj-PSP GUI [version 2]",
+            "phase_duration_days": 6.81,
+            "url": "https://kkday.atlassian.net/browse/ROB-3782"
+          },
+          {
+            "key": "ROB-3941",
+            "summary": "Merlin｜issue｜位控 instant=true 時，打了365天導致timeout",
+            "parent_key": "ROB-2187",
+            "parent_summary": "Merlin｜首次串接",
+            "phase_duration_days": 6.78,
+            "url": "https://kkday.atlassian.net/browse/ROB-3941"
+          },
+          {
+            "key": "ROB-3922",
+            "summary": "Ventrata｜修改｜庫存by月份查詢",
+            "parent_key": "ROB-343",
+            "parent_summary": "Ventrata｜首次串接",
+            "phase_duration_days": 6.78,
+            "url": "https://kkday.atlassian.net/browse/ROB-3922"
+          },
+          {
+            "key": "ROB-3949",
+            "summary": "Asoview｜旅規｜擴充特殊處理",
+            "parent_key": "ROB-3694",
+            "parent_summary": "Asoview｜首次串接",
+            "phase_duration_days": 6.77,
+            "url": "https://kkday.atlassian.net/browse/ROB-3949"
+          }
+        ]
       }
     },
     "team-scm": {
@@ -334,59 +500,59 @@
         "SCMWEB": {
           "cycle_time": {
             "backlog": {
-              "p50": 0.0,
-              "p85": 0.0,
-              "count": 0
+              "p50": 0.15,
+              "p85": 7.85,
+              "count": 473
             },
             "planning": {
               "p50": 0.0,
               "p85": 0.0,
-              "count": 0
+              "count": 4
             },
             "dev": {
-              "p50": 0.0,
-              "p85": 0.0,
-              "count": 0
+              "p50": 0.06,
+              "p85": 3.77,
+              "count": 473
             },
             "review": {
-              "p50": 0.0,
-              "p85": 0.0,
-              "count": 0
+              "p50": 0.02,
+              "p85": 5.55,
+              "count": 473
             },
             "dev_test": {
-              "p50": 0.0,
-              "p85": 0.0,
-              "count": 0
+              "p50": 0.01,
+              "p85": 4.02,
+              "count": 86
             },
             "qa": {
-              "p50": 0.0,
-              "p85": 0.0,
-              "count": 0
+              "p50": 0.17,
+              "p85": 6.06,
+              "count": 460
             },
             "staging": {
-              "p50": 0.0,
-              "p85": 0.0,
-              "count": 0
+              "p50": 4.19,
+              "p85": 20.78,
+              "count": 473
             },
             "done": {
-              "p50": 0.0,
-              "p85": 0.0,
-              "count": 0
+              "p50": 0.02,
+              "p85": 1.85,
+              "count": 15
             },
             "total": {
-              "p50": 0.0,
-              "p85": 0.0,
-              "count": 0
+              "p50": 8.43,
+              "p85": 33.77,
+              "count": 473
             }
           },
           "throughput": {
-            "completed_issues": 0,
+            "completed_issues": 64,
             "story_points": null,
             "weekly_trend": [
+              19,
+              6,
               0,
-              0,
-              0,
-              0
+              39
             ]
           },
           "pr_metrics": null
@@ -395,63 +561,159 @@
       "aggregated": {
         "cycle_time": {
           "backlog": {
-            "p50": 0.0,
-            "p85": 0.0,
-            "count": 0
+            "p50": 0.15,
+            "p85": 7.85,
+            "count": 473
           },
           "planning": {
             "p50": 0.0,
             "p85": 0.0,
-            "count": 0
+            "count": 4
           },
           "dev": {
-            "p50": 0.0,
-            "p85": 0.0,
-            "count": 0
+            "p50": 0.06,
+            "p85": 3.77,
+            "count": 473
           },
           "review": {
-            "p50": 0.0,
-            "p85": 0.0,
-            "count": 0
+            "p50": 0.02,
+            "p85": 5.55,
+            "count": 473
           },
           "dev_test": {
-            "p50": 0.0,
-            "p85": 0.0,
-            "count": 0
+            "p50": 0.01,
+            "p85": 4.02,
+            "count": 86
           },
           "qa": {
-            "p50": 0.0,
-            "p85": 0.0,
-            "count": 0
+            "p50": 0.17,
+            "p85": 6.06,
+            "count": 460
           },
           "staging": {
-            "p50": 0.0,
-            "p85": 0.0,
-            "count": 0
+            "p50": 4.19,
+            "p85": 20.78,
+            "count": 473
           },
           "done": {
-            "p50": 0.0,
-            "p85": 0.0,
-            "count": 0
+            "p50": 0.02,
+            "p85": 1.85,
+            "count": 15
           },
           "total": {
-            "p50": 0.0,
-            "p85": 0.0,
-            "count": 0
+            "p50": 8.43,
+            "p85": 33.77,
+            "count": 473
           }
         },
         "throughput": {
-          "completed_issues": 0,
+          "completed_issues": 64,
           "story_points": null,
           "weekly_trend": [
+            19,
+            6,
             0,
-            0,
-            0,
-            0
+            39
           ]
         },
-        "pr_metrics": null,
-        "build_metrics": null
+        "pr_metrics": {
+          "total_prs_merged": 657,
+          "pickup_hours": {
+            "p50": 0.1,
+            "p85": 1.5,
+            "count": 635
+          },
+          "merge_time_hours": {
+            "p50": 0.3,
+            "p85": 16.1,
+            "count": 657
+          },
+          "large_pr_pct": 20.2
+        },
+        "build_metrics": null,
+        "bottleneck_phase": "staging",
+        "bottleneck_issues": [
+          {
+            "key": "SCMWEB-2685",
+            "summary": "[FE] TOUR 類型的節點 2-3, 5-1 調整",
+            "parent_key": "SCMWEB-2711",
+            "parent_summary": "(02) TOUR 商品可依方案設定導覽語系",
+            "phase_duration_days": 42.68,
+            "url": "https://kkday.atlassian.net/browse/SCMWEB-2685"
+          },
+          {
+            "key": "SCMWEB-2669",
+            "summary": "[FE] 行程管理 - 調整 libs/prodSidemenu.js 檔案",
+            "parent_key": "SCMWEB-2721",
+            "parent_summary": "(01) 側邊欄依商品類型變化",
+            "phase_duration_days": 42.67,
+            "url": "https://kkday.atlassian.net/browse/SCMWEB-2669"
+          },
+          {
+            "key": "SCMWEB-2755",
+            "summary": "[BE] 方案特點修改跟取得",
+            "parent_key": "SCMWEB-2711",
+            "parent_summary": "(02) TOUR 商品可依方案設定導覽語系",
+            "phase_duration_days": 42.67,
+            "url": "https://kkday.atlassian.net/browse/SCMWEB-2755"
+          },
+          {
+            "key": "SCMWEB-2711",
+            "summary": "(02) TOUR 商品可依方案設定導覽語系",
+            "parent_key": "SCMWEB-2592",
+            "parent_summary": "[商品] Tour 特化下放方案",
+            "phase_duration_days": 42.67,
+            "url": "https://kkday.atlassian.net/browse/SCMWEB-2711"
+          },
+          {
+            "key": "SCMWEB-2686",
+            "summary": "[FE] 商品資訊 - 基本資訊頁面點擊「儲存」要重 call /steps api",
+            "parent_key": "SCMWEB-2721",
+            "parent_summary": "(01) 側邊欄依商品類型變化",
+            "phase_duration_days": 42.66,
+            "url": "https://kkday.atlassian.net/browse/SCMWEB-2686"
+          },
+          {
+            "key": "SCMWEB-2744",
+            "summary": "[BE] DB 調整",
+            "parent_key": "SCMWEB-2721",
+            "parent_summary": "(01) 側邊欄依商品類型變化",
+            "phase_duration_days": 42.66,
+            "url": "https://kkday.atlassian.net/browse/SCMWEB-2744"
+          },
+          {
+            "key": "SCMWEB-2756",
+            "summary": "[BE] 商品基本資料",
+            "parent_key": "SCMWEB-2721",
+            "parent_summary": "(01) 側邊欄依商品類型變化",
+            "phase_duration_days": 42.66,
+            "url": "https://kkday.atlassian.net/browse/SCMWEB-2756"
+          },
+          {
+            "key": "SCMWEB-2759",
+            "summary": "[BE] 使用者填寫節點",
+            "parent_key": "SCMWEB-2721",
+            "parent_summary": "(01) 側邊欄依商品類型變化",
+            "phase_duration_days": 42.66,
+            "url": "https://kkday.atlassian.net/browse/SCMWEB-2759"
+          },
+          {
+            "key": "SCMWEB-2721",
+            "summary": "(01) 側邊欄依商品類型變化",
+            "parent_key": "SCMWEB-2592",
+            "parent_summary": "[商品] Tour 特化下放方案",
+            "phase_duration_days": 42.66,
+            "url": "https://kkday.atlassian.net/browse/SCMWEB-2721"
+          },
+          {
+            "key": "SCMWEB-2787",
+            "summary": "[BE] 側邊欄依商品類型變化 串測",
+            "parent_key": "SCMWEB-2721",
+            "parent_summary": "(01) 側邊欄依商品類型變化",
+            "phase_duration_days": 42.66,
+            "url": "https://kkday.atlassian.net/browse/SCMWEB-2787"
+          }
+        ]
       }
     }
   },
@@ -506,18 +768,18 @@
         "2026-W09"
       ],
       "cycle_time_p50": [
+        0.77,
+        0.11,
         null,
-        null,
-        null,
-        null
+        33.54
       ],
       "throughput": [
+        19,
+        6,
         0,
-        0,
-        0,
-        0
+        39
       ],
-      "pr_pickup_hours": null
+      "pr_pickup_hours": 0.1
     }
   }
 }
