@@ -5262,58 +5262,6 @@
     "assignee": "楊棟友",
     "sprint_name": "Product Sprint 18"
   },
-  "BE2PROD-5386": {
-    "key": "BE2PROD-5386",
-    "project": "BE2PROD",
-    "issue_type": "Story",
-    "created": "2025-09-02T12:46:25.244000+08:00",
-    "resolved": null,
-    "phase_durations": {
-      "backlog": 1.8387716666666667,
-      "dev": 0.013250833333333335,
-      "review": 71.11737583333333,
-      "dev_test": 0.0009252777777777778,
-      "staging": 165.9478511111111,
-      "done": 4070.3328041833333
-    },
-    "current_status": "Done",
-    "assignee": "陳泰樺",
-    "sprint_name": "Product Sprint 18"
-  },
-  "BE2PROD-5385": {
-    "key": "BE2PROD-5385",
-    "project": "BE2PROD",
-    "issue_type": "Sub-task",
-    "created": "2025-09-02T11:14:38.219000+08:00",
-    "resolved": "2025-12-18T10:24:56.028000+08:00",
-    "phase_durations": {
-      "backlog": 75.7106625,
-      "dev": 312.37858277777775,
-      "review": 187.67731666666668,
-      "done": 3735.014146127778
-    },
-    "current_status": "Done",
-    "assignee": "陳泰樺",
-    "sprint_name": "Product Sprint 18"
-  },
-  "BE2PROD-5384": {
-    "key": "BE2PROD-5384",
-    "project": "BE2PROD",
-    "issue_type": "Story",
-    "created": "2025-09-02T10:15:53.085000+08:00",
-    "resolved": "2025-12-02T23:53:47.750000+08:00",
-    "phase_durations": {
-      "backlog": 198.21459305555555,
-      "dev": 217.31778972222222,
-      "review": 641.3100772222223,
-      "dev_test": 0.0006494444444444445,
-      "staging": 0.0009952777777777777,
-      "done": 3254.915807238889
-    },
-    "current_status": "Done",
-    "assignee": "徐鎧文",
-    "sprint_name": null
-  },
   "ROB-4108": {
     "key": "ROB-4108",
     "project": "ROB",
@@ -5366,7 +5314,7 @@
     "resolved": null,
     "phase_durations": {},
     "current_status": "New Request",
-    "assignee": null,
+    "assignee": "陳冠霖",
     "sprint_name": "B2B Sprint Mar 2, 2026"
   },
   "ROB-4101": {
@@ -5388,13 +5336,13 @@
     "resolved": null,
     "phase_durations": {
       "backlog": 0.016481944444444445,
-      "planning": 59.70925390555555,
+      "planning": 70.77925749583333,
       "dev": 0.000713611111111111,
       "qa": 46.73126861111111
     },
     "current_status": "PM/AM SURVEY",
     "assignee": "徐鵬凱",
-    "sprint_name": "B2B Sprint Feb 23, 2026"
+    "sprint_name": "B2B Sprint Mar 2, 2026"
   },
   "ROB-4099": {
     "key": "ROB-4099",
@@ -5405,11 +5353,11 @@
     "phase_durations": {
       "backlog": 19.690296944444444,
       "planning": 22.839601944444443,
-      "dev": 64.07427223888888
+      "dev": 75.14427582916666
     },
     "current_status": "In Development",
     "assignee": "曾廷州",
-    "sprint_name": "B2B Sprint Feb 23, 2026"
+    "sprint_name": "B2B Sprint Mar 2, 2026"
   },
   "ROB-4098": {
     "key": "ROB-4098",
@@ -5447,23 +5395,24 @@
     "phase_durations": {},
     "current_status": "New Request",
     "assignee": "褚煜瑜",
-    "sprint_name": "B2B Sprint Feb 23, 2026"
+    "sprint_name": "B2B Sprint Mar 2, 2026"
   },
   "ROB-4094": {
     "key": "ROB-4094",
     "project": "ROB",
     "issue_type": "Task",
     "created": "2026-02-23T11:51:05.611000+08:00",
-    "resolved": null,
+    "resolved": "2026-03-01T06:44:16.535000+08:00",
     "phase_durations": {
       "backlog": 4.5532144444444445,
       "planning": 0.004959444444444444,
       "dev": 1.6596133333333334,
       "qa": 22.761018333333332,
       "review": 41.372209722222216,
-      "staging": 63.82208390555556
+      "staging": 68.53535972222222,
+      "done": 6.356727773611111
     },
-    "current_status": "Wait For Release",
+    "current_status": "Done",
     "assignee": "陳冠甫",
     "sprint_name": "B2B Sprint Feb 23, 2026"
   },
@@ -5477,12 +5426,12 @@
       "backlog": 260.91820972222223,
       "planning": 2.6319625,
       "dev": 4.562185833333333,
-      "qa": 102.65211835,
+      "qa": 113.72212194027777,
       "review": 3.145277777777778
     },
     "current_status": "FEATURE TESTING",
     "assignee": "陳冠霖",
-    "sprint_name": "B2B Sprint Feb 23, 2026"
+    "sprint_name": "B2B Sprint Mar 2, 2026"
   },
   "ROB-4092": {
     "key": "ROB-4092",
@@ -5496,11 +5445,11 @@
       "dev": 2.2278308333333334,
       "qa": 26.716361944444444,
       "review": 36.84890027777777,
-      "staging": 63.82243196111111
+      "staging": 74.89243555138889
     },
     "current_status": "Wait For Release",
     "assignee": "陳冠甫",
-    "sprint_name": "B2B Sprint Feb 23, 2026"
+    "sprint_name": "B2B Sprint Mar 2, 2026"
   },
   "ROB-4091": {
     "key": "ROB-4091",
@@ -5510,13 +5459,13 @@
     "resolved": null,
     "phase_durations": {
       "backlog": 333.0812602777778,
-      "planning": 81.17948473888889,
+      "planning": 92.24948832916667,
       "dev": 0.0009588888888888889,
       "qa": 0.0004711111111111111
     },
     "current_status": "PM/AM SURVEY",
     "assignee": "徐鵬凱",
-    "sprint_name": "B2B Sprint Feb 23, 2026"
+    "sprint_name": "B2B Sprint Mar 2, 2026"
   },
   "ROB-4089": {
     "key": "ROB-4089",
@@ -5596,7 +5545,7 @@
       "dev": 24.062818888888888,
       "qa": 6.064525555555555,
       "review": 0.0025575000000000003,
-      "staging": 56.473865294444444
+      "staging": 67.54386888472222
     },
     "current_status": "Wait For Release",
     "assignee": "陳冠霖",
@@ -5610,7 +5559,7 @@
     "resolved": null,
     "phase_durations": {
       "backlog": 72.13625944444445,
-      "planning": 422.88746418333335,
+      "planning": 433.95746777361114,
       "dev": 1.153121388888889,
       "qa": 46.18090333333333
     },
@@ -5626,7 +5575,7 @@
     "resolved": null,
     "phase_durations": {
       "backlog": 126.3563838888889,
-      "planning": 416.48553279444445
+      "planning": 427.55553638472225
     },
     "current_status": "Analysis",
     "assignee": "陳冠甫",
@@ -5717,7 +5666,7 @@
       "backlog": 49.35672861111111,
       "planning": 22.58426111111111,
       "dev": 7.363138888888889,
-      "qa": 560.9037233500001,
+      "qa": 571.9737269402777,
       "review": 0.002266666666666667
     },
     "current_status": "PM/QA REVIEW",
@@ -5729,16 +5678,17 @@
     "project": "ROB",
     "issue_type": "Story",
     "created": "2026-01-30T17:54:09.589000+08:00",
-    "resolved": null,
+    "resolved": "2026-03-01T06:45:08.141000+08:00",
     "phase_durations": {
       "backlog": 93.80561055555556,
       "planning": 0.16952583333333335,
       "dev": 25.017260000000004,
       "qa": 20.918844166666666,
       "review": 476.9038925,
-      "staging": 87.30686112777778
+      "staging": 92.03446694444445,
+      "done": 6.342397773611111
     },
-    "current_status": "Wait For Release",
+    "current_status": "Done",
     "assignee": "陳冠霖",
     "sprint_name": "B2B Sprint Feb 9, 2026"
   },
@@ -6012,16 +5962,17 @@
     "project": "ROB",
     "issue_type": "Task",
     "created": "2026-01-26T09:20:56.178000+08:00",
-    "resolved": null,
+    "resolved": "2026-03-01T06:44:53.289000+08:00",
     "phase_durations": {
       "backlog": 173.48152472222222,
       "planning": 1.529646111111111,
       "dev": 27.436553333333336,
       "qa": 2.0189055555555555,
       "review": 543.9298377777778,
-      "staging": 60.27925196111111
+      "staging": 65.00273694444445,
+      "done": 6.346518606944445
     },
-    "current_status": "Wait For Release",
+    "current_status": "Done",
     "assignee": "陳冠霖",
     "sprint_name": "B2B Sprint Feb 9, 2026"
   },
@@ -6103,7 +6054,7 @@
     "created": "2026-01-22T16:52:12.376000+08:00",
     "resolved": null,
     "phase_durations": {
-      "backlog": 495.10505251666666,
+      "backlog": 506.17505610694445,
       "planning": 114.01108194444444,
       "dev": 27.305768333333333,
       "qa": 260.7287347222222,
@@ -6409,16 +6360,17 @@
     "project": "ROB",
     "issue_type": "Story",
     "created": "2026-01-19T14:25:09.711000+08:00",
-    "resolved": null,
+    "resolved": "2026-03-01T06:44:39.623000+08:00",
     "phase_durations": {
       "backlog": 188.54232777777776,
       "planning": 43.89877361111111,
       "dev": 10.343012777777778,
       "qa": 121.1903663888889,
       "review": 547.3523344444445,
-      "staging": 60.27847862777778
+      "staging": 64.9981675,
+      "done": 6.3503147180555555
     },
-    "current_status": "Wait For Release",
+    "current_status": "Done",
     "assignee": "陳冠霖",
     "sprint_name": "B2B Sprint Feb 9, 2026"
   },
@@ -6977,7 +6929,7 @@
       "dev": 30.36742888888889,
       "qa": 141.7533486111111,
       "review": 120.06485944444445,
-      "staging": 422.87400946111114
+      "staging": 433.9440130513889
     },
     "current_status": "Wait For Release",
     "assignee": "曾廷州",
@@ -7194,7 +7146,7 @@
       "dev": 76.15615388888888,
       "qa": 47.959915277777775,
       "review": 120.06272777777778,
-      "staging": 422.87732640555555
+      "staging": 433.9473299958333
     },
     "current_status": "Wait For Release",
     "assignee": "曾廷州",
@@ -8586,7 +8538,7 @@
     "phase_durations": {
       "backlog": 1126.9502330555554,
       "planning": 280.0553938888889,
-      "dev": 737.0841105722222
+      "dev": 748.1541141625
     },
     "current_status": "In Development",
     "assignee": "陳冠甫",
@@ -8647,7 +8599,7 @@
     "created": "2025-12-01T15:43:04.755000+08:00",
     "resolved": null,
     "phase_durations": {
-      "backlog": 2146.304962238889,
+      "backlog": 2157.3749658291667,
       "planning": 0.0017080555555555555
     },
     "current_status": "Pending",
@@ -8719,7 +8671,7 @@
     "resolved": null,
     "phase_durations": {
       "backlog": 188.31831555555559,
-      "planning": 878.8694772388887,
+      "planning": 889.9394808291667,
       "dev": 576.5921519444445,
       "qa": 480.4830547222222,
       "review": 23.412484166666665
@@ -13304,44 +13256,6 @@
     },
     "current_status": "Done",
     "assignee": "徐鵬凱",
-    "sprint_name": "B2B Sprint Sep 1, 2025"
-  },
-  "ROB-3508": {
-    "key": "ROB-3508",
-    "project": "ROB",
-    "issue_type": "Story",
-    "created": "2025-09-02T12:24:43.924000+08:00",
-    "resolved": "2025-09-05T15:36:44.697000+08:00",
-    "phase_durations": {
-      "backlog": 3.433922222222222,
-      "planning": 112.72429361111111,
-      "dev": 48.523019444444444,
-      "qa": 0.8376875,
-      "done": 3996.0131336277777,
-      "review": 23.268395555555557,
-      "staging": 124.81200472222223
-    },
-    "current_status": "Done",
-    "assignee": "陳冠霖",
-    "sprint_name": "B2B Sprint Sep 8, 2025"
-  },
-  "ROB-3507": {
-    "key": "ROB-3507",
-    "project": "ROB",
-    "issue_type": "Task",
-    "created": "2025-09-02T11:08:56.793000+08:00",
-    "resolved": "2025-09-05T11:10:20.538000+08:00",
-    "phase_durations": {
-      "backlog": 6.2589122222222215,
-      "planning": 0.001728888888888889,
-      "dev": 0.0008058333333333333,
-      "qa": 0.0006377777777777777,
-      "review": 17.753293333333332,
-      "staging": 48.007889444444444,
-      "done": 4238.852281127778
-    },
-    "current_status": "Done",
-    "assignee": "褚煜瑜",
     "sprint_name": "B2B Sprint Sep 1, 2025"
   }
 }
