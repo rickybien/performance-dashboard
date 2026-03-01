@@ -214,6 +214,87 @@ def _get_week_labels(now: datetime, num_weeks: int = 4) -> list[str]:
 # ============================================================
 
 
+def _build_jira_pr_index(prs: list) -> dict[str, list]:
+    """建立 Jira issue key → [merged PRMetrics] 反向索引。
+
+    Args:
+        prs: PRMetrics 列表
+
+    Returns:
+        {jira_key(大寫): [PRMetrics]}，只包含 merged PR
+    """
+    index: dict[str, list] = {}
+    for pr in prs:
+        if pr.merged_at is None:
+            continue
+        for key in pr.jira_keys:
+            normalized = key.upper()
+            index.setdefault(normalized, []).append(pr)
+    return index
+
+
+def _compute_pr_dev_hours(prs: list) -> float:
+    """從一組 merged PR 計算開發時間（小時）。
+
+    邏輯：取最早 PR 建立時間到最早 review 時間的差。
+    若無 review，fallback 到最早 merge 時間。
+
+    Args:
+        prs: 關聯到同一 issue 的 merged PRMetrics 列表
+
+    Returns:
+        開發時間（小時），最小為 0.0
+    """
+    if not prs:
+        return 0.0
+
+    earliest_start = min(pr.created_at for pr in prs)
+
+    reviews = [pr.first_review_at for pr in prs if pr.first_review_at is not None]
+    if reviews:
+        endpoint = min(reviews)
+    else:
+        endpoint = min(pr.merged_at for pr in prs)  # type: ignore[arg-type]
+
+    hours = (endpoint - earliest_start).total_seconds() / 3600
+    return max(hours, 0.0)
+
+
+def _enhance_dev_durations_with_prs(
+    issues: list[IssueMetrics],
+    pr_index: dict[str, list],
+) -> int:
+    """用 PR 數據補充 issue 的 development phase 時間（原地修改）。
+
+    對每個 resolved issue，取 max(jira_dev, pr_dev) 作為有效 dev 時間。
+
+    Args:
+        issues: IssueMetrics 列表（resolved issues 會被原地修改）
+        pr_index: 由 _build_jira_pr_index 建立的反向索引
+
+    Returns:
+        被補充的 issue 數量
+    """
+    enhanced_count = 0
+    for issue in issues:
+        if issue.resolved is None:
+            continue
+        related_prs = pr_index.get(issue.key.upper(), [])
+        if not related_prs:
+            continue
+
+        pr_dev = _compute_pr_dev_hours(related_prs)
+        if pr_dev <= 0:
+            continue
+
+        jira_dev = issue.phase_durations.get("dev", 0.0)
+        if pr_dev > jira_dev:
+            issue.phase_durations["dev"] = pr_dev
+            enhanced_count += 1
+
+    return enhanced_count
+
+
 def _compute_hour_stats(values: list[float]) -> dict:
     """計算百分位統計，保留小時單位（不轉換為天）。
 
@@ -531,6 +612,13 @@ def aggregate(
     # 分組 GitHub PRs 和 Jenkins builds（若有）
     prs_by_team = _group_prs_by_team(config, github_data or [])
     builds_by_team = _group_builds_by_team(config, jenkins_data or [])
+
+    # 用 PR 數據補充 dev phase 時間（取 max(jira_dev, pr_dev)）
+    pr_index = _build_jira_pr_index(github_data or [])
+    if pr_index:
+        enhanced = _enhance_dev_durations_with_prs(jira_data, pr_index)
+        if enhanced:
+            logger.info("已用 PR 數據補充 %d 筆 issue 的 dev phase 時間", enhanced)
 
     # 全域 PR 摘要
     all_prs = github_data or []

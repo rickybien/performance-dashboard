@@ -12,8 +12,11 @@ import pytest
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from aggregate import (
+    _build_jira_pr_index,
     _build_sa_sd_matcher,
+    _compute_pr_dev_hours,
     _compute_sa_sd_planning_hours,
+    _enhance_dev_durations_with_prs,
     _find_bottleneck_issues,
     _is_sa_sd_issue,
     _merge_sa_sd_into_planning,
@@ -23,6 +26,7 @@ from aggregate import (
     compute_weekly_trend,
     group_by_team_project,
 )
+from collect_github import PRMetrics
 from collect_jira import IssueMetrics
 
 
@@ -708,3 +712,220 @@ def test_sa_sd_unresolved_included():
     # planning count 應為 1（活躍時間應被計入）
     planning = project_data["cycle_time"]["planning"]
     assert planning["count"] == 1
+
+
+# ============================================================
+# PR dev 補充輔助函式
+# ============================================================
+
+PR_BASE = datetime(2026, 2, 1, tzinfo=timezone.utc)
+
+
+def make_pr(
+    repo: str = "repo-a",
+    jira_keys: list[str] | None = None,
+    created_offset_h: float = 0,
+    first_review_offset_h: float | None = None,
+    merged_offset_h: float = 20,
+    lines: int = 100,
+    pr_number: int = 1,
+) -> PRMetrics:
+    """建立合成 PRMetrics。時間以 PR_BASE 為基準加上偏移小時數。"""
+    created = PR_BASE + timedelta(hours=created_offset_h)
+    first_review = (
+        PR_BASE + timedelta(hours=first_review_offset_h)
+        if first_review_offset_h is not None
+        else None
+    )
+    merged = PR_BASE + timedelta(hours=merged_offset_h)
+    return PRMetrics(
+        repo=repo,
+        pr_number=pr_number,
+        title="test PR",
+        jira_keys=jira_keys or [],
+        created_at=created,
+        first_review_at=first_review,
+        merged_at=merged,
+        lines_added=lines // 2,
+        lines_deleted=lines // 2,
+        is_large=lines > 400,
+    )
+
+
+# _build_jira_pr_index
+
+
+def test_build_jira_pr_index_basic():
+    """反向索引應正確建立，key 正規化為大寫。"""
+    pr = make_pr(jira_keys=["proj-a-1", "PROJ-B-2"])
+    index = _build_jira_pr_index([pr])
+
+    assert "PROJ-A-1" in index
+    assert "PROJ-B-2" in index
+    assert index["PROJ-A-1"] == [pr]
+
+
+def test_build_jira_pr_index_multiple_prs_same_issue():
+    """同一 issue 關聯多個 PR 時，index 應包含所有 PR。"""
+    pr1 = make_pr(jira_keys=["PROJ-A-1"], pr_number=1)
+    pr2 = make_pr(jira_keys=["PROJ-A-1"], pr_number=2)
+    index = _build_jira_pr_index([pr1, pr2])
+
+    assert len(index["PROJ-A-1"]) == 2
+
+
+def test_build_jira_pr_index_excludes_unmerged():
+    """未 merge 的 PR 不應進入 index。"""
+    merged_pr = make_pr(jira_keys=["PROJ-A-1"], merged_offset_h=10)
+    unmerged_pr = PRMetrics(
+        repo="repo-a",
+        pr_number=2,
+        title="unmerged",
+        jira_keys=["PROJ-A-1"],
+        created_at=PR_BASE,
+        first_review_at=None,
+        merged_at=None,
+        lines_added=10,
+        lines_deleted=0,
+        is_large=False,
+    )
+    index = _build_jira_pr_index([merged_pr, unmerged_pr])
+
+    assert len(index["PROJ-A-1"]) == 1
+    assert index["PROJ-A-1"][0] is merged_pr
+
+
+def test_build_jira_pr_index_empty():
+    """空列表應回傳空 dict。"""
+    assert _build_jira_pr_index([]) == {}
+
+
+# _compute_pr_dev_hours
+
+
+def test_compute_pr_dev_hours_with_review():
+    """有 review 時，dev hours = created → first_review。"""
+    pr = make_pr(created_offset_h=0, first_review_offset_h=8, merged_offset_h=20)
+    assert _compute_pr_dev_hours([pr]) == 8.0
+
+
+def test_compute_pr_dev_hours_without_review():
+    """無 review 時，fallback 到 created → merged。"""
+    pr = make_pr(created_offset_h=0, first_review_offset_h=None, merged_offset_h=20)
+    assert _compute_pr_dev_hours([pr]) == 20.0
+
+
+def test_compute_pr_dev_hours_multiple_prs():
+    """多 PR 取 min(created_at) 和 min(first_review_at)。"""
+    pr1 = make_pr(created_offset_h=0, first_review_offset_h=8, merged_offset_h=20, pr_number=1)
+    pr2 = make_pr(created_offset_h=2, first_review_offset_h=6, merged_offset_h=24, pr_number=2)
+    # earliest_start = +0h, earliest_review = +6h → 6h
+    assert _compute_pr_dev_hours([pr1, pr2]) == 6.0
+
+
+def test_compute_pr_dev_hours_empty():
+    """空列表應回傳 0.0。"""
+    assert _compute_pr_dev_hours([]) == 0.0
+
+
+# _enhance_dev_durations_with_prs
+
+
+def test_enhance_dev_jira_too_short():
+    """Jira dev 過短時，應被 PR dev 取代。"""
+    resolved = BASE_TIME + timedelta(days=5)
+    issue = make_issue("PROJ-A-1", resolved=resolved, phase_durations={"dev": 0.25})
+    pr = make_pr(jira_keys=["PROJ-A-1"], created_offset_h=0, first_review_offset_h=48, merged_offset_h=60)
+
+    count = _enhance_dev_durations_with_prs([issue], _build_jira_pr_index([pr]))
+
+    assert issue.phase_durations["dev"] == 48.0
+    assert count == 1
+
+
+def test_enhance_dev_jira_already_correct():
+    """Jira dev 比 PR dev 更長時，保留 Jira 值。"""
+    resolved = BASE_TIME + timedelta(days=5)
+    issue = make_issue("PROJ-A-1", resolved=resolved, phase_durations={"dev": 72.0})
+    pr = make_pr(jira_keys=["PROJ-A-1"], created_offset_h=0, first_review_offset_h=48, merged_offset_h=60)
+
+    count = _enhance_dev_durations_with_prs([issue], _build_jira_pr_index([pr]))
+
+    assert issue.phase_durations["dev"] == 72.0
+    assert count == 0
+
+
+def test_enhance_dev_no_matching_pr():
+    """無對應 PR 時，不修改 issue。"""
+    resolved = BASE_TIME + timedelta(days=5)
+    issue = make_issue("PROJ-A-1", resolved=resolved, phase_durations={"dev": 0.1})
+    pr = make_pr(jira_keys=["PROJ-B-99"])  # 不同 key
+
+    count = _enhance_dev_durations_with_prs([issue], _build_jira_pr_index([pr]))
+
+    assert issue.phase_durations["dev"] == 0.1
+    assert count == 0
+
+
+def test_enhance_dev_unresolved_skipped():
+    """未 resolved 的 issue 應跳過，不修改。"""
+    issue = make_issue("PROJ-A-1", resolved=None, phase_durations={"dev": 0.1})
+    pr = make_pr(jira_keys=["PROJ-A-1"], created_offset_h=0, first_review_offset_h=48, merged_offset_h=60)
+
+    count = _enhance_dev_durations_with_prs([issue], _build_jira_pr_index([pr]))
+
+    assert issue.phase_durations["dev"] == 0.1
+    assert count == 0
+
+
+# 整合測試
+
+
+def test_aggregate_dev_enhanced_by_pr():
+    """aggregate() 應用 PR 數據補充 dev phase，cycle_time.dev.p50 反映補充後的值。"""
+    resolved = NOW - timedelta(days=1)
+    # Jira 只記了 0.25h（秒切）
+    issue = make_issue(
+        "PROJ-A-1",
+        project="PROJ-A",
+        resolved=resolved,
+        phase_durations={"dev": 0.25},
+    )
+    # PR 顯示實際花了 48h
+    pr = make_pr(
+        repo="repo-a",
+        jira_keys=["PROJ-A-1"],
+        created_offset_h=0,
+        first_review_offset_h=48,
+        merged_offset_h=60,
+    )
+    config = {
+        **SAMPLE_CONFIG,
+        "teams": [
+            {
+                "id": "team-alpha",
+                "name": "Team Alpha",
+                "jira_projects": ["PROJ-A"],
+                "github_repos": ["repo-a"],
+            }
+        ],
+    }
+
+    result = aggregate(config, [issue], github_data=[pr])
+    dev_stat = result["teams"]["team-alpha"]["projects"]["PROJ-A"]["cycle_time"]["dev"]
+
+    # p50 應反映 PR 的 48h（= 2.0 天）
+    assert dev_stat["count"] == 1
+    assert dev_stat["p50"] == 2.0
+
+
+def test_aggregate_no_github_data_backward_compat():
+    """github_data=None 時行為應與舊版完全一致，dev phase 保留 Jira 原值。"""
+    resolved = NOW - timedelta(days=1)
+    issue = make_issue("PROJ-A-1", project="PROJ-A", resolved=resolved, phase_durations={"dev": 48.0})
+
+    result = aggregate(SAMPLE_CONFIG, [issue], github_data=None)
+    dev_stat = result["teams"]["team-alpha"]["projects"]["PROJ-A"]["cycle_time"]["dev"]
+
+    assert dev_stat["count"] == 1
+    assert dev_stat["p50"] == 2.0
