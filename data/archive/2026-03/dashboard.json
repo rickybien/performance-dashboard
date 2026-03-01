@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-01T11:39:44.418671+00:00",
+  "generated_at": "2026-03-01T12:52:12.481529+00:00",
   "period": {
     "start": "2025-09-02",
     "end": "2026-03-01"
@@ -200,8 +200,8 @@
           {
             "key": "BE2PROD-5429",
             "summary": "[be2-product] 調整 b2cbe 同步活動時的時間差錯誤訊息",
-            "parent_key": "BE2PROD-5138",
-            "parent_summary": "[be2-product] 新增商品行銷標籤管理頁面",
+            "parent_key": null,
+            "parent_summary": null,
             "phase_duration_days": 52.81,
             "url": "https://kkday.atlassian.net/browse/BE2PROD-5429"
           },
@@ -224,8 +224,8 @@
           {
             "key": "BE2PROD-5487",
             "summary": "[be2-product] 修正 mkt tag 顯示問題",
-            "parent_key": "BE2PROD-5138",
-            "parent_summary": "[be2-product] 新增商品行銷標籤管理頁面",
+            "parent_key": null,
+            "parent_summary": null,
             "phase_duration_days": 29.72,
             "url": "https://kkday.atlassian.net/browse/BE2PROD-5487"
           },
@@ -264,8 +264,8 @@
           {
             "key": "BE2PROD-5647",
             "summary": "[be2-web] 修正地點庫同步資料問題",
-            "parent_key": "BE2PROD-5500",
-            "parent_summary": "[be2-web] TOUR 下放",
+            "parent_key": null,
+            "parent_summary": null,
             "phase_duration_days": 22.08,
             "url": "https://kkday.atlassian.net/browse/BE2PROD-5647"
           }
@@ -636,24 +636,24 @@
           {
             "key": "SCMWEB-2685",
             "summary": "[FE] TOUR 類型的節點 2-3, 5-1 調整",
-            "parent_key": "SCMWEB-2711",
-            "parent_summary": "(02) TOUR 商品可依方案設定導覽語系",
+            "parent_key": null,
+            "parent_summary": null,
             "phase_duration_days": 42.68,
             "url": "https://kkday.atlassian.net/browse/SCMWEB-2685"
           },
           {
             "key": "SCMWEB-2669",
             "summary": "[FE] 行程管理 - 調整 libs/prodSidemenu.js 檔案",
-            "parent_key": "SCMWEB-2721",
-            "parent_summary": "(01) 側邊欄依商品類型變化",
+            "parent_key": null,
+            "parent_summary": null,
             "phase_duration_days": 42.67,
             "url": "https://kkday.atlassian.net/browse/SCMWEB-2669"
           },
           {
             "key": "SCMWEB-2755",
             "summary": "[BE] 方案特點修改跟取得",
-            "parent_key": "SCMWEB-2711",
-            "parent_summary": "(02) TOUR 商品可依方案設定導覽語系",
+            "parent_key": null,
+            "parent_summary": null,
             "phase_duration_days": 42.67,
             "url": "https://kkday.atlassian.net/browse/SCMWEB-2755"
           },
@@ -668,32 +668,32 @@
           {
             "key": "SCMWEB-2686",
             "summary": "[FE] 商品資訊 - 基本資訊頁面點擊「儲存」要重 call /steps api",
-            "parent_key": "SCMWEB-2721",
-            "parent_summary": "(01) 側邊欄依商品類型變化",
+            "parent_key": null,
+            "parent_summary": null,
             "phase_duration_days": 42.66,
             "url": "https://kkday.atlassian.net/browse/SCMWEB-2686"
           },
           {
             "key": "SCMWEB-2744",
             "summary": "[BE] DB 調整",
-            "parent_key": "SCMWEB-2721",
-            "parent_summary": "(01) 側邊欄依商品類型變化",
+            "parent_key": null,
+            "parent_summary": null,
             "phase_duration_days": 42.66,
             "url": "https://kkday.atlassian.net/browse/SCMWEB-2744"
           },
           {
             "key": "SCMWEB-2756",
             "summary": "[BE] 商品基本資料",
-            "parent_key": "SCMWEB-2721",
-            "parent_summary": "(01) 側邊欄依商品類型變化",
+            "parent_key": null,
+            "parent_summary": null,
             "phase_duration_days": 42.66,
             "url": "https://kkday.atlassian.net/browse/SCMWEB-2756"
           },
           {
             "key": "SCMWEB-2759",
             "summary": "[BE] 使用者填寫節點",
-            "parent_key": "SCMWEB-2721",
-            "parent_summary": "(01) 側邊欄依商品類型變化",
+            "parent_key": null,
+            "parent_summary": null,
             "phase_duration_days": 42.66,
             "url": "https://kkday.atlassian.net/browse/SCMWEB-2759"
           },
@@ -708,8 +708,8 @@
           {
             "key": "SCMWEB-2787",
             "summary": "[BE] 側邊欄依商品類型變化 串測",
-            "parent_key": "SCMWEB-2721",
-            "parent_summary": "(01) 側邊欄依商品類型變化",
+            "parent_key": null,
+            "parent_summary": null,
             "phase_duration_days": 42.66,
             "url": "https://kkday.atlassian.net/browse/SCMWEB-2787"
           }
