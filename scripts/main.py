@@ -25,7 +25,13 @@ import yaml
 from aggregate import aggregate
 from collect_github import PRMetrics, collect_github_prs
 from collect_jenkins import collect_jenkins_builds
-from collect_jira import IssueMetrics, collect_jira
+from collect_jira import (
+    IssueMetrics,
+    build_status_lookup,
+    collect_jira,
+    compute_phase_durations,
+    parse_jira_datetime,
+)
 
 logging.basicConfig(
     level=logging.INFO,
@@ -87,6 +93,7 @@ def _serialize_issue(issue: IssueMetrics) -> dict:
         "summary": issue.summary,
         "parent_key": issue.parent_key,
         "parent_summary": issue.parent_summary,
+        "status_transitions": issue.status_transitions,
     }
 
 
@@ -105,6 +112,7 @@ def _deserialize_issue(d: dict) -> IssueMetrics:
         summary=d.get("summary", ""),
         parent_key=d.get("parent_key"),
         parent_summary=d.get("parent_summary"),
+        status_transitions=d.get("status_transitions", []),
     )
 
 
@@ -223,6 +231,49 @@ def main() -> None:
         all_issues = collect_jira(config)
         logger.info("全量收集完成，共 %d 筆", len(all_issues))
         cache = {issue.key: _serialize_issue(issue) for issue in all_issues}
+
+    # ── 用最新 status mapping 重算 phase_durations ──────────────────────────
+    remapped = 0
+    unmapped_report: dict[str, set[str]] = {}  # status → set of project keys
+
+    for data in cache.values():
+        transitions = data.get("status_transitions", [])
+        if not transitions:
+            continue
+        project = data["project"]
+        lookup = build_status_lookup(config, project)
+        status_changes = [
+            (parse_jira_datetime(t["timestamp"]), t["from_status"], t["to_status"])
+            for t in transitions
+        ]
+        created = datetime.fromisoformat(data["created"])
+        resolved = datetime.fromisoformat(data["resolved"]) if data["resolved"] else None
+        local_unmapped: set[str] = set()
+        data["phase_durations"] = compute_phase_durations(
+            status_changes, lookup, created, resolved or now,
+            unmapped_collector=local_unmapped,
+        )
+        for status in local_unmapped:
+            unmapped_report.setdefault(status, set()).add(project)
+        remapped += 1
+
+    if remapped:
+        logger.info("已用最新 status mapping 重算 %d 筆 issue 的 phase_durations", remapped)
+
+    old_format = len(cache) - remapped
+    if old_format > 0:
+        logger.warning(
+            "%d 筆 cache issue 無 status_transitions（舊格式），建議執行 FORCE_JIRA_REFRESH=true 補齊",
+            old_format,
+        )
+
+    if unmapped_report:
+        lines = ["以下 Jira 狀態未對應到任何 phase（計入 unmapped）："]
+        for status, projects in sorted(unmapped_report.items()):
+            proj_str = "、".join(sorted(projects))
+            lines.append(f"  - '{status}'（出現在 {proj_str}）")
+        lines.append("請更新 config.yaml 的 status_mapping，下次 run 將自動重算。")
+        logger.warning("\n".join(lines))
 
     save_issues_cache(cache)
     jira_data = [_deserialize_issue(v) for v in cache.values()]

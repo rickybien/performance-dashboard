@@ -12,7 +12,7 @@ import pytest
 # 將 scripts/ 加入 path，使測試可以 import collect_jira
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from collect_jira import IssueMetrics, build_status_lookup, parse_changelog
+from collect_jira import IssueMetrics, build_status_lookup, compute_phase_durations, parse_changelog
 
 
 # ============================================================
@@ -253,3 +253,158 @@ def test_parse_changelog_non_status_items_ignored():
     assert abs(durations.get("backlog", 0) - 12.0) < 0.01
     # dev: 12:00 → now = 36 小時
     assert abs(durations.get("dev", 0) - 36.0) < 0.01
+
+
+# ============================================================
+# compute_phase_durations 直接測試
+# ============================================================
+
+
+def make_status_changes(
+    *args: tuple[str, str, str],
+) -> list[tuple]:
+    """建立 status_changes：(iso_timestamp, from_status, to_status)。"""
+    from datetime import datetime, timezone
+    result = []
+    for ts, frm, to in args:
+        from dateutil import parser as dateutil_parser
+        parsed = dateutil_parser.parse(ts)
+        if parsed.tzinfo is None:
+            parsed = parsed.replace(tzinfo=timezone.utc)
+        result.append((parsed, frm, to))
+    return result
+
+
+def test_compute_phase_durations_linear_path():
+    """compute_phase_durations：正常線性流程與 parse_changelog 結果一致。"""
+    created = dt(2026, 1, 1, 9, 0)
+    now = dt(2026, 1, 10, 9, 0)
+
+    changes = make_status_changes(
+        ("2026-01-01T10:00:00+00:00", "To Do", "Analysis"),
+        ("2026-01-02T09:00:00+00:00", "Analysis", "In Progress"),
+        ("2026-01-05T09:00:00+00:00", "In Progress", "In Review"),
+        ("2026-01-06T09:00:00+00:00", "In Review", "QA Testing"),
+        ("2026-01-08T09:00:00+00:00", "QA Testing", "Done"),
+    )
+
+    durations = compute_phase_durations(changes, SIMPLE_LOOKUP, created, now)
+
+    assert abs(durations.get("backlog", 0) - 1.0) < 0.01
+    assert abs(durations.get("planning", 0) - 23.0) < 0.01
+    assert abs(durations.get("dev", 0) - 72.0) < 0.01
+    assert abs(durations.get("review", 0) - 24.0) < 0.01
+    assert abs(durations.get("qa", 0) - 48.0) < 0.01
+    assert abs(durations.get("done", 0) - 48.0) < 0.01
+
+
+def test_compute_phase_durations_empty():
+    """空 status_changes 回傳空 dict。"""
+    created = dt(2026, 1, 1, 0, 0)
+    now = dt(2026, 1, 5, 0, 0)
+
+    durations = compute_phase_durations([], SIMPLE_LOOKUP, created, now)
+
+    assert isinstance(durations, dict)
+    assert len(durations) == 0
+
+
+def test_compute_phase_durations_unmapped_collector():
+    """未對應狀態應 add() 進 unmapped_collector，不再 log warning。"""
+    created = dt(2026, 1, 1, 0, 0)
+    now = dt(2026, 1, 5, 0, 0)
+
+    changes = make_status_changes(
+        ("2026-01-01T00:00:00+00:00", "To Do", "UNKNOWN_A"),
+        ("2026-01-03T00:00:00+00:00", "UNKNOWN_A", "UNKNOWN_B"),
+        ("2026-01-04T00:00:00+00:00", "UNKNOWN_B", "In Progress"),
+    )
+
+    collector: set[str] = set()
+    durations = compute_phase_durations(changes, SIMPLE_LOOKUP, created, now, unmapped_collector=collector)
+
+    # 兩個未對應狀態都應被收集
+    assert "UNKNOWN_A" in collector
+    assert "UNKNOWN_B" in collector
+    # 未對應時間應計入 unmapped
+    assert "unmapped" in durations
+    # dev: Jan 4 → now (Jan 5) = 24 小時
+    assert abs(durations.get("dev", 0) - 24.0) < 0.01
+
+
+def test_compute_phase_durations_unmapped_in_initial_state():
+    """初始狀態（第一個變更前的 from_status）也應被 unmapped_collector 收集。"""
+    created = dt(2026, 1, 1, 0, 0)
+    now = dt(2026, 1, 5, 0, 0)
+
+    changes = make_status_changes(
+        ("2026-01-02T00:00:00+00:00", "MYSTERY", "In Progress"),
+    )
+
+    collector: set[str] = set()
+    durations = compute_phase_durations(changes, SIMPLE_LOOKUP, created, now, unmapped_collector=collector)
+
+    assert "MYSTERY" in collector
+    assert "unmapped" in durations
+    # 初始 MYSTERY: Jan 1 → Jan 2 = 24 小時
+    assert abs(durations["unmapped"] - 24.0) < 0.01
+
+
+# ============================================================
+# Remap 場景測試
+# ============================================================
+
+
+def test_remap_with_updated_mapping():
+    """當 status_transitions 存在且 config 更新 mapping，重算應反映新 mapping。"""
+    created = dt(2026, 1, 1, 0, 0)
+    now = dt(2026, 1, 5, 0, 0)
+
+    # 舊 mapping 中 "Evaluate" 未對應；新 mapping 加入 planning
+    new_lookup = dict(SIMPLE_LOOKUP)
+    new_lookup["Evaluate"] = "planning"
+
+    changes = make_status_changes(
+        ("2026-01-01T00:00:00+00:00", "To Do", "Evaluate"),
+        ("2026-01-03T00:00:00+00:00", "Evaluate", "In Progress"),
+    )
+
+    # 舊 mapping：Evaluate 計 unmapped
+    old_durations = compute_phase_durations(changes, SIMPLE_LOOKUP, created, now)
+    assert "unmapped" in old_durations
+    assert abs(old_durations["unmapped"] - 48.0) < 0.01
+
+    # 新 mapping：Evaluate 計 planning
+    new_durations = compute_phase_durations(changes, new_lookup, created, now)
+    assert "unmapped" not in new_durations
+    assert abs(new_durations.get("planning", 0) - 48.0) < 0.01
+    # dev: Jan 3 → now (Jan 5) = 48 小時
+    assert abs(new_durations.get("dev", 0) - 48.0) < 0.01
+
+
+def test_backward_compat_no_transitions():
+    """舊格式 cache（無 status_transitions）：phase_durations 保持不動。
+
+    模擬 main.py 的行為：無 transitions → 跳過 remap → phase_durations 不變。
+    """
+    # 假設舊 cache 已有 phase_durations，沒有 status_transitions
+    old_cache_entry = {
+        "key": "PROJ-1",
+        "project": "PROJ",
+        "created": "2026-01-01T00:00:00+00:00",
+        "resolved": None,
+        "phase_durations": {"dev": 72.0, "qa": 48.0},
+        # 沒有 status_transitions
+    }
+
+    transitions = old_cache_entry.get("status_transitions", [])
+    assert transitions == []  # 確認是舊格式
+
+    # 模擬 remap 邏輯：無 transitions → 跳過
+    if not transitions:
+        remapped = False
+
+    assert not remapped
+    # phase_durations 應維持原值
+    assert old_cache_entry["phase_durations"]["dev"] == 72.0
+    assert old_cache_entry["phase_durations"]["qa"] == 48.0

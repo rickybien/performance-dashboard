@@ -31,6 +31,8 @@ class IssueMetrics:
     summary: str = ""
     parent_key: Optional[str] = None      # parent issue key（即 epic）
     parent_summary: Optional[str] = None  # parent issue 標題
+    status_transitions: list[dict] = field(default_factory=list)
+    # 每個 dict: {"timestamp": "ISO str", "from_status": str, "to_status": str}
 
 
 def build_status_lookup(config: dict, project_key: str) -> dict[str, str]:
@@ -66,6 +68,69 @@ def build_status_lookup(config: dict, project_key: str) -> dict[str, str]:
     return lookup
 
 
+def compute_phase_durations(
+    status_changes: list[tuple[datetime, str, str]],
+    status_lookup: dict[str, str],
+    issue_created: datetime,
+    now: datetime,
+    unmapped_collector: set | None = None,
+) -> dict[str, float]:
+    """計算各 phase 的累計停留時間（小時）。
+
+    Args:
+        status_changes: status 變更列表 [(timestamp, from_status, to_status), ...]，不需預先排序
+        status_lookup: status → phase 反向查找字典
+        issue_created: issue 建立時間（timezone-aware）
+        now: 計算終止時間（timezone-aware）
+        unmapped_collector: 若提供，遇到未對應的 status 會 add() 進去；否則 log warning
+
+    Returns:
+        {"planning": 12.5, "dev": 48.0, "unmapped": 2.0, ...}
+        時間單位：小時，只含有停留時間的 phase
+    """
+    sorted_changes = sorted(status_changes, key=lambda x: x[0])
+    phase_durations: dict[str, float] = {}
+
+    if not sorted_changes:
+        return phase_durations
+
+    # 第一個變更前的時間：從 issue_created 到第一個狀態變更
+    first_change_time, first_from, _ = sorted_changes[0]
+    initial_phase = status_lookup.get(first_from)
+    if initial_phase:
+        duration_hours = (first_change_time - issue_created).total_seconds() / 3600
+        if duration_hours > 0:
+            phase_durations[initial_phase] = phase_durations.get(initial_phase, 0.0) + duration_hours
+    elif first_from:
+        duration_hours = (first_change_time - issue_created).total_seconds() / 3600
+        if duration_hours > 0:
+            if unmapped_collector is not None:
+                unmapped_collector.add(first_from)
+            else:
+                logger.warning("未對應狀態: '%s'，計入 unmapped", first_from)
+            phase_durations["unmapped"] = phase_durations.get("unmapped", 0.0) + duration_hours
+
+    # 逐一處理狀態變更
+    for i, (change_time, _from_status, to_status) in enumerate(sorted_changes):
+        end_time = sorted_changes[i + 1][0] if i + 1 < len(sorted_changes) else now
+        duration_hours = (end_time - change_time).total_seconds() / 3600
+
+        if duration_hours <= 0:
+            continue
+
+        phase = status_lookup.get(to_status)
+        if phase:
+            phase_durations[phase] = phase_durations.get(phase, 0.0) + duration_hours
+        elif to_status:
+            if unmapped_collector is not None:
+                unmapped_collector.add(to_status)
+            else:
+                logger.warning("未對應狀態: '%s'，計入 unmapped", to_status)
+            phase_durations["unmapped"] = phase_durations.get("unmapped", 0.0) + duration_hours
+
+    return phase_durations
+
+
 def parse_changelog(
     changelog_entries: list[dict],
     status_lookup: dict[str, str],
@@ -84,57 +149,19 @@ def parse_changelog(
         {"planning": 12.5, "dev": 48.0, "unmapped": 2.0, ...}
         時間單位：小時，只含有停留時間的 phase
     """
-    # 篩出 status 變更事件並排序
-    status_changes: list[tuple[datetime, str, str]] = []  # (timestamp, from_status, to_status)
+    status_changes: list[tuple[datetime, str, str]] = []
     for entry in changelog_entries:
-        entry_time = _parse_jira_datetime(entry["created"])
+        entry_time = parse_jira_datetime(entry["created"])
         for item in entry.get("items", []):
             if item.get("field") == "status":
                 from_status = item.get("fromString", "")
                 to_status = item.get("toString", "")
                 status_changes.append((entry_time, from_status, to_status))
 
-    status_changes.sort(key=lambda x: x[0])
-
-    phase_durations: dict[str, float] = {}
-
-    if not status_changes:
-        # 沒有任何狀態變更：issue 從建立到現在都在初始狀態
-        # 初始狀態未知，不計算時間
-        return phase_durations
-
-    # 第一個變更前的時間：從 issue_created 到第一個狀態變更
-    first_change_time, first_from, first_to = status_changes[0]
-    initial_phase = status_lookup.get(first_from)
-    if initial_phase:
-        duration_hours = (first_change_time - issue_created).total_seconds() / 3600
-        if duration_hours > 0:
-            phase_durations[initial_phase] = phase_durations.get(initial_phase, 0.0) + duration_hours
-    elif first_from:
-        duration_hours = (first_change_time - issue_created).total_seconds() / 3600
-        if duration_hours > 0:
-            logger.warning("未對應狀態: '%s'，計入 unmapped", first_from)
-            phase_durations["unmapped"] = phase_durations.get("unmapped", 0.0) + duration_hours
-
-    # 逐一處理狀態變更
-    for i, (change_time, from_status, to_status) in enumerate(status_changes):
-        end_time = status_changes[i + 1][0] if i + 1 < len(status_changes) else now
-        duration_hours = (end_time - change_time).total_seconds() / 3600
-
-        if duration_hours <= 0:
-            continue
-
-        phase = status_lookup.get(to_status)
-        if phase:
-            phase_durations[phase] = phase_durations.get(phase, 0.0) + duration_hours
-        elif to_status:
-            logger.warning("未對應狀態: '%s'，計入 unmapped", to_status)
-            phase_durations["unmapped"] = phase_durations.get("unmapped", 0.0) + duration_hours
-
-    return phase_durations
+    return compute_phase_durations(status_changes, status_lookup, issue_created, now)
 
 
-def _parse_jira_datetime(dt_str: str) -> datetime:
+def parse_jira_datetime(dt_str: str) -> datetime:
     """解析 Jira 回傳的 datetime 字串為 timezone-aware datetime。"""
     from dateutil import parser as dateutil_parser
     dt = dateutil_parser.parse(dt_str)
@@ -292,11 +319,11 @@ def _process_issue(issue: dict, project_key: str, status_lookup: dict[str, str],
     """將單一 Jira issue（dict）轉換為 IssueMetrics。"""
     fields = issue.get("fields", {})
 
-    created = _parse_jira_datetime(fields["created"])
+    created = parse_jira_datetime(fields["created"])
 
     resolved = None
     if fields.get("resolutiondate"):
-        resolved = _parse_jira_datetime(fields["resolutiondate"])
+        resolved = parse_jira_datetime(fields["resolutiondate"])
 
     assignee = None
     if fields.get("assignee"):
@@ -331,6 +358,17 @@ def _process_issue(issue: dict, project_key: str, status_lookup: dict[str, str],
         }
         changelog_entries.append(entry)
 
+    # 提取 status transitions 以供 cache 儲存（日後 remap 用）
+    status_transitions: list[dict] = []
+    for entry in changelog_entries:
+        for item in entry.get("items", []):
+            if item.get("field") == "status":
+                status_transitions.append({
+                    "timestamp": entry["created"],
+                    "from_status": item.get("fromString", ""),
+                    "to_status": item.get("toString", ""),
+                })
+
     phase_durations = parse_changelog(changelog_entries, status_lookup, created, now)
 
     return IssueMetrics(
@@ -346,6 +384,7 @@ def _process_issue(issue: dict, project_key: str, status_lookup: dict[str, str],
         summary=summary,
         parent_key=parent_key,
         parent_summary=parent_summary,
+        status_transitions=status_transitions,
     )
 
 
