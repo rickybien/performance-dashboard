@@ -5,6 +5,7 @@
 """
 
 import logging
+import re
 from datetime import datetime, timedelta, timezone
 from typing import Optional
 
@@ -380,6 +381,76 @@ def _compute_build_metrics(builds: list) -> Optional[dict]:
     }
 
 
+# ============================================================
+# SA/SD 獨立票識別與合併函式
+# ============================================================
+
+
+def _build_sa_sd_matcher(
+    config: dict,
+    team_id: Optional[str],
+) -> tuple[set[str], list[re.Pattern]]:
+    """建構 SA/SD 識別規則。
+
+    Args:
+        config: 完整 config.yaml 內容
+        team_id: 目前 team id，用於查找 per-team override
+
+    Returns:
+        (issue_types_set, compiled_patterns)
+    """
+    rules = config.get("sa_sd_rules", {})
+    if not rules:
+        return (set(), [])
+    source = rules
+    if team_id and rules.get("overrides", {}).get(team_id):
+        source = rules["overrides"][team_id]
+    types = set(source.get("issue_types", []))
+    patterns = [re.compile(p, re.IGNORECASE) for p in source.get("summary_patterns", [])]
+    return (types, patterns)
+
+
+def _is_sa_sd_issue(
+    issue: IssueMetrics,
+    issue_types: set[str],
+    patterns: list[re.Pattern],
+) -> bool:
+    """判斷是否為 SA/SD 獨立票。"""
+    if issue.issue_type in issue_types:
+        return True
+    return any(p.search(issue.summary or "") for p in patterns)
+
+
+def _compute_sa_sd_planning_hours(issue: IssueMetrics) -> float:
+    """SA/SD 票的活躍時間（排除 backlog/done/unmapped），作為 planning 數據點。"""
+    return sum(
+        hours for phase, hours in issue.phase_durations.items()
+        if phase not in EXCLUDED_FROM_TOTAL and hours > 0
+    )
+
+
+def _merge_sa_sd_into_planning(
+    cycle_time: dict,
+    normal_issues: list[IssueMetrics],
+    sa_sd_hours: list[float],
+) -> None:
+    """將 SA/SD 活躍小時數併入 cycle_time["planning"]（原地修改）。
+
+    只在 sa_sd_hours 非空時才修改，避免不必要的重算。
+    """
+    if not sa_sd_hours:
+        return
+    planning_values = [
+        issue.phase_durations["planning"]
+        for issue in normal_issues
+        if issue.resolved is not None
+        and "planning" in issue.phase_durations
+        and issue.phase_durations["planning"] > 0
+    ]
+    planning_values.extend(sa_sd_hours)
+    cycle_time["planning"] = compute_percentile_stats(planning_values)
+
+
 def _find_bottleneck_issues(
     issues: list[IssueMetrics],
     bottleneck_phase: str,
@@ -501,14 +572,35 @@ def aggregate(
         team_prs = prs_by_team.get(team_id, [])
         team_builds = builds_by_team.get(team_id, [])
 
+        sa_sd_types, sa_sd_pats = _build_sa_sd_matcher(config, team_id)
+        has_sa_sd = bool(sa_sd_types or sa_sd_pats)
+
         projects_output: dict = {}
         all_team_issues: list[IssueMetrics] = []
+        all_team_sa_sd_hours: list[float] = []
 
         for project_key, project_issues in team_projects.items():
-            all_team_issues.extend(project_issues)
+            if has_sa_sd:
+                normal_issues: list[IssueMetrics] = []
+                sa_sd_hours: list[float] = []
+                for issue in project_issues:
+                    if _is_sa_sd_issue(issue, sa_sd_types, sa_sd_pats):
+                        if issue.resolved is not None:
+                            h = _compute_sa_sd_planning_hours(issue)
+                            if h > 0:
+                                sa_sd_hours.append(h)
+                    else:
+                        normal_issues.append(issue)
+                all_team_sa_sd_hours.extend(sa_sd_hours)
+                all_team_issues.extend(normal_issues)
+            else:
+                normal_issues = project_issues
+                sa_sd_hours = []
+                all_team_issues.extend(project_issues)
 
-            cycle_time = _compute_cycle_time_for_project(project_issues, phases)
-            throughput = compute_throughput(project_issues, recent_days)
+            cycle_time = _compute_cycle_time_for_project(normal_issues, phases)
+            _merge_sa_sd_into_planning(cycle_time, normal_issues, sa_sd_hours)
+            throughput = compute_throughput(normal_issues, recent_days)
 
             projects_output[project_key] = {
                 "cycle_time": cycle_time,
@@ -518,6 +610,7 @@ def aggregate(
 
         # Team 聚合（跨所有 project）
         team_cycle_time = _compute_cycle_time_for_project(all_team_issues, phases)
+        _merge_sa_sd_into_planning(team_cycle_time, all_team_issues, all_team_sa_sd_hours)
         team_throughput = compute_throughput(all_team_issues, recent_days)
         team_pr_metrics = _compute_pr_metrics(team_prs, large_pr_threshold)
         team_build_metrics = _compute_build_metrics(team_builds)

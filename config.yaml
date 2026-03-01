@@ -140,6 +140,27 @@ status_mapping:
   #      - "Architecture Design"
 
 # ============================================================
+# SA/SD 獨立票識別規則
+# ============================================================
+# 符合規則的票會被排除在主 cycle time / throughput / bottleneck 之外，
+# 其活躍時間（排除 backlog/done/unmapped）會合併到 planning phase 數據點。
+#
+# issue_types：精確匹配 Jira issue type（不是 regex）
+# summary_patterns：regex，case-insensitive，匹配票名（summary）
+# overrides：per-team 完全取代全域規則（與 status_mapping.overrides 語義一致）
+
+sa_sd_rules:
+  issue_types:
+    - "SA/SD"
+  summary_patterns:
+    - "^\\[SA\\]"
+    - "^\\[SD\\]"
+  overrides: {}
+  #  team-scm:
+  #    issue_types: ["Analysis"]
+  #    summary_patterns: ["^\\[需求分析\\]"]
+
+# ============================================================
 # Teams
 # ============================================================
 teams:

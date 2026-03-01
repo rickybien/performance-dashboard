@@ -12,7 +12,11 @@ import pytest
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from aggregate import (
+    _build_sa_sd_matcher,
+    _compute_sa_sd_planning_hours,
     _find_bottleneck_issues,
+    _is_sa_sd_issue,
+    _merge_sa_sd_into_planning,
     aggregate,
     compute_percentile_stats,
     compute_throughput,
@@ -39,12 +43,13 @@ def make_issue(
     summary: str = "",
     parent_key: str | None = None,
     parent_summary: str | None = None,
+    issue_type: str = "Story",
 ) -> IssueMetrics:
     """建立合成 IssueMetrics。"""
     return IssueMetrics(
         key=key,
         project=project,
-        issue_type="Story",
+        issue_type=issue_type,
         created=created or BASE_TIME,
         resolved=resolved,
         phase_durations=phase_durations or {"dev": 48.0},
@@ -498,3 +503,165 @@ def test_aggregate_bottleneck_empty_issues():
 
     assert team["aggregated"]["bottleneck_phase"] is None
     assert team["aggregated"]["bottleneck_issues"] == []
+
+
+# ============================================================
+# SA/SD 識別與合併測試
+# ============================================================
+
+SA_SD_CONFIG = {
+    **SAMPLE_CONFIG,
+    "sa_sd_rules": {
+        "issue_types": ["SA/SD"],
+        "summary_patterns": [r"^\[SA\]", r"^\[SD\]"],
+        "overrides": {},
+    },
+}
+
+
+def test_is_sa_sd_by_issue_type():
+    """issue_type='SA/SD' 應匹配，'Story' 不應匹配。"""
+    import re
+
+    issue_types = {"SA/SD"}
+    patterns = []
+
+    sasd = make_issue(issue_type="SA/SD")
+    story = make_issue(issue_type="Story")
+
+    assert _is_sa_sd_issue(sasd, issue_types, patterns) is True
+    assert _is_sa_sd_issue(story, issue_types, patterns) is False
+
+
+def test_is_sa_sd_by_summary_pattern():
+    """summary='[SA] 分析' 應匹配，'修復 SA 模組' 不應匹配。"""
+    import re
+
+    issue_types: set[str] = set()
+    patterns = [re.compile(r"^\[SA\]", re.IGNORECASE), re.compile(r"^\[SD\]", re.IGNORECASE)]
+
+    sasd = make_issue(summary="[SA] 分析需求")
+    not_sasd = make_issue(summary="修復 SA 模組的 bug")
+
+    assert _is_sa_sd_issue(sasd, issue_types, patterns) is True
+    assert _is_sa_sd_issue(not_sasd, issue_types, patterns) is False
+
+
+def test_sa_sd_per_team_override():
+    """override 完全取代全域規則，不繼承全域 issue_types/summary_patterns。"""
+    config_with_override = {
+        **SAMPLE_CONFIG,
+        "sa_sd_rules": {
+            "issue_types": ["SA/SD"],
+            "summary_patterns": [r"^\[SA\]"],
+            "overrides": {
+                "team-alpha": {
+                    "issue_types": ["Analysis"],
+                    "summary_patterns": [],
+                }
+            },
+        },
+    }
+
+    # team-alpha 有 override：只匹配 "Analysis"，不匹配 "SA/SD"
+    alpha_types, alpha_pats = _build_sa_sd_matcher(config_with_override, "team-alpha")
+    assert "Analysis" in alpha_types
+    assert "SA/SD" not in alpha_types
+    assert alpha_pats == []
+
+    # team-beta 無 override：使用全域規則，匹配 "SA/SD"
+    beta_types, beta_pats = _build_sa_sd_matcher(config_with_override, "team-beta")
+    assert "SA/SD" in beta_types
+
+
+def test_sa_sd_merged_into_planning():
+    """SA/SD 票的活躍時間應合併到 planning p50，dev count 不含 SA/SD 票。"""
+    resolved = datetime.now(timezone.utc) - timedelta(days=1)
+
+    # 普通票：dev=24h
+    normal = make_issue("PROJ-A-1", resolved=resolved, phase_durations={"dev": 24.0})
+    # SA/SD 票：planning=48h（活躍時間 = 48h）
+    sasd = make_issue(
+        "PROJ-A-2",
+        resolved=resolved,
+        phase_durations={"planning": 48.0},
+        issue_type="SA/SD",
+    )
+
+    result = aggregate(SA_SD_CONFIG, [normal, sasd])
+    project_data = result["teams"]["team-alpha"]["projects"]["PROJ-A"]
+
+    # planning 應包含 SA/SD 的 48h = 2 天（唯一數據點）
+    planning = project_data["cycle_time"]["planning"]
+    assert planning["count"] == 1
+    assert abs(planning["p50"] - 2.0) < 0.01
+
+    # dev count 只有 1（normal 票），不含 SA/SD
+    dev = project_data["cycle_time"]["dev"]
+    assert dev["count"] == 1
+
+
+def test_sa_sd_excluded_from_throughput():
+    """SA/SD 票不應計入 completed_issues throughput。"""
+    resolved = datetime.now(timezone.utc) - timedelta(days=1)
+
+    normal = make_issue("PROJ-A-1", resolved=resolved, phase_durations={"dev": 24.0})
+    sasd = make_issue("PROJ-A-2", resolved=resolved, phase_durations={"dev": 24.0}, issue_type="SA/SD")
+
+    result = aggregate(SA_SD_CONFIG, [normal, sasd])
+    throughput = result["teams"]["team-alpha"]["aggregated"]["throughput"]
+
+    # 只有 1 個普通票計入 throughput
+    assert throughput["completed_issues"] == 1
+
+
+def test_no_sa_sd_rules_backward_compat():
+    """無 sa_sd_rules config 時，行為應與舊版完全一致。"""
+    resolved = datetime.now(timezone.utc) - timedelta(days=1)
+    issues = [
+        make_issue("PROJ-A-1", resolved=resolved, phase_durations={"dev": 24.0}),
+        make_issue("PROJ-A-2", resolved=resolved, phase_durations={"dev": 48.0}, issue_type="SA/SD"),
+    ]
+
+    # SAMPLE_CONFIG 沒有 sa_sd_rules
+    result = aggregate(SAMPLE_CONFIG, issues)
+    throughput = result["teams"]["team-alpha"]["aggregated"]["throughput"]
+
+    # 舊行為：SA/SD 票照常計入
+    assert throughput["completed_issues"] == 2
+
+
+def test_sa_sd_zero_active_hours():
+    """SA/SD 票只有 backlog（活躍時間=0）→ 不產生 planning 數據點。"""
+    resolved = datetime.now(timezone.utc) - timedelta(days=1)
+
+    sasd_backlog_only = make_issue(
+        "PROJ-A-1",
+        resolved=resolved,
+        phase_durations={"backlog": 72.0},  # backlog 被排除
+        issue_type="SA/SD",
+    )
+
+    result = aggregate(SA_SD_CONFIG, [sasd_backlog_only])
+    project_data = result["teams"]["team-alpha"]["projects"]["PROJ-A"]
+
+    # planning count 應為 0（無有效數據點）
+    planning = project_data["cycle_time"]["planning"]
+    assert planning["count"] == 0
+
+
+def test_sa_sd_unresolved_excluded():
+    """未 resolved 的 SA/SD 票 → 不產生 planning 數據點。"""
+    sasd_unresolved = make_issue(
+        "PROJ-A-1",
+        resolved=None,  # 未完成
+        phase_durations={"planning": 48.0},
+        issue_type="SA/SD",
+    )
+
+    result = aggregate(SA_SD_CONFIG, [sasd_unresolved])
+    project_data = result["teams"]["team-alpha"]["projects"]["PROJ-A"]
+
+    # planning count 應為 0
+    planning = project_data["cycle_time"]["planning"]
+    assert planning["count"] == 0
