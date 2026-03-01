@@ -43,6 +43,7 @@ def make_issue(
     summary: str = "",
     parent_key: str | None = None,
     parent_summary: str | None = None,
+    parent_issue_type: str | None = None,
     issue_type: str = "Story",
 ) -> IssueMetrics:
     """建立合成 IssueMetrics。"""
@@ -59,6 +60,7 @@ def make_issue(
         summary=summary,
         parent_key=parent_key,
         parent_summary=parent_summary,
+        parent_issue_type=parent_issue_type,
     )
 
 
@@ -438,13 +440,14 @@ def test_find_bottleneck_issues_empty():
 
 
 def test_find_bottleneck_issues_url_and_parent():
-    """應正確組裝 URL 並帶入 parent 資訊。"""
+    """parent_issue_type="Epic" 時應正確組裝 URL 並帶入 parent 資訊。"""
     resolved = datetime.now(timezone.utc) - timedelta(days=1)
     issues = [
         make_issue(
             "PROJ-123", resolved=resolved, phase_durations={"qa": 72.0},
             summary="Fix login bug",
             parent_key="PROJ-100", parent_summary="Auth Epic",
+            parent_issue_type="Epic",
         ),
     ]
 
@@ -456,6 +459,26 @@ def test_find_bottleneck_issues_url_and_parent():
     assert item["summary"] == "Fix login bug"
     assert item["parent_key"] == "PROJ-100"
     assert item["parent_summary"] == "Auth Epic"
+
+
+def test_find_bottleneck_issues_non_epic_parent_excluded():
+    """parent_issue_type 不是 "Epic" 時，parent_key/parent_summary 應為 None。"""
+    resolved = datetime.now(timezone.utc) - timedelta(days=1)
+    issues = [
+        make_issue(
+            "PROJ-456", resolved=resolved, phase_durations={"dev": 48.0},
+            summary="Sub-task work",
+            parent_key="PROJ-200", parent_summary="Some Story",
+            parent_issue_type="Story",
+        ),
+    ]
+
+    result = _find_bottleneck_issues(issues, "dev", JIRA_BASE)
+
+    assert len(result) == 1
+    item = result[0]
+    assert item["parent_key"] is None
+    assert item["parent_summary"] is None
 
 
 def test_find_bottleneck_issues_no_parent():

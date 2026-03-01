@@ -29,8 +29,9 @@ class IssueMetrics:
     assignee: Optional[str]
     sprint_name: Optional[str]  # 供未來使用
     summary: str = ""
-    parent_key: Optional[str] = None      # parent issue key（即 epic）
-    parent_summary: Optional[str] = None  # parent issue 標題
+    parent_key: Optional[str] = None        # parent issue key（Epic 時才有意義）
+    parent_summary: Optional[str] = None    # parent issue 標題
+    parent_issue_type: Optional[str] = None  # parent 的 issue type（如 "Epic"）
     status_transitions: list[dict] = field(default_factory=list)
     # 每個 dict: {"timestamp": "ISO str", "from_status": str, "to_status": str}
 
@@ -338,10 +339,13 @@ def _process_issue(issue: dict, project_key: str, status_lookup: dict[str, str],
 
     parent_key = None
     parent_summary = None
+    parent_issue_type = None
     parent = fields.get("parent")
     if parent:
         parent_key = parent.get("key")
-        parent_summary = parent.get("fields", {}).get("summary")
+        parent_fields = parent.get("fields", {})
+        parent_summary = parent_fields.get("summary")
+        parent_issue_type = parent_fields.get("issuetype", {}).get("name")
 
     changelog_entries: list[dict] = []
     for history in issue.get("changelog", {}).get("histories", []):
@@ -384,6 +388,7 @@ def _process_issue(issue: dict, project_key: str, status_lookup: dict[str, str],
         summary=summary,
         parent_key=parent_key,
         parent_summary=parent_summary,
+        parent_issue_type=parent_issue_type,
         status_transitions=status_transitions,
     )
 

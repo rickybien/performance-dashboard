@@ -93,6 +93,7 @@ def _serialize_issue(issue: IssueMetrics) -> dict:
         "summary": issue.summary,
         "parent_key": issue.parent_key,
         "parent_summary": issue.parent_summary,
+        "parent_issue_type": issue.parent_issue_type,
         "status_transitions": issue.status_transitions,
     }
 
@@ -112,6 +113,7 @@ def _deserialize_issue(d: dict) -> IssueMetrics:
         summary=d.get("summary", ""),
         parent_key=d.get("parent_key"),
         parent_summary=d.get("parent_summary"),
+        parent_issue_type=d.get("parent_issue_type"),
         status_transitions=d.get("status_transitions", []),
     )
 

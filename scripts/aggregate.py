@@ -481,11 +481,12 @@ def _find_bottleneck_issues(
     browse_url = jira_base_url.rstrip("/") + "/browse/"
     result = []
     for hours, issue in candidates[:limit]:
+        is_epic = issue.parent_issue_type == "Epic"
         result.append({
             "key": issue.key,
             "summary": issue.summary,
-            "parent_key": issue.parent_key,
-            "parent_summary": issue.parent_summary,
+            "parent_key": issue.parent_key if is_epic else None,
+            "parent_summary": issue.parent_summary if is_epic else None,
             "phase_duration_days": round(hours / 24, 2),
             "url": browse_url + issue.key,
         })
