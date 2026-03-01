@@ -677,8 +677,8 @@ def test_sa_sd_zero_active_hours():
     assert planning["count"] == 0
 
 
-def test_sa_sd_unresolved_excluded():
-    """未 resolved 的 SA/SD 票 → 不產生 planning 數據點。"""
+def test_sa_sd_unresolved_included():
+    """未 resolved 的 SA/SD 票 → 已走過的 planning 時間應被計入。"""
     sasd_unresolved = make_issue(
         "PROJ-A-1",
         resolved=None,  # 未完成
@@ -689,6 +689,6 @@ def test_sa_sd_unresolved_excluded():
     result = aggregate(SA_SD_CONFIG, [sasd_unresolved])
     project_data = result["teams"]["team-alpha"]["projects"]["PROJ-A"]
 
-    # planning count 應為 0
+    # planning count 應為 1（活躍時間應被計入）
     planning = project_data["cycle_time"]["planning"]
-    assert planning["count"] == 0
+    assert planning["count"] == 1

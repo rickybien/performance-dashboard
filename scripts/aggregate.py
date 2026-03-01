@@ -589,10 +589,9 @@ def aggregate(
                 sa_sd_hours: list[float] = []
                 for issue in project_issues:
                     if _is_sa_sd_issue(issue, sa_sd_types, sa_sd_pats):
-                        if issue.resolved is not None:
-                            h = _compute_sa_sd_planning_hours(issue)
-                            if h > 0:
-                                sa_sd_hours.append(h)
+                        h = _compute_sa_sd_planning_hours(issue)
+                        if h > 0:
+                            sa_sd_hours.append(h)
                     else:
                         normal_issues.append(issue)
                 all_team_sa_sd_hours.extend(sa_sd_hours)
