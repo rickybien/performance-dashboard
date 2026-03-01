@@ -24,6 +24,7 @@ on:
 
 permissions:
   contents: write  # 需要寫入 data/ 目錄
+  actions: write   # 需要觸發其他 workflow
 
 jobs:
   collect:
@@ -66,8 +67,16 @@ jobs:
           git add data/
           if git diff --staged --quiet; then
             echo "No data changes to commit"
+            echo "DATA_CHANGED=false" >> $GITHUB_ENV
           else
             git commit -m "chore: 自動更新 metrics 資料"
             git pull --rebase origin master
             git push origin master
+            echo "DATA_CHANGED=true" >> $GITHUB_ENV
           fi
+
+      - name: Trigger frontend deploy
+        if: env.DATA_CHANGED == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run deploy-frontend.yml
