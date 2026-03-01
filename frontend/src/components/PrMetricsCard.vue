@@ -11,12 +11,18 @@
           {{ prMetrics.pickup_hours.count > 0 ? prMetrics.pickup_hours.p50 + 'h' : '—' }}
         </div>
         <div class="metric-label">Pickup p50</div>
+        <div v-if="prMetrics.pickup_hours.count > 0" class="metric-sub">
+          p75: {{ prMetrics.pickup_hours.p75 }}h · p90: {{ prMetrics.pickup_hours.p90 }}h
+        </div>
       </div>
       <div class="metric-item">
         <div class="metric-value">
           {{ prMetrics.merge_time_hours.count > 0 ? prMetrics.merge_time_hours.p50 + 'h' : '—' }}
         </div>
         <div class="metric-label">Merge Time p50</div>
+        <div v-if="prMetrics.merge_time_hours.count > 0" class="metric-sub">
+          p75: {{ prMetrics.merge_time_hours.p75 }}h · p90: {{ prMetrics.merge_time_hours.p90 }}h
+        </div>
       </div>
       <div class="metric-item">
         <div
@@ -77,5 +83,12 @@ defineProps({
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.05em;
+}
+
+.metric-sub {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-top: 0.15rem;
+  font-variant-numeric: tabular-nums;
 }
 </style>

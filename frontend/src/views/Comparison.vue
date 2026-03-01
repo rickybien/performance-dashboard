@@ -46,10 +46,13 @@
             <thead>
               <tr>
                 <th>Team</th>
-                <th>Total Cycle Time p50</th>
+                <th>Total p50</th>
+                <th>Total p75</th>
+                <th>Total p90</th>
                 <th>Throughput (30d)</th>
                 <th>PRs Merged</th>
                 <th>PR Pickup p50</th>
+                <th>PR Pickup p75</th>
               </tr>
             </thead>
             <tbody>
@@ -63,9 +66,12 @@
                   </span>
                 </td>
                 <td>{{ formatDays(data.teams[teamId]?.aggregated.cycle_time.total?.p50) }}</td>
+                <td>{{ formatDays(data.teams[teamId]?.aggregated.cycle_time.total?.p75) }}</td>
+                <td>{{ formatDays(data.teams[teamId]?.aggregated.cycle_time.total?.p90) }}</td>
                 <td>{{ data.teams[teamId]?.aggregated.throughput.completed_issues ?? '—' }}</td>
                 <td>{{ data.teams[teamId]?.aggregated.pr_metrics?.total_prs_merged ?? '—' }}</td>
                 <td>{{ formatHours(data.teams[teamId]?.aggregated.pr_metrics?.pickup_hours?.p50) }}</td>
+                <td>{{ formatHours(data.teams[teamId]?.aggregated.pr_metrics?.pickup_hours?.p75) }}</td>
               </tr>
             </tbody>
           </table>
@@ -158,7 +164,14 @@ const chartOptions = {
     },
     tooltip: {
       callbacks: {
-        label: (ctx) => ` ${ctx.dataset.label}: ${ctx.parsed.y}d`,
+        label: (ctx) => {
+          if (!data.value) return ` ${ctx.dataset.label}: ${ctx.parsed.y}d`
+          const teamId = Object.keys(data.value.teams)[ctx.datasetIndex]
+          const phaseId = data.value.meta.phases[ctx.dataIndex]?.id
+          const stat = data.value.teams[teamId]?.aggregated.cycle_time?.[phaseId]
+          const extra = stat ? `  p75: ${stat.p75}d  p90: ${stat.p90}d` : ''
+          return ` ${ctx.dataset.label}: ${ctx.parsed.y}d (p50)${extra}`
+        },
       },
     },
   },

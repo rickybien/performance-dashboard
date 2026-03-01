@@ -27,11 +27,11 @@ def compute_percentile_stats(values: list[float]) -> dict:
         values: 時間值列表（小時）
 
     Returns:
-        {"p50": float, "p85": float, "count": int}  # 輸出單位：天
-        若 values 為空，回傳 count=0 且 p50/p85 為 0
+        {"p50": float, "p75": float, "p90": float, "count": int}  # 輸出單位：天
+        若 values 為空，回傳 count=0 且 p50/p75/p90 為 0
     """
     if not values:
-        return {"p50": 0.0, "p85": 0.0, "count": 0}
+        return {"p50": 0.0, "p75": 0.0, "p90": 0.0, "count": 0}
 
     sorted_values = sorted(values)
     n = len(sorted_values)
@@ -49,12 +49,14 @@ def compute_percentile_stats(values: list[float]) -> dict:
         return sorted_values[lower] + fraction * (sorted_values[upper] - sorted_values[lower])
 
     p50_hours = percentile(50)
-    p85_hours = percentile(85)
+    p75_hours = percentile(75)
+    p90_hours = percentile(90)
 
     # 轉換為天
     return {
         "p50": round(p50_hours / 24, 2),
-        "p85": round(p85_hours / 24, 2),
+        "p75": round(p75_hours / 24, 2),
+        "p90": round(p90_hours / 24, 2),
         "count": n,
     }
 
@@ -219,10 +221,10 @@ def _compute_hour_stats(values: list[float]) -> dict:
         values: 小時值列表
 
     Returns:
-        {"p50": float, "p85": float, "count": int}
+        {"p50": float, "p75": float, "p90": float, "count": int}
     """
     if not values:
-        return {"p50": 0.0, "p85": 0.0, "count": 0}
+        return {"p50": 0.0, "p75": 0.0, "p90": 0.0, "count": 0}
 
     sorted_values = sorted(values)
     n = len(sorted_values)
@@ -240,7 +242,8 @@ def _compute_hour_stats(values: list[float]) -> dict:
 
     return {
         "p50": round(percentile(50), 1),
-        "p85": round(percentile(85), 1),
+        "p75": round(percentile(75), 1),
+        "p90": round(percentile(90), 1),
         "count": n,
     }
 

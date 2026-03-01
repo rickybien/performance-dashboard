@@ -58,7 +58,7 @@ function cellClass(stat) {
 
 function cellTitle(stat) {
   if (!stat || stat.count === 0) return 'No data'
-  return `p50: ${stat.p50}d  p85: ${stat.p85}d  n=${stat.count}`
+  return `p50: ${stat.p50}d  p75: ${stat.p75}d  p90: ${stat.p90}d  n=${stat.count}`
 }
 
 function formatDays(stat) {

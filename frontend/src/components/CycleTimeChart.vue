@@ -20,7 +20,7 @@ import {
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend)
 
 const props = defineProps({
-  // { project_key: { cycle_time: { phase_id: { p50, p85, count } } } }
+  // { project_key: { cycle_time: { phase_id: { p50, p75, p90, count } } } }
   projects: { type: Object, required: true },
   phases: { type: Array, required: true },
 })
@@ -64,7 +64,17 @@ const chartOptions = {
     },
     tooltip: {
       callbacks: {
-        label: (ctx) => ` ${ctx.dataset.label}: ${ctx.parsed.x}d (p50)`,
+        label: (ctx) => {
+          const pk = ctx.chart.data.labels[ctx.dataIndex]
+          const phase = ctx.chart.data.datasets[ctx.datasetIndex]
+          // 從 props 取得當前 project + phase 的 p75/p90
+          const phaseId = props.phases.find((p) => p.label === phase.label)?.id
+          const stat = phaseId ? props.projects[pk]?.cycle_time?.[phaseId] : null
+          const extra = stat
+            ? `  p75: ${stat.p75}d  p90: ${stat.p90}d`
+            : ''
+          return ` ${phase.label}: ${ctx.parsed.x}d (p50)${extra}`
+        },
       },
     },
   },

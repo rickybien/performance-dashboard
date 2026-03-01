@@ -50,7 +50,7 @@
           </span>
           is the slowest phase with p50
           <strong>{{ bottleneck.p50 }}d</strong>
-          (p85: {{ bottleneck.p85 }}d, n={{ bottleneck.count }})
+          (p75: {{ bottleneck.p75 }}d, p90: {{ bottleneck.p90 }}d, n={{ bottleneck.count }})
         </p>
       </section>
 

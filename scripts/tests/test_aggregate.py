@@ -103,31 +103,35 @@ SAMPLE_CONFIG = {
 
 
 def test_compute_percentile_stats_basic():
-    """p50/p85 應正確計算並轉換為天。"""
+    """p50/p75/p90 應正確計算並轉換為天。"""
     # 10 個值：24, 48, 72, ..., 240 小時（1-10 天）
     values = [24.0 * i for i in range(1, 11)]
     stats = compute_percentile_stats(values)
 
     # p50 = 5.5 天（5 和 6 的平均）
     assert abs(stats["p50"] - 5.5) < 0.1
-    # p85 = 8.65 天
-    assert abs(stats["p85"] - 8.65) < 0.1
+    # p75: index=6.75, value=7+0.75*(8-7)=7.75 天
+    assert abs(stats["p75"] - 7.75) < 0.1
+    # p90: index=8.1, value=9+0.1*(10-9)=9.1 天
+    assert abs(stats["p90"] - 9.1) < 0.1
     assert stats["count"] == 10
 
 
 def test_compute_percentile_stats_empty():
-    """空列表應回傳 count=0 且 p50/p85 為 0。"""
+    """空列表應回傳 count=0 且 p50/p75/p90 為 0。"""
     stats = compute_percentile_stats([])
     assert stats["p50"] == 0.0
-    assert stats["p85"] == 0.0
+    assert stats["p75"] == 0.0
+    assert stats["p90"] == 0.0
     assert stats["count"] == 0
 
 
 def test_compute_percentile_stats_single():
-    """只有一個值時，p50 和 p85 都應等於該值。"""
+    """只有一個值時，p50/p75/p90 都應等於該值。"""
     stats = compute_percentile_stats([48.0])
     assert abs(stats["p50"] - 2.0) < 0.01  # 48h = 2 天
-    assert abs(stats["p85"] - 2.0) < 0.01
+    assert abs(stats["p75"] - 2.0) < 0.01
+    assert abs(stats["p90"] - 2.0) < 0.01
     assert stats["count"] == 1
 
 
