@@ -35,7 +35,7 @@ jobs:
         run: npm run build
 
       - name: Copy data files to dist
-        run: cp -r data/latest frontend/dist/data
+        run: mkdir -p frontend/dist/data && cp -r data/latest frontend/dist/data/
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
