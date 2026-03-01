@@ -5336,7 +5336,7 @@
     "resolved": null,
     "phase_durations": {
       "backlog": 0.016481944444444445,
-      "planning": 70.77925749583333,
+      "planning": 71.7076866338889,
       "dev": 0.000713611111111111,
       "qa": 46.73126861111111
     },
@@ -5353,7 +5353,7 @@
     "phase_durations": {
       "backlog": 19.690296944444444,
       "planning": 22.839601944444443,
-      "dev": 75.14427582916666
+      "dev": 76.07270496722222
     },
     "current_status": "In Development",
     "assignee": "曾廷州",
@@ -5410,7 +5410,7 @@
       "qa": 22.761018333333332,
       "review": 41.372209722222216,
       "staging": 68.53535972222222,
-      "done": 6.356727773611111
+      "done": 7.285156911666666
     },
     "current_status": "Done",
     "assignee": "陳冠甫",
@@ -5426,7 +5426,7 @@
       "backlog": 260.91820972222223,
       "planning": 2.6319625,
       "dev": 4.562185833333333,
-      "qa": 113.72212194027777,
+      "qa": 114.65055107833334,
       "review": 3.145277777777778
     },
     "current_status": "FEATURE TESTING",
@@ -5445,7 +5445,7 @@
       "dev": 2.2278308333333334,
       "qa": 26.716361944444444,
       "review": 36.84890027777777,
-      "staging": 74.89243555138889
+      "staging": 75.82086468944443
     },
     "current_status": "Wait For Release",
     "assignee": "陳冠甫",
@@ -5459,7 +5459,7 @@
     "resolved": null,
     "phase_durations": {
       "backlog": 333.0812602777778,
-      "planning": 92.24948832916667,
+      "planning": 93.17791746722222,
       "dev": 0.0009588888888888889,
       "qa": 0.0004711111111111111
     },
@@ -5545,7 +5545,7 @@
       "dev": 24.062818888888888,
       "qa": 6.064525555555555,
       "review": 0.0025575000000000003,
-      "staging": 67.54386888472222
+      "staging": 68.47229802277778
     },
     "current_status": "Wait For Release",
     "assignee": "陳冠霖",
@@ -5559,7 +5559,7 @@
     "resolved": null,
     "phase_durations": {
       "backlog": 72.13625944444445,
-      "planning": 433.95746777361114,
+      "planning": 434.8858969116667,
       "dev": 1.153121388888889,
       "qa": 46.18090333333333
     },
@@ -5575,7 +5575,7 @@
     "resolved": null,
     "phase_durations": {
       "backlog": 126.3563838888889,
-      "planning": 427.55553638472225
+      "planning": 428.4839655227778
     },
     "current_status": "Analysis",
     "assignee": "陳冠甫",
@@ -5666,7 +5666,7 @@
       "backlog": 49.35672861111111,
       "planning": 22.58426111111111,
       "dev": 7.363138888888889,
-      "qa": 571.9737269402777,
+      "qa": 572.9021560783333,
       "review": 0.002266666666666667
     },
     "current_status": "PM/QA REVIEW",
@@ -5686,7 +5686,7 @@
       "qa": 20.918844166666666,
       "review": 476.9038925,
       "staging": 92.03446694444445,
-      "done": 6.342397773611111
+      "done": 7.270826911666666
     },
     "current_status": "Done",
     "assignee": "陳冠霖",
@@ -5970,7 +5970,7 @@
       "qa": 2.0189055555555555,
       "review": 543.9298377777778,
       "staging": 65.00273694444445,
-      "done": 6.346518606944445
+      "done": 7.274947745
     },
     "current_status": "Done",
     "assignee": "陳冠霖",
@@ -6054,7 +6054,7 @@
     "created": "2026-01-22T16:52:12.376000+08:00",
     "resolved": null,
     "phase_durations": {
-      "backlog": 506.17505610694445,
+      "backlog": 507.103485245,
       "planning": 114.01108194444444,
       "dev": 27.305768333333333,
       "qa": 260.7287347222222,
@@ -6368,7 +6368,7 @@
       "qa": 121.1903663888889,
       "review": 547.3523344444445,
       "staging": 64.9981675,
-      "done": 6.3503147180555555
+      "done": 7.278743856111111
     },
     "current_status": "Done",
     "assignee": "陳冠霖",
@@ -6929,7 +6929,7 @@
       "dev": 30.36742888888889,
       "qa": 141.7533486111111,
       "review": 120.06485944444445,
-      "staging": 433.9440130513889
+      "staging": 434.8724421894444
     },
     "current_status": "Wait For Release",
     "assignee": "曾廷州",
@@ -7146,7 +7146,7 @@
       "dev": 76.15615388888888,
       "qa": 47.959915277777775,
       "review": 120.06272777777778,
-      "staging": 433.9473299958333
+      "staging": 434.8757591338889
     },
     "current_status": "Wait For Release",
     "assignee": "曾廷州",
@@ -8538,7 +8538,7 @@
     "phase_durations": {
       "backlog": 1126.9502330555554,
       "planning": 280.0553938888889,
-      "dev": 748.1541141625
+      "dev": 749.0825433005556
     },
     "current_status": "In Development",
     "assignee": "陳冠甫",
@@ -8599,7 +8599,7 @@
     "created": "2025-12-01T15:43:04.755000+08:00",
     "resolved": null,
     "phase_durations": {
-      "backlog": 2157.3749658291667,
+      "backlog": 2158.303394967222,
       "planning": 0.0017080555555555555
     },
     "current_status": "Pending",
@@ -8671,7 +8671,7 @@
     "resolved": null,
     "phase_durations": {
       "backlog": 188.31831555555559,
-      "planning": 889.9394808291667,
+      "planning": 890.8679099672222,
       "dev": 576.5921519444445,
       "qa": 480.4830547222222,
       "review": 23.412484166666665
@@ -13239,23 +13239,62 @@
     "assignee": "褚煜瑜",
     "sprint_name": "B2B Sprint Sep 1, 2025"
   },
-  "ROB-3509": {
-    "key": "ROB-3509",
-    "project": "ROB",
-    "issue_type": "Bug",
-    "created": "2025-09-02T13:37:19.583000+08:00",
-    "resolved": "2025-09-05T11:05:04.544000+08:00",
+  "SCMWEB-3102": {
+    "key": "SCMWEB-3102",
+    "project": "SCMWEB",
+    "issue_type": "Task",
+    "created": "2026-02-04T16:45:47.115000+08:00",
+    "resolved": null,
     "phase_durations": {
-      "backlog": 0.1061263888888889,
-      "planning": 0.00036638888888888886,
-      "dev": 0.00040083333333333334,
-      "qa": 4.978758333333333,
-      "review": 0.0010872222222222223,
-      "staging": 64.37575527777778,
-      "done": 4238.940056961111
+      "backlog": 523.1015552777777,
+      "dev": 74.15844774499999
     },
-    "current_status": "Done",
-    "assignee": "徐鵬凱",
-    "sprint_name": "B2B Sprint Sep 1, 2025"
+    "current_status": "In Development",
+    "assignee": "張祐鈞",
+    "sprint_name": "SCM Sprint 31"
+  },
+  "SCMWEB-3193": {
+    "key": "SCMWEB-3193",
+    "project": "SCMWEB",
+    "issue_type": "Sub-task",
+    "created": "2026-02-28T21:15:38.450000+08:00",
+    "resolved": null,
+    "phase_durations": {},
+    "current_status": "TODO",
+    "assignee": null,
+    "sprint_name": "SCM Sprint 31"
+  },
+  "SCMWEB-3188": {
+    "key": "SCMWEB-3188",
+    "project": "SCMWEB",
+    "issue_type": "Sub-task",
+    "created": "2026-02-26T15:31:35.221000+08:00",
+    "resolved": null,
+    "phase_durations": {},
+    "current_status": "TODO",
+    "assignee": null,
+    "sprint_name": "SCM Sprint 31"
+  },
+  "SCMWEB-3173": {
+    "key": "SCMWEB-3173",
+    "project": "SCMWEB",
+    "issue_type": "Sub-task",
+    "created": "2026-02-26T15:28:55.159000+08:00",
+    "resolved": null,
+    "phase_durations": {},
+    "current_status": "TODO",
+    "assignee": "張祐鈞",
+    "sprint_name": "SCM Sprint 31"
+  },
+  "SCMWEB-3192": {
+    "key": "SCMWEB-3192",
+    "project": "SCMWEB",
+    "issue_type": "Sub-task",
+    "created": "2026-02-28T21:10:05.965000+08:00",
+    "resolved": null,
+    "phase_durations": {},
+    "current_status": "TODO",
+    "assignee": null,
+    "sprint_name": null
   }
 }

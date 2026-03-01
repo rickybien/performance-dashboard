@@ -3923,20 +3923,6 @@
     "lines_deleted": 83,
     "is_large": false
   },
-  "kkday-product-service#6752": {
-    "repo": "kkday-product-service",
-    "pr_number": 6752,
-    "title": "feat(BE2PROD-5331): 新增 DispatchProductUpdateEvent檢查此次發布資訊",
-    "jira_keys": [
-      "BE2PROD-5331"
-    ],
-    "created_at": "2025-08-20T08:07:38+00:00",
-    "first_review_at": "2025-09-02T02:25:01+00:00",
-    "merged_at": "2025-09-02T05:12:07+00:00",
-    "lines_added": 1997,
-    "lines_deleted": 7,
-    "is_large": true
-  },
   "kkday-be2-web#3520": {
     "repo": "kkday-be2-web",
     "pr_number": 3520,
@@ -18563,31 +18549,5 @@
     "lines_added": 5,
     "lines_deleted": 1,
     "is_large": false
-  },
-  "kkday-b2b-api#6162": {
-    "repo": "kkday-b2b-api",
-    "pr_number": 6162,
-    "title": "feat: 調整供應商報報查詢",
-    "jira_keys": [
-      "be2-14"
-    ],
-    "created_at": "2025-09-02T05:42:03+00:00",
-    "first_review_at": "2025-09-02T05:55:10+00:00",
-    "merged_at": "2025-09-02T05:58:22+00:00",
-    "lines_added": 1,
-    "lines_deleted": 1,
-    "is_large": false
-  },
-  "kkday-b2b-api#6158": {
-    "repo": "kkday-b2b-api",
-    "pr_number": 6158,
-    "title": "Release/250825",
-    "jira_keys": [],
-    "created_at": "2025-09-02T04:03:38+00:00",
-    "first_review_at": null,
-    "merged_at": "2025-09-02T05:11:14+00:00",
-    "lines_added": 4230,
-    "lines_deleted": 43,
-    "is_large": true
   }
 }
