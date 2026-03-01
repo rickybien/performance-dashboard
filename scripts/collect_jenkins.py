@@ -39,10 +39,11 @@ def _fetch_builds_for_job(
     auth: HTTPBasicAuth,
     cutoff: datetime,
     api_delay: float,
-) -> list[BuildResult]:
+) -> Optional[list[BuildResult]]:
     """從 Jenkins API 取得單一 job 的建置列表。
 
     Jenkins 回傳建置資料由新到舊，遇到比 cutoff 更早的建置即停止。
+    回傳 None 表示連線失敗；回傳空列表表示成功但無符合建置。
     """
     url = (
         f"{base_url.rstrip('/')}/job/{job_name}/api/json"
@@ -50,11 +51,11 @@ def _fetch_builds_for_job(
     )
 
     try:
-        resp = requests.get(url, auth=auth, timeout=30)
+        resp = requests.get(url, auth=auth, timeout=10)
         resp.raise_for_status()
     except requests.RequestException as exc:
         logger.error("無法取得 Jenkins job %s 資料: %s", job_name, exc)
-        return []
+        return None
 
     time.sleep(api_delay)
 
@@ -121,10 +122,24 @@ def collect_jenkins_builds(config: dict) -> list[BuildResult]:
 
     cutoff = datetime.now(timezone.utc) - timedelta(days=lookback_days)
     results: list[BuildResult] = []
+    consecutive_failures = 0
+    max_consecutive_failures = 3
 
     for team in config.get("teams", []):
         for job_name in team.get("jenkins_jobs", []):
+            if consecutive_failures >= max_consecutive_failures:
+                logger.warning(
+                    "連續 %d 次 Jenkins 連線失敗，跳過剩餘 jobs（Jenkins 可能無法從 CI 環境存取）",
+                    consecutive_failures,
+                )
+                return results
+
             builds = _fetch_builds_for_job(base_url, job_name, auth, cutoff, api_delay)
+            if builds is None:
+                consecutive_failures += 1
+                continue
+
+            consecutive_failures = 0
             results.extend(builds)
             logger.info(
                 "Jenkins job %s（team: %s）: 收集到 %d 筆建置",

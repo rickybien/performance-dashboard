@@ -66,6 +66,8 @@ status_mapping:
       - "New Request"
       - "Backlog"
       - "Pending"
+      - "Pending 項目擱置"
+      - "Evaluate"
       - "Open"
       - "待處理"
       - "Awaiting"
@@ -126,6 +128,7 @@ status_mapping:
       - "Released"
       - "Closed"
       - "Resolved"
+      - "OBSERVE"
       - "已完成"
       - "已上線"
 

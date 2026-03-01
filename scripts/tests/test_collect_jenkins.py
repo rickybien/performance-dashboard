@@ -172,3 +172,35 @@ def test_collect_jenkins_builds_no_credentials(monkeypatch):
     }
     result = collect_jenkins_builds(config)
     assert result == []
+
+
+def test_collect_jenkins_circuit_breaker(monkeypatch):
+    """連續 3 次失敗後應立即放棄剩餘 jobs，不再繼續嘗試。"""
+    monkeypatch.setenv("JENKINS_USER", "user")
+    monkeypatch.setenv("JENKINS_API_TOKEN", "token")
+
+    call_count = 0
+
+    def mock_fetch(*args, **kwargs):
+        nonlocal call_count
+        call_count += 1
+        return None  # 模擬連線失敗
+
+    with patch("collect_jenkins._fetch_builds_for_job", side_effect=mock_fetch):
+        from collect_jenkins import collect_jenkins_builds
+
+        config = {
+            "jenkins": {"enabled": True, "base_url": "https://jenkins.example.com"},
+            "collection": {"lookback_days": 90, "api_delay_seconds": 0},
+            "teams": [
+                {
+                    "id": "team-alpha",
+                    "jenkins_jobs": ["job-1", "job-2", "job-3", "job-4", "job-5"],
+                }
+            ],
+        }
+        result = collect_jenkins_builds(config)
+
+    # 連續 3 次失敗後停止，job-4 和 job-5 不應被呼叫
+    assert result == []
+    assert call_count == 3
