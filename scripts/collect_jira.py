@@ -28,6 +28,9 @@ class IssueMetrics:
     current_status: str
     assignee: Optional[str]
     sprint_name: Optional[str]  # 供未來使用
+    summary: str = ""
+    parent_key: Optional[str] = None      # parent issue key（即 epic）
+    parent_summary: Optional[str] = None  # parent issue 標題
 
 
 def build_status_lookup(config: dict, project_key: str) -> dict[str, str]:
@@ -210,6 +213,7 @@ def collect_jira(config: dict, since_hours: Optional[int] = None) -> list[IssueM
                 "fields": [
                     "summary", "status", "issuetype", "assignee",
                     "created", "resolutiondate", "customfield_10020",
+                    "parent",
                 ],
             }
             if next_page_token:
@@ -303,6 +307,15 @@ def _process_issue(issue: dict, project_key: str, status_lookup: dict[str, str],
 
     sprint_name = _get_sprint_name_from_field(fields.get("customfield_10020"))
 
+    summary = fields.get("summary", "")
+
+    parent_key = None
+    parent_summary = None
+    parent = fields.get("parent")
+    if parent:
+        parent_key = parent.get("key")
+        parent_summary = parent.get("fields", {}).get("summary")
+
     changelog_entries: list[dict] = []
     for history in issue.get("changelog", {}).get("histories", []):
         entry = {
@@ -330,6 +343,9 @@ def _process_issue(issue: dict, project_key: str, status_lookup: dict[str, str],
         current_status=current_status,
         assignee=assignee,
         sprint_name=sprint_name,
+        summary=summary,
+        parent_key=parent_key,
+        parent_summary=parent_summary,
     )
 
 

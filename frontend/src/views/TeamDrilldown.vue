@@ -54,6 +54,34 @@
         </p>
       </section>
 
+      <!-- Bottleneck Issues -->
+      <section v-if="bottleneckIssues.length" class="card" style="margin-top: 1rem">
+        <h3>Slowest Issues in {{ bottleneck.label }}</h3>
+        <table class="issues-table">
+          <thead>
+            <tr>
+              <th>Issue</th>
+              <th>Summary</th>
+              <th>Epic</th>
+              <th>Duration</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="issue in bottleneckIssues" :key="issue.key">
+              <td><a :href="issue.url" target="_blank" rel="noopener">{{ issue.key }}</a></td>
+              <td class="cell-summary">{{ issue.summary }}</td>
+              <td>
+                <a v-if="issue.parent_key" :href="parentUrl(issue)" target="_blank" rel="noopener">
+                  {{ issue.parent_summary || issue.parent_key }}
+                </a>
+                <span v-else class="muted">—</span>
+              </td>
+              <td>{{ issue.phase_duration_days }}d</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
       <!-- PR Metrics -->
       <section class="card" style="margin-top: 1rem">
         <h3>PR Metrics</h3>
@@ -128,6 +156,16 @@ const bottleneck = computed(() => {
 
   return maxPhase
 })
+
+const bottleneckIssues = computed(() =>
+  currentTeam.value?.aggregated.bottleneck_issues ?? [],
+)
+
+function parentUrl(issue) {
+  // 從 issue.url 推導 base，替換 issue key 為 parent key
+  const base = issue.url.substring(0, issue.url.lastIndexOf('/') + 1)
+  return base + issue.parent_key
+}
 </script>
 
 <style scoped>
@@ -191,5 +229,47 @@ const bottleneck = computed(() => {
   font-weight: 600;
   font-size: 0.8125rem;
   margin-right: 0.25rem;
+}
+
+.issues-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8125rem;
+  margin-top: 0.75rem;
+}
+
+.issues-table th,
+.issues-table td {
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color, #e5e7eb);
+}
+
+.issues-table th {
+  font-weight: 600;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.issues-table a {
+  color: var(--link-color, #3b82f6);
+  text-decoration: none;
+}
+
+.issues-table a:hover {
+  text-decoration: underline;
+}
+
+.cell-summary {
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.muted {
+  color: var(--text-muted);
 }
 </style>

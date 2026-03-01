@@ -68,7 +68,15 @@
           "merge_time_hours": {"p50": 18.5, "p85": 36.2, "count": 12},
           "large_pr_pct": 16.7
         },
-        "build_metrics": null
+        "build_metrics": null,
+        "bottleneck_phase": "dev",
+        "bottleneck_issues": [
+          {"key": "PROJ-A-42", "summary": "Refactor payment module to support multi-currency", "parent_key": "PROJ-A-10", "parent_summary": "Payment Platform v2", "phase_duration_days": 8.5, "url": "https://example.atlassian.net/browse/PROJ-A-42"},
+          {"key": "PROJ-A-37", "summary": "Implement OAuth2 integration with third-party providers", "parent_key": "PROJ-A-10", "parent_summary": "Payment Platform v2", "phase_duration_days": 6.2, "url": "https://example.atlassian.net/browse/PROJ-A-37"},
+          {"key": "PROJ-A-28", "summary": "Database migration for new schema", "parent_key": null, "parent_summary": null, "phase_duration_days": 5.8, "url": "https://example.atlassian.net/browse/PROJ-A-28"},
+          {"key": "PROJ-A-51", "summary": "Fix race condition in async job processor", "parent_key": "PROJ-A-15", "parent_summary": "Infrastructure Reliability", "phase_duration_days": 4.3, "url": "https://example.atlassian.net/browse/PROJ-A-51"},
+          {"key": "PROJ-A-19", "summary": "Add caching layer for API responses", "parent_key": null, "parent_summary": null, "phase_duration_days": 3.1, "url": "https://example.atlassian.net/browse/PROJ-A-19"}
+        ]
       }
     },
     "team-beta": {
@@ -135,7 +143,15 @@
           "avg_duration_mins": 12.3,
           "total_builds": 96,
           "weekly_trend": [22, 25, 24, 25]
-        }
+        },
+        "bottleneck_phase": "qa",
+        "bottleneck_issues": [
+          {"key": "PROJ-B-88", "summary": "E2E test flakiness blocking QA sign-off", "parent_key": "PROJ-B-20", "parent_summary": "Quality Initiative Q1", "phase_duration_days": 12.3, "url": "https://example.atlassian.net/browse/PROJ-B-88"},
+          {"key": "PROJ-C-55", "summary": "Performance regression in search endpoint", "parent_key": "PROJ-C-5", "parent_summary": "Search Improvements", "phase_duration_days": 9.7, "url": "https://example.atlassian.net/browse/PROJ-C-55"},
+          {"key": "PROJ-B-72", "summary": "Mobile responsive layout breaks on tablet", "parent_key": null, "parent_summary": null, "phase_duration_days": 7.1, "url": "https://example.atlassian.net/browse/PROJ-B-72"},
+          {"key": "PROJ-B-91", "summary": "User permission matrix validation", "parent_key": "PROJ-B-20", "parent_summary": "Quality Initiative Q1", "phase_duration_days": 6.5, "url": "https://example.atlassian.net/browse/PROJ-B-91"},
+          {"key": "PROJ-C-48", "summary": "Localization string review for JP market", "parent_key": "PROJ-C-8", "parent_summary": "JP Market Launch", "phase_duration_days": 5.2, "url": "https://example.atlassian.net/browse/PROJ-C-48"}
+        ]
       }
     }
   },

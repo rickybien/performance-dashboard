@@ -12,6 +12,7 @@ import pytest
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from aggregate import (
+    _find_bottleneck_issues,
     aggregate,
     compute_percentile_stats,
     compute_throughput,
@@ -35,6 +36,9 @@ def make_issue(
     phase_durations: dict | None = None,
     resolved: datetime | None = None,
     created: datetime | None = None,
+    summary: str = "",
+    parent_key: str | None = None,
+    parent_summary: str | None = None,
 ) -> IssueMetrics:
     """建立合成 IssueMetrics。"""
     return IssueMetrics(
@@ -47,10 +51,16 @@ def make_issue(
         current_status="Done" if resolved else "In Progress",
         assignee=None,
         sprint_name=None,
+        summary=summary,
+        parent_key=parent_key,
+        parent_summary=parent_summary,
     )
 
 
 SAMPLE_CONFIG = {
+    "jira": {
+        "base_url": "https://example.atlassian.net",
+    },
     "collection": {
         "lookback_days": 90,
         "recent_days": 30,
@@ -355,3 +365,136 @@ def test_aggregate_trends_structure():
         assert trend["pr_pickup_hours"] is None
         assert len(trend["weeks"]) == 4
         assert len(trend["throughput"]) == 4
+
+
+# ============================================================
+# _find_bottleneck_issues 測試
+# ============================================================
+
+JIRA_BASE = "https://example.atlassian.net"
+
+
+def test_find_bottleneck_issues_sorted_desc():
+    """應依 phase duration 降序排列。"""
+    resolved = datetime.now(timezone.utc) - timedelta(days=1)
+    issues = [
+        make_issue("A-1", resolved=resolved, phase_durations={"dev": 24.0}, summary="Fast"),
+        make_issue("A-2", resolved=resolved, phase_durations={"dev": 72.0}, summary="Slow"),
+        make_issue("A-3", resolved=resolved, phase_durations={"dev": 48.0}, summary="Medium"),
+    ]
+
+    result = _find_bottleneck_issues(issues, "dev", JIRA_BASE)
+
+    assert len(result) == 3
+    assert result[0]["key"] == "A-2"
+    assert result[1]["key"] == "A-3"
+    assert result[2]["key"] == "A-1"
+    assert result[0]["phase_duration_days"] == 3.0
+    assert result[1]["phase_duration_days"] == 2.0
+    assert result[2]["phase_duration_days"] == 1.0
+
+
+def test_find_bottleneck_issues_limit():
+    """limit 參數應限制回傳數量。"""
+    resolved = datetime.now(timezone.utc) - timedelta(days=1)
+    issues = [
+        make_issue(f"A-{i}", resolved=resolved, phase_durations={"dev": float(i * 24)})
+        for i in range(1, 6)
+    ]
+
+    result = _find_bottleneck_issues(issues, "dev", JIRA_BASE, limit=2)
+
+    assert len(result) == 2
+    assert result[0]["key"] == "A-5"
+    assert result[1]["key"] == "A-4"
+
+
+def test_find_bottleneck_issues_excludes_unresolved():
+    """未 resolved 的 issue 不應出現在結果中。"""
+    resolved = datetime.now(timezone.utc) - timedelta(days=1)
+    issues = [
+        make_issue("A-1", resolved=resolved, phase_durations={"dev": 48.0}),
+        make_issue("A-2", resolved=None, phase_durations={"dev": 240.0}),  # unresolved
+    ]
+
+    result = _find_bottleneck_issues(issues, "dev", JIRA_BASE)
+
+    assert len(result) == 1
+    assert result[0]["key"] == "A-1"
+
+
+def test_find_bottleneck_issues_empty():
+    """無 resolved issues 時應回傳空列表。"""
+    issues = [make_issue("A-1", resolved=None, phase_durations={"dev": 48.0})]
+
+    result = _find_bottleneck_issues(issues, "dev", JIRA_BASE)
+
+    assert result == []
+
+
+def test_find_bottleneck_issues_url_and_parent():
+    """應正確組裝 URL 並帶入 parent 資訊。"""
+    resolved = datetime.now(timezone.utc) - timedelta(days=1)
+    issues = [
+        make_issue(
+            "PROJ-123", resolved=resolved, phase_durations={"qa": 72.0},
+            summary="Fix login bug",
+            parent_key="PROJ-100", parent_summary="Auth Epic",
+        ),
+    ]
+
+    result = _find_bottleneck_issues(issues, "qa", JIRA_BASE)
+
+    assert len(result) == 1
+    item = result[0]
+    assert item["url"] == "https://example.atlassian.net/browse/PROJ-123"
+    assert item["summary"] == "Fix login bug"
+    assert item["parent_key"] == "PROJ-100"
+    assert item["parent_summary"] == "Auth Epic"
+
+
+def test_find_bottleneck_issues_no_parent():
+    """沒有 parent 的 issue 應正常回傳 None。"""
+    resolved = datetime.now(timezone.utc) - timedelta(days=1)
+    issues = [
+        make_issue("A-1", resolved=resolved, phase_durations={"dev": 48.0}, summary="Solo task"),
+    ]
+
+    result = _find_bottleneck_issues(issues, "dev", JIRA_BASE)
+
+    assert result[0]["parent_key"] is None
+    assert result[0]["parent_summary"] is None
+
+
+def test_aggregate_bottleneck_phase_identification():
+    """aggregate 應正確識別 bottleneck phase（p50 最高者）。"""
+    resolved = datetime.now(timezone.utc) - timedelta(days=1)
+    issues = [
+        make_issue(
+            "PROJ-A-1", resolved=resolved,
+            phase_durations={"dev": 24.0, "qa": 72.0},  # qa 是瓶頸
+            summary="Issue 1",
+        ),
+        make_issue(
+            "PROJ-A-2", resolved=resolved,
+            phase_durations={"dev": 48.0, "qa": 96.0},
+            summary="Issue 2",
+        ),
+    ]
+
+    result = aggregate(SAMPLE_CONFIG, issues)
+    team = result["teams"]["team-alpha"]
+
+    assert team["aggregated"]["bottleneck_phase"] == "qa"
+    assert len(team["aggregated"]["bottleneck_issues"]) == 2
+    # 第一筆應是 qa 最慢的（96h = 4 天）
+    assert team["aggregated"]["bottleneck_issues"][0]["phase_duration_days"] == 4.0
+
+
+def test_aggregate_bottleneck_empty_issues():
+    """無 issue 時 bottleneck_phase 應為 None，bottleneck_issues 應為空。"""
+    result = aggregate(SAMPLE_CONFIG, [])
+    team = result["teams"]["team-alpha"]
+
+    assert team["aggregated"]["bottleneck_phase"] is None
+    assert team["aggregated"]["bottleneck_issues"] == []

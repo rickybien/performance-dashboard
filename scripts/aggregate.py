@@ -380,6 +380,48 @@ def _compute_build_metrics(builds: list) -> Optional[dict]:
     }
 
 
+def _find_bottleneck_issues(
+    issues: list[IssueMetrics],
+    bottleneck_phase: str,
+    jira_base_url: str,
+    limit: int = 10,
+) -> list[dict]:
+    """找出瓶頸 phase 停留最久的 top N issues。
+
+    Args:
+        issues: 該 team 的所有 IssueMetrics
+        bottleneck_phase: 瓶頸 phase id
+        jira_base_url: Jira Cloud base URL，用於組裝連結
+        limit: 回傳筆數上限
+
+    Returns:
+        排序後的 issue 列表（停留天數降序）
+    """
+    candidates = []
+    for issue in issues:
+        if issue.resolved is None:
+            continue
+        hours = issue.phase_durations.get(bottleneck_phase, 0.0)
+        if hours > 0:
+            candidates.append((hours, issue))
+
+    candidates.sort(key=lambda x: x[0], reverse=True)
+
+    browse_url = jira_base_url.rstrip("/") + "/browse/"
+    result = []
+    for hours, issue in candidates[:limit]:
+        result.append({
+            "key": issue.key,
+            "summary": issue.summary,
+            "parent_key": issue.parent_key,
+            "parent_summary": issue.parent_summary,
+            "phase_duration_days": round(hours / 24, 2),
+            "url": browse_url + issue.key,
+        })
+
+    return result
+
+
 def aggregate(
     config: dict,
     jira_data: list[IssueMetrics],
@@ -402,6 +444,7 @@ def aggregate(
     lookback_days = collection_config.get("lookback_days", 90)
     recent_days = collection_config.get("recent_days", 30)
     phases = config.get("phases", [])
+    jira_base_url = config.get("jira", {}).get("base_url", "")
 
     large_pr_threshold = config.get("dashboard", {}).get("large_pr_threshold", 400)
 
@@ -479,6 +522,24 @@ def aggregate(
         team_pr_metrics = _compute_pr_metrics(team_prs, large_pr_threshold)
         team_build_metrics = _compute_build_metrics(team_builds)
 
+        # 找出瓶頸 phase（p50 最高，排除 backlog/done/unmapped/total）
+        bottleneck_phase_id = None
+        max_p50 = 0.0
+        for phase in phases:
+            pid = phase["id"]
+            if pid in EXCLUDED_FROM_TOTAL:
+                continue
+            stat = team_cycle_time.get(pid)
+            if stat and stat["count"] > 0 and stat["p50"] > max_p50:
+                max_p50 = stat["p50"]
+                bottleneck_phase_id = pid
+
+        bottleneck_issues = []
+        if bottleneck_phase_id and jira_base_url:
+            bottleneck_issues = _find_bottleneck_issues(
+                all_team_issues, bottleneck_phase_id, jira_base_url,
+            )
+
         teams_output[team_id] = {
             "name": team_name,
             "projects": projects_output,
@@ -487,6 +548,8 @@ def aggregate(
                 "throughput": team_throughput,
                 "pr_metrics": team_pr_metrics,
                 "build_metrics": team_build_metrics,
+                "bottleneck_phase": bottleneck_phase_id,
+                "bottleneck_issues": bottleneck_issues,
             },
         }
 

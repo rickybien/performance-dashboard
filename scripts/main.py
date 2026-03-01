@@ -79,6 +79,9 @@ def _serialize_issue(issue: IssueMetrics) -> dict:
         "current_status": issue.current_status,
         "assignee": issue.assignee,
         "sprint_name": issue.sprint_name,
+        "summary": issue.summary,
+        "parent_key": issue.parent_key,
+        "parent_summary": issue.parent_summary,
     }
 
 
@@ -94,6 +97,9 @@ def _deserialize_issue(d: dict) -> IssueMetrics:
         current_status=d["current_status"],
         assignee=d.get("assignee"),
         sprint_name=d.get("sprint_name"),
+        summary=d.get("summary", ""),
+        parent_key=d.get("parent_key"),
+        parent_summary=d.get("parent_summary"),
     )
 
 
