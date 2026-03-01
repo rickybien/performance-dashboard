@@ -18,7 +18,7 @@ from pathlib import Path
 import yaml
 
 from aggregate import aggregate
-from collect_github import collect_github_prs
+from collect_github import PRMetrics, collect_github_prs
 from collect_jenkins import collect_jenkins_builds
 from collect_jira import IssueMetrics, collect_jira
 
@@ -33,6 +33,7 @@ logger = logging.getLogger(__name__)
 PROJECT_ROOT = Path(__file__).parent.parent
 DATA_DIR = PROJECT_ROOT / "data"
 CACHE_PATH = DATA_DIR / "cache" / "issues.json"
+PR_CACHE_PATH = DATA_DIR / "cache" / "prs.json"
 
 
 def load_config(config_path: Path) -> dict:
@@ -113,6 +114,55 @@ def save_issues_cache(cache: dict[str, dict]) -> None:
     logger.info("已寫入 cache: %s（%d 筆）", CACHE_PATH, len(cache))
 
 
+def _serialize_pr(pr: PRMetrics) -> dict:
+    """將 PRMetrics 序列化為可 JSON 儲存的 dict。"""
+    return {
+        "repo": pr.repo,
+        "pr_number": pr.pr_number,
+        "title": pr.title,
+        "jira_keys": pr.jira_keys,
+        "created_at": pr.created_at.isoformat(),
+        "first_review_at": pr.first_review_at.isoformat() if pr.first_review_at else None,
+        "merged_at": pr.merged_at.isoformat() if pr.merged_at else None,
+        "lines_added": pr.lines_added,
+        "lines_deleted": pr.lines_deleted,
+        "is_large": pr.is_large,
+    }
+
+
+def _deserialize_pr(d: dict) -> PRMetrics:
+    """從 dict 還原 PRMetrics。"""
+    return PRMetrics(
+        repo=d["repo"],
+        pr_number=d["pr_number"],
+        title=d["title"],
+        jira_keys=d["jira_keys"],
+        created_at=datetime.fromisoformat(d["created_at"]),
+        first_review_at=datetime.fromisoformat(d["first_review_at"]) if d["first_review_at"] else None,
+        merged_at=datetime.fromisoformat(d["merged_at"]) if d["merged_at"] else None,
+        lines_added=d["lines_added"],
+        lines_deleted=d["lines_deleted"],
+        is_large=d["is_large"],
+    )
+
+
+def load_prs_cache() -> dict[str, dict]:
+    """載入 PR cache，回傳 {repo#pr_number: serialized_dict}。檔案不存在時回傳 {}。"""
+    if not PR_CACHE_PATH.exists():
+        return {}
+    with PR_CACHE_PATH.open("r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+def save_prs_cache(cache: dict[str, dict]) -> None:
+    """將 PR cache 寫入 data/cache/prs.json。"""
+    PR_CACHE_PATH.parent.mkdir(parents=True, exist_ok=True)
+    with PR_CACHE_PATH.open("w", encoding="utf-8") as f:
+        json.dump(cache, f, ensure_ascii=False, indent=2, default=str)
+        f.write("\n")
+    logger.info("已寫入 PR cache: %s（%d 筆）", PR_CACHE_PATH, len(cache))
+
+
 def main() -> None:
     """主程式進入點。"""
     config_path = PROJECT_ROOT / "config.yaml"
@@ -165,11 +215,42 @@ def main() -> None:
     jira_data = [_deserialize_issue(v) for v in cache.values()]
     logger.info("Jira 資料準備完成，共 %d 筆", len(jira_data))
 
-    # ── GitHub / Jenkins 資料收集（維持原邏輯）──────────────────────────────
-    logger.info("開始收集 GitHub PR 資料")
-    github_data = collect_github_prs(config)
-    logger.info("GitHub PR 資料收集完成，共 %d 筆", len(github_data))
+    # ── GitHub PR 資料收集（增量或全量）─────────────────────────────────────
+    pr_cache = {} if force_full else load_prs_cache()
 
+    if pr_cache:
+        logger.info("PR 增量模式：抓取最近 %d 小時內有更新的 PR", overlap_hours)
+        updated_prs = collect_github_prs(config, since_hours=overlap_hours)
+        logger.info("PR 增量收集完成，共 %d 筆更新", len(updated_prs))
+
+        for pr in updated_prs:
+            key = f"{pr.repo}#{pr.pr_number}"
+            pr_cache[key] = _serialize_pr(pr)
+
+        # 清除超過 lookback_days 的 PR（以 merged_at 為準）
+        pr_cutoff = now - timedelta(days=lookback_days)
+        before_evict = len(pr_cache)
+        pr_cache = {
+            k: v for k, v in pr_cache.items()
+            if v.get("merged_at") and datetime.fromisoformat(v["merged_at"]) >= pr_cutoff
+        }
+        evicted = before_evict - len(pr_cache)
+        if evicted:
+            logger.info("清除 %d 筆逾期 PR（cutoff: %s）", evicted, pr_cutoff.date())
+
+        logger.info("PR cache 合併後共 %d 筆", len(pr_cache))
+    else:
+        mode = "強制全量" if force_full else "首次執行（無 PR cache）"
+        logger.info("%s：收集 %d 天內的 merged PR", mode, lookback_days)
+        all_prs = collect_github_prs(config)
+        logger.info("PR 全量收集完成，共 %d 筆", len(all_prs))
+        pr_cache = {f"{pr.repo}#{pr.pr_number}": _serialize_pr(pr) for pr in all_prs}
+
+    save_prs_cache(pr_cache)
+    github_data = [_deserialize_pr(v) for v in pr_cache.values()]
+    logger.info("GitHub PR 資料準備完成，共 %d 筆", len(github_data))
+
+    # ── Jenkins 資料收集──────────────────────────────────────────────────────
     logger.info("開始收集 Jenkins 建置資料")
     jenkins_data = collect_jenkins_builds(config)
     logger.info("Jenkins 建置資料收集完成，共 %d 筆", len(jenkins_data))

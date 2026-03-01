@@ -54,13 +54,15 @@ def _get_first_review_time(pr, author_login: str) -> Optional[datetime]:
     return None
 
 
-def collect_github_prs(config: dict) -> list[PRMetrics]:
+def collect_github_prs(config: dict, since_hours: Optional[int] = None) -> list[PRMetrics]:
     """從 GitHub 收集所有 team repos 的 merged PR 指標。
 
     若未設定 GITHUB_TOKEN 則回傳空列表（不中斷管線）。
 
     Args:
         config: 完整 config.yaml 內容
+        since_hours: 若指定，只收集最近 N 小時內有更新的 PR（增量模式）。
+                     None 表示全量模式，收集 lookback_days 天內的所有 merged PR。
 
     Returns:
         PRMetrics 列表
@@ -88,7 +90,10 @@ def collect_github_prs(config: dict) -> list[PRMetrics]:
     jira_pattern = collection_config.get("pr_issue_pattern", r"([A-Z][A-Z0-9]+-\d+)")
 
     large_pr_threshold = config.get("dashboard", {}).get("large_pr_threshold", 400)
-    cutoff = datetime.now(timezone.utc) - timedelta(days=lookback_days)
+    if since_hours is not None:
+        cutoff = datetime.now(timezone.utc) - timedelta(hours=since_hours)
+    else:
+        cutoff = datetime.now(timezone.utc) - timedelta(days=lookback_days)
 
     gh = Github(token)
     results: list[PRMetrics] = []
