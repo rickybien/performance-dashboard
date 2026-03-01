@@ -133,7 +133,10 @@ status_mapping:
       - "已上線"
 
   # Per-project overrides — only specify the differences
-  overrides: {}
+  overrides:
+    ROB:
+      dev_test:
+        - "FEATURE TESTING"
   #  PROJ-A:
   #    planning:
   #      - "Requirement Review"
