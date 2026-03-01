@@ -18,7 +18,7 @@ export function useMetrics() {
   }
 
   const baseUrl = import.meta.env.BASE_URL
-  const url = `${baseUrl}data/latest/dashboard.json`
+  const url = `${baseUrl}data/latest/dashboard.json?_=${Date.now()}`
 
   fetch(url)
     .then((r) => {
