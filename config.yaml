@@ -155,7 +155,7 @@ sa_sd_rules:
   summary_patterns:
     - "^\\[SA\\]"
     - "^\\[SD\\]"
-    - "\\bSA/?SD\\b"
+    - "(?<![A-Za-z])SA/?SD(?![A-Za-z])"
   overrides: {}
   #  team-scm:
   #    issue_types: ["Analysis"]

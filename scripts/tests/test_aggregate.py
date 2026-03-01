@@ -574,6 +574,22 @@ def test_is_sa_sd_by_summary_pattern():
     assert _is_sa_sd_issue(not_sasd, issue_types, patterns) is False
 
 
+def test_is_sa_sd_chinese_adjacent_pattern():
+    """中文字元緊鄰 SA/SD 時，(?<![A-Za-z])SA/?SD(?![A-Za-z]) 應正確匹配。"""
+    import re
+
+    issue_types: set[str] = set()
+    patterns = [re.compile(r"(?<![A-Za-z])SA/?SD(?![A-Za-z])", re.IGNORECASE)]
+
+    chinese_adjacent = make_issue(summary="跨方案 後端SA/SD")
+    with_space = make_issue(summary="[be2-web] 前端 SA/SD")
+    english_adjacent = make_issue(summary="NASASD mission")
+
+    assert _is_sa_sd_issue(chinese_adjacent, issue_types, patterns) is True
+    assert _is_sa_sd_issue(with_space, issue_types, patterns) is True
+    assert _is_sa_sd_issue(english_adjacent, issue_types, patterns) is False
+
+
 def test_sa_sd_per_team_override():
     """override 完全取代全域規則，不繼承全域 issue_types/summary_patterns。"""
     config_with_override = {
