@@ -8535,18 +8535,6 @@
     "lines_deleted": 0,
     "is_large": false
   },
-  "kkday-be2-b2b#478": {
-    "repo": "kkday-be2-b2b",
-    "pr_number": 478,
-    "title": "Feature/rob 3419 接駁地點管理｜release PR",
-    "jira_keys": [],
-    "created_at": "2025-09-02T05:32:29+00:00",
-    "first_review_at": null,
-    "merged_at": "2025-09-02T16:34:06+00:00",
-    "lines_added": 6700,
-    "lines_deleted": 26,
-    "is_large": true
-  },
   "kkday-psp#685": {
     "repo": "kkday-psp",
     "pr_number": 685,
