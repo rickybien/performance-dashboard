@@ -173,6 +173,17 @@ teams:
       - "kkday-b2b-api"
     jenkins_jobs: []
 
+  - name: "Team scm"
+    id: "team-scm"
+    jira_projects:
+      - "SCMWEB"
+    github_repos:
+      - "kkday-supplier-web"
+      - "kkday-supplier-api"
+      - "kkday-scm-backend"
+      - "kkday-scm-frontend"
+    jenkins_jobs: []
+
   # TODO: Add remaining 16 teams
   # Tip: You can generate this section from a spreadsheet or script
 
