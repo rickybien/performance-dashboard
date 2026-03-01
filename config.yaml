@@ -15,7 +15,7 @@ github:
 jenkins:
   base_url: "https://jenkins.kkday.com"
   # Auth via env vars: JENKINS_USER, JENKINS_API_TOKEN
-  enabled: true  # Enable in Phase 3
+  enabled: false  # Jenkins 在內網，CI 無法存取
 
 # ============================================================
 # Jira Status → Phase Mapping
