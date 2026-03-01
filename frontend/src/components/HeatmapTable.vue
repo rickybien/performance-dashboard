@@ -23,17 +23,17 @@
             v-for="phase in phases"
             :key="phase.id"
             class="heatmap-cell"
-            :class="cellClass(teamData.aggregated.cycle_time[phase.id]?.p50)"
+            :class="cellClass(teamData.aggregated.cycle_time[phase.id])"
             :title="cellTitle(teamData.aggregated.cycle_time[phase.id])"
           >
-            {{ formatDays(teamData.aggregated.cycle_time[phase.id]?.p50) }}
+            {{ formatDays(teamData.aggregated.cycle_time[phase.id]) }}
           </td>
           <td
             class="heatmap-cell total-col"
-            :class="cellClass(teamData.aggregated.cycle_time.total?.p50)"
+            :class="cellClass(teamData.aggregated.cycle_time.total)"
             :title="cellTitle(teamData.aggregated.cycle_time.total)"
           >
-            {{ formatDays(teamData.aggregated.cycle_time.total?.p50) }}
+            {{ formatDays(teamData.aggregated.cycle_time.total) }}
           </td>
         </tr>
       </tbody>
@@ -49,10 +49,10 @@ const props = defineProps({
   thresholds: { type: Object, required: true },
 })
 
-function cellClass(p50) {
-  if (p50 === undefined || p50 === null || p50 === 0) return 'cell-empty'
-  if (p50 < props.thresholds.good) return 'cell-good'
-  if (p50 < props.thresholds.warning) return 'cell-warning'
+function cellClass(stat) {
+  if (!stat || stat.count === 0) return 'cell-empty'
+  if (stat.p50 < props.thresholds.good) return 'cell-good'
+  if (stat.p50 < props.thresholds.warning) return 'cell-warning'
   return 'cell-bad'
 }
 
@@ -61,9 +61,9 @@ function cellTitle(stat) {
   return `p50: ${stat.p50}d  p85: ${stat.p85}d  n=${stat.count}`
 }
 
-function formatDays(p50) {
-  if (p50 === undefined || p50 === null || p50 === 0) return '—'
-  return `${p50}d`
+function formatDays(stat) {
+  if (!stat || stat.count === 0) return '—'
+  return `${stat.p50}d`
 }
 </script>
 

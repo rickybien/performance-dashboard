@@ -13,19 +13,17 @@
 
       <!-- Team Multi-Select -->
       <section class="card selector-card">
-        <h3>Select Teams (max 4)</h3>
+        <h3>Select Teams</h3>
         <div class="checkbox-group">
           <label
             v-for="(team, teamId) in data.teams"
             :key="teamId"
             class="checkbox-label"
-            :class="{ disabled: !selectedTeamIds.includes(teamId) && selectedTeamIds.length >= 4 }"
           >
             <input
               type="checkbox"
               :value="teamId"
               v-model="selectedTeamIds"
-              :disabled="!selectedTeamIds.includes(teamId) && selectedTeamIds.length >= 4"
             />
             {{ team.name }}
           </label>
@@ -94,7 +92,11 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend)
 
 const { data, loading, error } = useMetrics()
 
-const PALETTE = ['#60a5fa', '#34d399', '#f97316', '#a78bfa']
+const PALETTE = [
+  '#60a5fa', '#34d399', '#f97316', '#a78bfa',
+  '#f472b6', '#facc15', '#2dd4bf', '#fb923c',
+  '#818cf8', '#a3e635',
+]
 
 // 預設選前兩個 team
 const selectedTeamIds = ref([])
@@ -125,16 +127,17 @@ const chartData = computed(() => {
   const phases = data.value.meta.phases
   const labels = phases.map((p) => p.label)
 
-  const datasets = selectedTeamIds.value.map((teamId, i) => {
+  const datasets = selectedTeamIds.value.map((teamId) => {
     const team = data.value.teams[teamId]
     const ct = team?.aggregated.cycle_time ?? {}
     const values = phases.map((p) => ct[p.id]?.p50 ?? 0)
+    const color = teamColor(teamId)
 
     return {
       label: team?.name ?? teamId,
       data: values,
-      backgroundColor: PALETTE[i % PALETTE.length] + 'cc',
-      borderColor: PALETTE[i % PALETTE.length],
+      backgroundColor: color + 'cc',
+      borderColor: color,
       borderWidth: 1,
       borderRadius: 3,
     }
@@ -221,20 +224,11 @@ function formatHours(val) {
   user-select: none;
 }
 
-.checkbox-label.disabled {
-  color: var(--text-muted);
-  cursor: not-allowed;
-}
-
 .checkbox-label input[type='checkbox'] {
   accent-color: var(--accent);
   width: 14px;
   height: 14px;
   cursor: pointer;
-}
-
-.checkbox-label.disabled input[type='checkbox'] {
-  cursor: not-allowed;
 }
 
 .chart-section {
