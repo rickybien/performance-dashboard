@@ -156,7 +156,15 @@ sa_sd_rules:
     - "^\\[SA\\]"
     - "^\\[SD\\]"
     - "(?<![A-Za-z])SA/?SD(?![A-Za-z])"
-  overrides: {}
+  overrides:
+    team-b2b:
+      issue_types:
+        - "SA/SD"
+      summary_patterns:
+        - "^\\[SA\\]"
+        - "^\\[SD\\]"
+        - "(?<![A-Za-z])SA/?SD(?![A-Za-z])"
+        - "閱讀文件"
   #  team-scm:
   #    issue_types: ["Analysis"]
   #    summary_patterns: ["^\\[需求分析\\]"]
