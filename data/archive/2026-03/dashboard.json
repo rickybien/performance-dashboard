@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-01T08:08:20.111678+00:00",
+  "generated_at": "2026-03-01T10:53:43.772044+00:00",
   "period": {
     "start": "2025-09-02",
     "end": "2026-03-01"
@@ -43,10 +43,10 @@
     }
   },
   "summary": {
-    "total_completed_issues": 1002,
-    "avg_cycle_time_days": 11.44,
+    "total_completed_issues": 1000,
+    "avg_cycle_time_days": 11.43,
     "avg_cycle_time_prev_period": null,
-    "total_prs_merged": 2069,
+    "total_prs_merged": 2064,
     "avg_pr_pickup_hours": 0.2
   },
   "teams": {
@@ -57,8 +57,8 @@
           "cycle_time": {
             "backlog": {
               "p50": 0.07,
-              "p85": 7.05,
-              "count": 158
+              "p85": 7.38,
+              "count": 157
             },
             "planning": {
               "p50": 0.0,
@@ -68,17 +68,17 @@
             "dev": {
               "p50": 0.01,
               "p85": 2.86,
-              "count": 144
+              "count": 143
             },
             "review": {
               "p50": 3.79,
-              "p85": 12.87,
-              "count": 141
+              "p85": 11.96,
+              "count": 140
             },
             "dev_test": {
               "p50": 0.0,
-              "p85": 0.04,
-              "count": 115
+              "p85": 0.06,
+              "count": 114
             },
             "qa": {
               "p50": 0.0,
@@ -88,17 +88,17 @@
             "staging": {
               "p50": 0.2,
               "p85": 3.99,
-              "count": 132
+              "count": 131
             },
             "done": {
-              "p50": 69.19,
-              "p85": 136.16,
-              "count": 158
+              "p50": 69.35,
+              "p85": 136.31,
+              "count": 157
             },
             "total": {
-              "p50": 7.82,
-              "p85": 21.27,
-              "count": 144
+              "p50": 7.76,
+              "p85": 19.6,
+              "count": 143
             }
           },
           "throughput": {
@@ -118,8 +118,8 @@
         "cycle_time": {
           "backlog": {
             "p50": 0.07,
-            "p85": 7.05,
-            "count": 158
+            "p85": 7.38,
+            "count": 157
           },
           "planning": {
             "p50": 0.0,
@@ -129,17 +129,17 @@
           "dev": {
             "p50": 0.01,
             "p85": 2.86,
-            "count": 144
+            "count": 143
           },
           "review": {
             "p50": 3.79,
-            "p85": 12.87,
-            "count": 141
+            "p85": 11.96,
+            "count": 140
           },
           "dev_test": {
             "p50": 0.0,
-            "p85": 0.04,
-            "count": 115
+            "p85": 0.06,
+            "count": 114
           },
           "qa": {
             "p50": 0.0,
@@ -149,17 +149,17 @@
           "staging": {
             "p50": 0.2,
             "p85": 3.99,
-            "count": 132
+            "count": 131
           },
           "done": {
-            "p50": 69.19,
-            "p85": 136.16,
-            "count": 158
+            "p50": 69.35,
+            "p85": 136.31,
+            "count": 157
           },
           "total": {
-            "p50": 7.82,
-            "p85": 21.27,
-            "count": 144
+            "p50": 7.76,
+            "p85": 19.6,
+            "count": 143
           }
         },
         "throughput": {
@@ -230,14 +230,6 @@
             "url": "https://kkday.atlassian.net/browse/BE2PROD-5487"
           },
           {
-            "key": "BE2PROD-5391",
-            "summary": "[product-api]修正下架套餐呼叫packages/pkg_oid/items/item_oid時會出錯",
-            "parent_key": null,
-            "parent_summary": null,
-            "phase_duration_days": 28.81,
-            "url": "https://kkday.atlassian.net/browse/BE2PROD-5391"
-          },
-          {
             "key": "BE2PROD-5443",
             "summary": "[product-api]增加儲存影片連結",
             "parent_key": "PROD-20",
@@ -268,6 +260,14 @@
             "parent_summary": null,
             "phase_duration_days": 23.81,
             "url": "https://kkday.atlassian.net/browse/BE2PROD-5451"
+          },
+          {
+            "key": "BE2PROD-5647",
+            "summary": "[be2-web] 修正地點庫同步資料問題",
+            "parent_key": "BE2PROD-5500",
+            "parent_summary": "[be2-web] TOUR 下放",
+            "phase_duration_days": 22.08,
+            "url": "https://kkday.atlassian.net/browse/BE2PROD-5647"
           }
         ]
       }
@@ -313,8 +313,8 @@
               "count": 190
             },
             "done": {
-              "p50": 89.07,
-              "p85": 145.42,
+              "p50": 89.23,
+              "p85": 145.58,
               "count": 370
             },
             "total": {
@@ -374,8 +374,8 @@
             "count": 190
           },
           "done": {
-            "p50": 89.07,
-            "p85": 145.42,
+            "p50": 89.23,
+            "p85": 145.58,
             "count": 370
           },
           "total": {
@@ -395,18 +395,18 @@
           ]
         },
         "pr_metrics": {
-          "total_prs_merged": 903,
+          "total_prs_merged": 901,
           "pickup_hours": {
             "p50": 0.6,
-            "p85": 18.5,
-            "count": 389
+            "p85": 18.6,
+            "count": 388
           },
           "merge_time_hours": {
             "p50": 1.7,
-            "p85": 40.1,
-            "count": 903
+            "p85": 37.5,
+            "count": 901
           },
-          "large_pr_pct": 32.8
+          "large_pr_pct": 32.7
         },
         "build_metrics": null,
         "bottleneck_phase": "staging",
@@ -500,9 +500,9 @@
         "SCMWEB": {
           "cycle_time": {
             "backlog": {
-              "p50": 0.14,
+              "p50": 0.15,
               "p85": 7.85,
-              "count": 474
+              "count": 473
             },
             "planning": {
               "p50": 0.0,
@@ -511,13 +511,13 @@
             },
             "dev": {
               "p50": 0.06,
-              "p85": 3.76,
-              "count": 474
+              "p85": 3.77,
+              "count": 473
             },
             "review": {
               "p50": 0.02,
-              "p85": 5.52,
-              "count": 474
+              "p85": 5.55,
+              "count": 473
             },
             "dev_test": {
               "p50": 0.01,
@@ -527,26 +527,26 @@
             "qa": {
               "p50": 0.17,
               "p85": 6.06,
-              "count": 461
+              "count": 460
             },
             "staging": {
               "p50": 4.19,
               "p85": 20.78,
-              "count": 474
+              "count": 473
             },
             "done": {
-              "p50": 61.68,
-              "p85": 143.26,
-              "count": 474
+              "p50": 61.39,
+              "p85": 143.4,
+              "count": 473
             },
             "total": {
               "p50": 8.43,
               "p85": 33.77,
-              "count": 474
+              "count": 473
             }
           },
           "throughput": {
-            "completed_issues": 66,
+            "completed_issues": 64,
             "story_points": null,
             "weekly_trend": [
               19,
@@ -561,9 +561,9 @@
       "aggregated": {
         "cycle_time": {
           "backlog": {
-            "p50": 0.14,
+            "p50": 0.15,
             "p85": 7.85,
-            "count": 474
+            "count": 473
           },
           "planning": {
             "p50": 0.0,
@@ -572,13 +572,13 @@
           },
           "dev": {
             "p50": 0.06,
-            "p85": 3.76,
-            "count": 474
+            "p85": 3.77,
+            "count": 473
           },
           "review": {
             "p50": 0.02,
-            "p85": 5.52,
-            "count": 474
+            "p85": 5.55,
+            "count": 473
           },
           "dev_test": {
             "p50": 0.01,
@@ -588,26 +588,26 @@
           "qa": {
             "p50": 0.17,
             "p85": 6.06,
-            "count": 461
+            "count": 460
           },
           "staging": {
             "p50": 4.19,
             "p85": 20.78,
-            "count": 474
+            "count": 473
           },
           "done": {
-            "p50": 61.68,
-            "p85": 143.26,
-            "count": 474
+            "p50": 61.39,
+            "p85": 143.4,
+            "count": 473
           },
           "total": {
             "p50": 8.43,
             "p85": 33.77,
-            "count": 474
+            "count": 473
           }
         },
         "throughput": {
-          "completed_issues": 66,
+          "completed_issues": 64,
           "story_points": null,
           "weekly_trend": [
             19,
@@ -617,16 +617,16 @@
           ]
         },
         "pr_metrics": {
-          "total_prs_merged": 660,
+          "total_prs_merged": 657,
           "pickup_hours": {
             "p50": 0.1,
             "p85": 1.5,
-            "count": 637
+            "count": 635
           },
           "merge_time_hours": {
             "p50": 0.3,
             "p85": 16.1,
-            "count": 660
+            "count": 657
           },
           "large_pr_pct": 20.2
         },
