@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-02T11:14:43.057271+00:00",
+  "generated_at": "2026-03-02T11:29:24.038324+00:00",
   "period": {
     "start": "2025-09-03",
     "end": "2026-03-02"
@@ -207,8 +207,89 @@
           "large_pr_pct": 33.1
         },
         "build_metrics": null,
-        "bottleneck_phase": "planning",
-        "bottleneck_issues": [],
+        "bottleneck_phase": "review",
+        "bottleneck_issues": [
+          {
+            "key": "BE2PROD-5500",
+            "summary": "[be2-web] TOUR 下放",
+            "parent_key": "BE2PROD-5520",
+            "parent_summary": "[Prod]  地點 / 行程模組下放 Pkg 層級 （ 因應 tour prod page 特化）",
+            "phase_duration_days": 57.06,
+            "url": "https://kkday.atlassian.net/browse/BE2PROD-5500"
+          },
+          {
+            "key": "BE2PROD-5429",
+            "summary": "[be2-product] 調整 b2cbe 同步活動時的時間差錯誤訊息",
+            "parent_key": null,
+            "parent_summary": null,
+            "phase_duration_days": 52.81,
+            "url": "https://kkday.atlassian.net/browse/BE2PROD-5429"
+          },
+          {
+            "key": "BE2PROD-5529",
+            "summary": "[product-api] 行程地點模組下放",
+            "parent_key": "BE2PROD-5520",
+            "parent_summary": "[Prod]  地點 / 行程模組下放 Pkg 層級 （ 因應 tour prod page 特化）",
+            "phase_duration_days": 42.2,
+            "url": "https://kkday.atlassian.net/browse/BE2PROD-5529"
+          },
+          {
+            "key": "BE2PROD-5423",
+            "summary": "[be2-product] 新增 Mixpanel Session Replay",
+            "parent_key": null,
+            "parent_summary": null,
+            "phase_duration_days": 40.8,
+            "url": "https://kkday.atlassian.net/browse/BE2PROD-5423"
+          },
+          {
+            "key": "BE2PROD-5487",
+            "summary": "[be2-product] 修正 mkt tag 顯示問題",
+            "parent_key": null,
+            "parent_summary": null,
+            "phase_duration_days": 29.72,
+            "url": "https://kkday.atlassian.net/browse/BE2PROD-5487"
+          },
+          {
+            "key": "BE2PROD-5443",
+            "summary": "[product-api]增加儲存影片連結",
+            "parent_key": "PROD-20",
+            "parent_summary": "[Product] Hook GAI video for Category Lists & Search Result Lists",
+            "phase_duration_days": 27.26,
+            "url": "https://kkday.atlassian.net/browse/BE2PROD-5443"
+          },
+          {
+            "key": "BE2PROD-5404",
+            "summary": "[product-external-api] 位控 BY SKU 模式下多個 SKU 查詢時，只有最後一個 SKU 會往下查詢",
+            "parent_key": null,
+            "parent_summary": null,
+            "phase_duration_days": 23.96,
+            "url": "https://kkday.atlassian.net/browse/BE2PROD-5404"
+          },
+          {
+            "key": "BE2PROD-5454",
+            "summary": "[product-api] 組合商品後台api 移除 vertical 檢查",
+            "parent_key": null,
+            "parent_summary": null,
+            "phase_duration_days": 23.95,
+            "url": "https://kkday.atlassian.net/browse/BE2PROD-5454"
+          },
+          {
+            "key": "BE2PROD-5451",
+            "summary": "[product-api] 混合型月曆模式 定版檢查 Open date 不能設定延後出票 - 檢查方案層",
+            "parent_key": null,
+            "parent_summary": null,
+            "phase_duration_days": 23.81,
+            "url": "https://kkday.atlassian.net/browse/BE2PROD-5451"
+          },
+          {
+            "key": "BE2PROD-5647",
+            "summary": "[be2-web] 修正地點庫同步資料問題",
+            "parent_key": null,
+            "parent_summary": null,
+            "phase_duration_days": 22.08,
+            "url": "https://kkday.atlassian.net/browse/BE2PROD-5647"
+          }
+        ],
         "phase_insights": [
           {
             "phase_id": "dev",
