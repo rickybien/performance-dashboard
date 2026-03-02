@@ -5564,62 +5564,6 @@
     "lines_deleted": 1,
     "is_large": false
   },
-  "kkday-be2-web#3399": {
-    "repo": "kkday-be2-web",
-    "pr_number": 3399,
-    "title": "feat(KBE2-4123): pull develop",
-    "jira_keys": [
-      "KBE2-4123"
-    ],
-    "created_at": "2025-09-03T09:48:15+00:00",
-    "first_review_at": "2025-09-03T09:49:59+00:00",
-    "merged_at": "2025-09-03T10:04:37+00:00",
-    "lines_added": 849,
-    "lines_deleted": 2141,
-    "is_large": true
-  },
-  "kkday-be2-web#3389": {
-    "repo": "kkday-be2-web",
-    "pr_number": 3389,
-    "title": "feat(KBE2-4123): remove settle stmt detail file",
-    "jira_keys": [
-      "KBE2-4123"
-    ],
-    "created_at": "2025-08-27T06:14:51+00:00",
-    "first_review_at": "2025-08-28T03:15:40+00:00",
-    "merged_at": "2025-09-03T09:24:59+00:00",
-    "lines_added": 0,
-    "lines_deleted": 1885,
-    "is_large": true
-  },
-  "kkday-be2-web#3398": {
-    "repo": "kkday-be2-web",
-    "pr_number": 3398,
-    "title": "chore(BE2PROD-4970): 升級 storybook, eslint, jest",
-    "jira_keys": [
-      "BE2PROD-4970"
-    ],
-    "created_at": "2025-09-02T03:37:11+00:00",
-    "first_review_at": null,
-    "merged_at": "2025-09-03T07:37:14+00:00",
-    "lines_added": 18347,
-    "lines_deleted": 18455,
-    "is_large": true
-  },
-  "kkday-be2-web#3397": {
-    "repo": "kkday-be2-web",
-    "pr_number": 3397,
-    "title": "feat(BE2PROD-5376): 價格編輯頁面支援判別千分位符號",
-    "jira_keys": [
-      "BE2PROD-5376"
-    ],
-    "created_at": "2025-09-02T03:36:06+00:00",
-    "first_review_at": null,
-    "merged_at": "2025-09-03T07:35:47+00:00",
-    "lines_added": 75,
-    "lines_deleted": 5,
-    "is_large": false
-  },
   "katalyst#2019": {
     "repo": "katalyst",
     "pr_number": 2019,
@@ -6265,20 +6209,6 @@
     "lines_deleted": 8553,
     "is_large": true
   },
-  "katalyst#1934": {
-    "repo": "katalyst",
-    "pr_number": 1934,
-    "title": "chore(KAT-485): Add mixpanel session replay",
-    "jira_keys": [
-      "KAT-485"
-    ],
-    "created_at": "2025-09-02T05:48:52+00:00",
-    "first_review_at": "2025-09-03T02:45:45+00:00",
-    "merged_at": "2025-09-03T02:46:51+00:00",
-    "lines_added": 12944,
-    "lines_deleted": 8553,
-    "is_large": true
-  },
   "kkday-psi-service#1361": {
     "repo": "kkday-psi-service",
     "pr_number": 1361,
@@ -6866,20 +6796,6 @@
     "lines_added": 395,
     "lines_deleted": 179,
     "is_large": true
-  },
-  "kkday-be2-product#138": {
-    "repo": "kkday-be2-product",
-    "pr_number": 138,
-    "title": "refactor(BE2PROD-5330): 調整審品預設查詢日期區間",
-    "jira_keys": [
-      "BE2PROD-5330"
-    ],
-    "created_at": "2025-08-19T02:07:52+00:00",
-    "first_review_at": null,
-    "merged_at": "2025-09-03T08:56:48+00:00",
-    "lines_added": 9,
-    "lines_deleted": 6,
-    "is_large": false
   },
   "kkday-detective#191": {
     "repo": "kkday-detective",
@@ -18428,78 +18344,6 @@
     "lines_deleted": 59,
     "is_large": false
   },
-  "kkday-b2b-api#6167": {
-    "repo": "kkday-b2b-api",
-    "pr_number": 6167,
-    "title": "Release/250825",
-    "jira_keys": [],
-    "created_at": "2025-09-03T06:45:57+00:00",
-    "first_review_at": null,
-    "merged_at": "2025-09-03T07:26:53+00:00",
-    "lines_added": 912,
-    "lines_deleted": 29,
-    "is_large": true
-  },
-  "kkday-b2b-api#6166": {
-    "repo": "kkday-b2b-api",
-    "pr_number": 6166,
-    "title": "Feature/rob 3507 zoowoyoo fix price",
-    "jira_keys": [],
-    "created_at": "2025-09-03T03:05:37+00:00",
-    "first_review_at": null,
-    "merged_at": "2025-09-03T06:45:47+00:00",
-    "lines_added": 5,
-    "lines_deleted": 1,
-    "is_large": false
-  },
-  "kkday-b2b-api#6163": {
-    "repo": "kkday-b2b-api",
-    "pr_number": 6163,
-    "title": "Feature/rob 3509 tourcms report",
-    "jira_keys": [],
-    "created_at": "2025-09-02T05:58:36+00:00",
-    "first_review_at": null,
-    "merged_at": "2025-09-03T06:44:32+00:00",
-    "lines_added": 1,
-    "lines_deleted": 1,
-    "is_large": false
-  },
-  "kkday-b2b-api#6144": {
-    "repo": "kkday-b2b-api",
-    "pr_number": 6144,
-    "title": "Feature/rob 3469 experience oz",
-    "jira_keys": [],
-    "created_at": "2025-09-01T03:00:00+00:00",
-    "first_review_at": null,
-    "merged_at": "2025-09-03T06:42:21+00:00",
-    "lines_added": 911,
-    "lines_deleted": 28,
-    "is_large": true
-  },
-  "kkday-b2b-api#6164": {
-    "repo": "kkday-b2b-api",
-    "pr_number": 6164,
-    "title": "feat: AJ 改傳 base64 格式",
-    "jira_keys": [],
-    "created_at": "2025-09-02T09:00:29+00:00",
-    "first_review_at": "2025-09-02T10:39:55+00:00",
-    "merged_at": "2025-09-03T06:34:14+00:00",
-    "lines_added": 221,
-    "lines_deleted": 87,
-    "is_large": false
-  },
-  "kkday-b2b-api#6165": {
-    "repo": "kkday-b2b-api",
-    "pr_number": 6165,
-    "title": "feat: 新增 FixedPriceSupportInterface",
-    "jira_keys": [],
-    "created_at": "2025-09-02T09:08:40+00:00",
-    "first_review_at": "2025-09-02T09:50:35+00:00",
-    "merged_at": "2025-09-03T03:05:26+00:00",
-    "lines_added": 5,
-    "lines_deleted": 1,
-    "is_large": false
-  },
   "kkday-supplier-web#2340": {
     "repo": "kkday-supplier-web",
     "pr_number": 2340,
@@ -20488,34 +20332,6 @@
     "lines_added": 1112,
     "lines_deleted": 179,
     "is_large": true
-  },
-  "kkday-supplier-web#2192": {
-    "repo": "kkday-supplier-web",
-    "pr_number": 2192,
-    "title": "feat(SCMWEB-2333): fix single-spec and reset data when cancel",
-    "jira_keys": [
-      "SCMWEB-2333"
-    ],
-    "created_at": "2025-09-03T05:05:33+00:00",
-    "first_review_at": "2025-09-03T05:13:18+00:00",
-    "merged_at": "2025-09-03T05:25:56+00:00",
-    "lines_added": 33,
-    "lines_deleted": 24,
-    "is_large": false
-  },
-  "kkday-supplier-web#2191": {
-    "repo": "kkday-supplier-web",
-    "pr_number": 2191,
-    "title": "feat(SCMWEB-2375): integrate new prod tag API for SCM",
-    "jira_keys": [
-      "SCMWEB-2375"
-    ],
-    "created_at": "2025-09-03T03:54:16+00:00",
-    "first_review_at": "2025-09-03T05:00:13+00:00",
-    "merged_at": "2025-09-03T05:10:01+00:00",
-    "lines_added": 54,
-    "lines_deleted": 65,
-    "is_large": false
   },
   "kkday-supplier-api#773": {
     "repo": "kkday-supplier-api",
@@ -24536,20 +24352,6 @@
     "lines_deleted": 66,
     "is_large": false
   },
-  "kkday-scm-backend#671": {
-    "repo": "kkday-scm-backend",
-    "pr_number": 671,
-    "title": "feat(SCMWEB-2346): enhance prod tag tree structure",
-    "jira_keys": [
-      "SCMWEB-2346"
-    ],
-    "created_at": "2025-09-03T03:49:08+00:00",
-    "first_review_at": "2025-09-03T04:58:12+00:00",
-    "merged_at": "2025-09-03T05:09:58+00:00",
-    "lines_added": 81,
-    "lines_deleted": 66,
-    "is_large": false
-  },
   "kkday-scm-frontend#925": {
     "repo": "kkday-scm-frontend",
     "pr_number": 925,
@@ -27457,6 +27259,142 @@
     "merged_at": "2025-09-10T02:22:26+00:00",
     "lines_added": 24,
     "lines_deleted": 14,
+    "is_large": false
+  },
+  "kkday-product-service#7097": {
+    "repo": "kkday-product-service",
+    "pr_number": 7097,
+    "title": "feat(BE2PROD-5772): 補上 Proxy feature test",
+    "jira_keys": [
+      "BE2PROD-5772"
+    ],
+    "created_at": "2026-03-02T05:43:39+00:00",
+    "first_review_at": "2026-03-02T06:02:51+00:00",
+    "merged_at": "2026-03-02T07:25:18+00:00",
+    "lines_added": 120,
+    "lines_deleted": 0,
+    "is_large": false
+  },
+  "kkday-product-service#7093": {
+    "repo": "kkday-product-service",
+    "pr_number": 7093,
+    "title": "feat(BE2PROD-5767): MICE 商品可以使用組合商品功能",
+    "jira_keys": [
+      "BE2PROD-5767"
+    ],
+    "created_at": "2026-02-25T06:14:12+00:00",
+    "first_review_at": "2026-03-02T05:22:29+00:00",
+    "merged_at": "2026-03-02T06:03:01+00:00",
+    "lines_added": 39,
+    "lines_deleted": 1,
+    "is_large": false
+  },
+  "kkday-product-service#7082": {
+    "repo": "kkday-product-service",
+    "pr_number": 7082,
+    "title": "feat(BE2PROD-5772):  預覽加上每日最低價 & action-flow api",
+    "jira_keys": [
+      "BE2PROD-5772"
+    ],
+    "created_at": "2026-02-23T03:42:54+00:00",
+    "first_review_at": "2026-02-23T07:36:57+00:00",
+    "merged_at": "2026-03-02T02:36:09+00:00",
+    "lines_added": 267,
+    "lines_deleted": 0,
+    "is_large": false
+  },
+  "kkday-be2-web#3522": {
+    "repo": "kkday-be2-web",
+    "pr_number": 3522,
+    "title": "feat(BE2PROD-5799): Add user promotion and activity labels",
+    "jira_keys": [
+      "BE2PROD-5799"
+    ],
+    "created_at": "2026-02-24T03:46:38+00:00",
+    "first_review_at": "2026-02-24T03:52:57+00:00",
+    "merged_at": "2026-03-02T07:34:20+00:00",
+    "lines_added": 148,
+    "lines_deleted": 38,
+    "is_large": false
+  },
+  "katalyst#2014": {
+    "repo": "katalyst",
+    "pr_number": 2014,
+    "title": "refactor(KAT-525): Replace outdated packages and upgrade dependencies",
+    "jira_keys": [
+      "KAT-525"
+    ],
+    "created_at": "2026-02-24T08:53:16+00:00",
+    "first_review_at": "2026-02-24T09:02:54+00:00",
+    "merged_at": "2026-03-02T07:32:53+00:00",
+    "lines_added": 2394,
+    "lines_deleted": 8876,
+    "is_large": true
+  },
+  "kkday-b2b-api#6958": {
+    "repo": "kkday-b2b-api",
+    "pr_number": 6958,
+    "title": "feature/ROB-4126 USJ｜修改｜價格規則 margin 改為非必填｜review PR",
+    "jira_keys": [
+      "ROB-4126"
+    ],
+    "created_at": "2026-03-02T02:26:39+00:00",
+    "first_review_at": "2026-03-02T02:42:18+00:00",
+    "merged_at": "2026-03-02T03:00:48+00:00",
+    "lines_added": 1,
+    "lines_deleted": 1,
+    "is_large": false
+  },
+  "kkday-b2b-api#6957": {
+    "repo": "kkday-b2b-api",
+    "pr_number": 6957,
+    "title": "feat: 新增 owner 使用",
+    "jira_keys": [],
+    "created_at": "2026-03-02T02:09:57+00:00",
+    "first_review_at": null,
+    "merged_at": "2026-03-02T02:10:04+00:00",
+    "lines_added": 21,
+    "lines_deleted": 6,
+    "is_large": false
+  },
+  "kkday-supplier-web#2342": {
+    "repo": "kkday-supplier-web",
+    "pr_number": 2342,
+    "title": "feat(SCMWEB-3102): show reload confirm modal when chunk loading error occurred",
+    "jira_keys": [
+      "SCMWEB-3102"
+    ],
+    "created_at": "2026-03-02T02:05:18+00:00",
+    "first_review_at": "2026-03-02T02:21:51+00:00",
+    "merged_at": "2026-03-02T03:06:20+00:00",
+    "lines_added": 16,
+    "lines_deleted": 0,
+    "is_large": false
+  },
+  "kkday-scm-frontend#928": {
+    "repo": "kkday-scm-frontend",
+    "pr_number": 928,
+    "title": "show reload confirm modal when chunk loading error occurred",
+    "jira_keys": [],
+    "created_at": "2026-03-02T02:07:47+00:00",
+    "first_review_at": "2026-03-02T02:10:19+00:00",
+    "merged_at": "2026-03-02T03:06:25+00:00",
+    "lines_added": 19,
+    "lines_deleted": 0,
+    "is_large": false
+  },
+  "kkday-scm-frontend#927": {
+    "repo": "kkday-scm-frontend",
+    "pr_number": 927,
+    "title": "feat: add reportDetail route",
+    "jira_keys": [
+      "SCMWEB-3165"
+    ],
+    "created_at": "2026-03-02T02:00:44+00:00",
+    "first_review_at": "2026-03-02T02:01:47+00:00",
+    "merged_at": "2026-03-02T02:08:09+00:00",
+    "lines_added": 22,
+    "lines_deleted": 0,
     "is_large": false
   }
 }
