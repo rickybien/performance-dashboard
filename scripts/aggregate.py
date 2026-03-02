@@ -750,12 +750,8 @@ def aggregate(
 
         # Team 聚合（跨所有 project）
         team_cycle_time = _compute_cycle_time_for_project(all_team_issues, phases)
-        _merge_sa_sd_into_planning(team_cycle_time, all_team_issues, all_team_sa_sd_hours)
-        team_throughput = compute_throughput(all_team_issues, recent_days)
-        team_pr_metrics = _compute_pr_metrics(team_prs, large_pr_threshold)
-        team_build_metrics = _compute_build_metrics(team_builds)
 
-        # 找出瓶頸 phase（p50 最高，排除 backlog/done/unmapped/total）
+        # 先偵測瓶頸（在 SA/SD 合併之前，避免 planning p50 被 SA/SD 數據虛高汙染）
         bottleneck_phase_id = None
         max_p50 = 0.0
         for phase in phases:
@@ -766,6 +762,12 @@ def aggregate(
             if stat and stat["count"] > 0 and stat["p50"] > max_p50:
                 max_p50 = stat["p50"]
                 bottleneck_phase_id = pid
+
+        # 再合併 SA/SD → planning（不影響已偵測的 bottleneck）
+        _merge_sa_sd_into_planning(team_cycle_time, all_team_issues, all_team_sa_sd_hours)
+        team_throughput = compute_throughput(all_team_issues, recent_days)
+        team_pr_metrics = _compute_pr_metrics(team_prs, large_pr_threshold)
+        team_build_metrics = _compute_build_metrics(team_builds)
 
         bottleneck_issues = []
         if bottleneck_phase_id and jira_base_url:

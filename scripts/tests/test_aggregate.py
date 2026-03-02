@@ -715,6 +715,32 @@ def test_sa_sd_unresolved_included():
     assert planning["count"] == 1
 
 
+def test_sa_sd_does_not_pollute_bottleneck():
+    """SA/SD 合併到 planning 不應影響 bottleneck 偵測。
+
+    場景：normal issues 的 review p50 > planning p50，
+    但 SA/SD 合併後 planning p50 暴漲超過 review。
+    bottleneck 應仍為 review（基於合併前的乾淨數據）。
+    """
+    resolved = datetime.now(timezone.utc) - timedelta(days=1)
+
+    # Normal issues：review=72h（3天）> planning=12h（0.5天）
+    normal_issues = [
+        make_issue(f"PROJ-A-{i}", resolved=resolved, phase_durations={"planning": 12.0, "review": 72.0})
+        for i in range(1, 6)
+    ]
+    # SA/SD 票：planning=120h（5天）→ 合併後 planning 暴漲超過 review
+    sasd = make_issue("PROJ-A-99", resolved=resolved, phase_durations={"planning": 120.0}, issue_type="SA/SD")
+
+    result = aggregate(SA_SD_CONFIG, normal_issues + [sasd])
+    team = result["teams"]["team-alpha"]["aggregated"]
+
+    # bottleneck 應是 review（normal issues 的真實瓶頸），而非 planning（SA/SD 汙染後的虛高值）
+    assert team["bottleneck_phase"] == "review"
+    # bottleneck_issues 應有資料（review 有 5 個 normal issues）
+    assert len(team["bottleneck_issues"]) > 0
+
+
 # ============================================================
 # PR dev 補充輔助函式
 # ============================================================
