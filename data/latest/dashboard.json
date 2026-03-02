@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-02T17:13:58.743717+00:00",
+  "generated_at": "2026-03-02T18:42:00.230434+00:00",
   "period": {
     "start": "2025-09-03",
     "end": "2026-03-02"
@@ -43,8 +43,8 @@
     }
   },
   "summary": {
-    "total_completed_issues": 994,
-    "avg_cycle_time_days": 13.94,
+    "total_completed_issues": 993,
+    "avg_cycle_time_days": 13.95,
     "avg_cycle_time_prev_period": null,
     "total_prs_merged": 2061,
     "avg_pr_pickup_hours": 0.2
@@ -345,28 +345,28 @@
         "ROB": {
           "cycle_time": {
             "backlog": {
-              "p50": 1.06,
+              "p50": 1.08,
               "p75": 5.04,
               "p90": 13.3,
-              "count": 362
+              "count": 361
             },
             "planning": {
               "p50": 0.0,
-              "p75": 0.8,
-              "p90": 4.65,
-              "count": 366
+              "p75": 0.81,
+              "p90": 4.67,
+              "count": 365
             },
             "dev": {
               "p50": 0.06,
-              "p75": 1.45,
+              "p75": 1.49,
               "p90": 5.78,
-              "count": 362,
+              "count": 361,
               "filtered": {
                 "p50": 1.18,
                 "p75": 4.89,
                 "p90": 10.59,
                 "count": 188,
-                "excluded_count": 174,
+                "excluded_count": 173,
                 "threshold_hours": 1.0
               }
             },
@@ -378,9 +378,9 @@
             },
             "dev_test": {
               "p50": 0.0,
-              "p75": 0.87,
+              "p75": 0.88,
               "p90": 3.99,
-              "count": 305
+              "count": 304
             },
             "qa": {
               "p50": 1.85,
@@ -401,10 +401,10 @@
               "count": 12
             },
             "total": {
-              "p50": 4.32,
-              "p75": 9.22,
-              "p90": 22.07,
-              "count": 362
+              "p50": 4.36,
+              "p75": 9.26,
+              "p90": 22.09,
+              "count": 361
             }
           },
           "throughput": {
@@ -423,28 +423,28 @@
       "aggregated": {
         "cycle_time": {
           "backlog": {
-            "p50": 1.06,
+            "p50": 1.08,
             "p75": 5.04,
             "p90": 13.3,
-            "count": 362
+            "count": 361
           },
           "planning": {
             "p50": 0.0,
-            "p75": 0.8,
-            "p90": 4.65,
-            "count": 366
+            "p75": 0.81,
+            "p90": 4.67,
+            "count": 365
           },
           "dev": {
             "p50": 0.06,
-            "p75": 1.45,
+            "p75": 1.49,
             "p90": 5.78,
-            "count": 362,
+            "count": 361,
             "filtered": {
               "p50": 1.18,
               "p75": 4.89,
               "p90": 10.59,
               "count": 188,
-              "excluded_count": 174,
+              "excluded_count": 173,
               "threshold_hours": 1.0
             }
           },
@@ -456,9 +456,9 @@
           },
           "dev_test": {
             "p50": 0.0,
-            "p75": 0.87,
+            "p75": 0.88,
             "p90": 3.99,
-            "count": 305
+            "count": 304
           },
           "qa": {
             "p50": 1.85,
@@ -479,10 +479,10 @@
             "count": 12
           },
           "total": {
-            "p50": 4.32,
-            "p75": 9.22,
-            "p90": 22.07,
-            "count": 362
+            "p50": 4.36,
+            "p75": 9.26,
+            "p90": 22.09,
+            "count": 361
           }
         },
         "throughput": {
@@ -599,14 +599,14 @@
           {
             "phase_id": "planning",
             "pass_through_count": 211,
-            "total_in_phase": 362,
-            "pass_through_pct": 58.3
+            "total_in_phase": 361,
+            "pass_through_pct": 58.4
           },
           {
             "phase_id": "dev",
             "pass_through_count": 115,
-            "total_in_phase": 362,
-            "pass_through_pct": 31.8
+            "total_in_phase": 361,
+            "pass_through_pct": 31.9
           },
           {
             "phase_id": "review",
@@ -617,14 +617,14 @@
           {
             "phase_id": "dev_test",
             "pass_through_count": 161,
-            "total_in_phase": 305,
-            "pass_through_pct": 52.8
+            "total_in_phase": 304,
+            "pass_through_pct": 53.0
           }
         ],
         "dev_source_stats": {
           "jira_count": 255,
-          "github_count": 107,
-          "total": 362
+          "github_count": 106,
+          "total": 361
         }
       }
     },
