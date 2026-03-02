@@ -535,6 +535,55 @@ def _merge_sa_sd_into_planning(
     cycle_time["planning"] = compute_percentile_stats(planning_values)
 
 
+PASS_THROUGH_THRESHOLD_HOURS = 1 / 60  # < 1 分鐘視為自動穿越
+
+
+def _compute_phase_insights(
+    issues: list[IssueMetrics],
+    phases: list[dict],
+    cycle_time: dict,
+) -> list[dict]:
+    """為 p50 < 1d 的 phase 計算 pass-through 分布。
+
+    Args:
+        issues: team 的所有 IssueMetrics
+        phases: config phases 列表
+        cycle_time: 已算好的 {phase_id: {p50, count, ...}} dict
+
+    Returns:
+        [{"phase_id", "pass_through_count", "total_in_phase", "pass_through_pct"}, ...]
+    """
+    resolved = [i for i in issues if i.resolved is not None]
+    if not resolved:
+        return []
+
+    insights = []
+    for phase in phases:
+        pid = phase["id"]
+        if pid in EXCLUDED_FROM_TOTAL:
+            continue
+        stat = cycle_time.get(pid)
+        if not stat or stat["count"] == 0 or stat["p50"] >= 1.0:
+            continue  # 只看 p50 < 1d 的 phase
+
+        in_phase = [i for i in resolved if i.phase_durations.get(pid, 0) > 0]
+        if not in_phase:
+            continue
+        pass_through = sum(
+            1 for i in in_phase
+            if i.phase_durations[pid] < PASS_THROUGH_THRESHOLD_HOURS
+        )
+        pct = round(pass_through / len(in_phase) * 100, 1)
+        insights.append({
+            "phase_id": pid,
+            "pass_through_count": pass_through,
+            "total_in_phase": len(in_phase),
+            "pass_through_pct": pct,
+        })
+
+    return insights
+
+
 def _find_bottleneck_issues(
     issues: list[IssueMetrics],
     bottleneck_phase: str,
@@ -724,6 +773,8 @@ def aggregate(
                 all_team_issues, bottleneck_phase_id, jira_base_url,
             )
 
+        phase_insights = _compute_phase_insights(all_team_issues, phases, team_cycle_time)
+
         teams_output[team_id] = {
             "name": team_name,
             "projects": projects_output,
@@ -734,6 +785,7 @@ def aggregate(
                 "build_metrics": team_build_metrics,
                 "bottleneck_phase": bottleneck_phase_id,
                 "bottleneck_issues": bottleneck_issues,
+                "phase_insights": phase_insights,
             },
         }
 

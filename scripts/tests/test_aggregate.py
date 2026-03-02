@@ -14,6 +14,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 from aggregate import (
     _build_jira_pr_index,
     _build_sa_sd_matcher,
+    _compute_phase_insights,
     _compute_pr_dev_hours,
     _compute_sa_sd_planning_hours,
     _enhance_dev_durations_with_prs,
@@ -929,3 +930,130 @@ def test_aggregate_no_github_data_backward_compat():
 
     assert dev_stat["count"] == 1
     assert dev_stat["p50"] == 2.0
+
+
+# ============================================================
+# _compute_phase_insights 測試
+# ============================================================
+
+PHASES_FOR_INSIGHTS = [
+    {"id": "backlog", "label": "Backlog"},
+    {"id": "planning", "label": "SA/SD"},
+    {"id": "dev", "label": "Development"},
+    {"id": "done", "label": "Done"},
+]
+
+
+def make_cycle_time(p50_by_phase: dict) -> dict:
+    """輔助：建立 cycle_time dict，只含指定的 p50 和 count=1。"""
+    ct = {}
+    for pid, p50 in p50_by_phase.items():
+        ct[pid] = {"p50": p50, "p75": p50, "p90": p50, "count": 1 if p50 > 0 else 0}
+    return ct
+
+
+def test_phase_insights_only_low_p50():
+    """只有 p50 < 1d 的 phase 才產生 insight；p50 >= 1d 的不出現。"""
+    resolved = datetime.now(timezone.utc) - timedelta(days=1)
+    issues = [
+        make_issue("A-1", resolved=resolved, phase_durations={"planning": 0.5 / 60, "dev": 48.0}),
+    ]
+    ct = make_cycle_time({"planning": 0.5 / 24, "dev": 2.0})  # planning=0.02d(<1d), dev=2d(>=1d)
+
+    insights = _compute_phase_insights(issues, PHASES_FOR_INSIGHTS, ct)
+
+    phase_ids = [i["phase_id"] for i in insights]
+    assert "planning" in phase_ids
+    assert "dev" not in phase_ids
+
+
+def test_phase_insights_high_pass_through():
+    """80% 以上 issues < 1 分鐘 → pass_through_pct 正確計算。"""
+    resolved = datetime.now(timezone.utc) - timedelta(days=1)
+    # 9 筆 < 1 分鐘（0.01h），1 筆正常（2h）
+    fast = 0.01  # hours，< 1/60h
+    issues = [
+        make_issue(f"A-{i}", resolved=resolved, phase_durations={"planning": fast})
+        for i in range(9)
+    ] + [
+        make_issue("A-9", resolved=resolved, phase_durations={"planning": 2.0}),
+    ]
+    ct = make_cycle_time({"planning": 0.01 / 24})  # p50 < 1d
+
+    insights = _compute_phase_insights(issues, PHASES_FOR_INSIGHTS, ct)
+
+    assert len(insights) == 1
+    insight = insights[0]
+    assert insight["phase_id"] == "planning"
+    assert insight["pass_through_count"] == 9
+    assert insight["total_in_phase"] == 10
+    assert abs(insight["pass_through_pct"] - 90.0) < 0.1
+
+
+def test_phase_insights_low_pass_through():
+    """pass-through < 10% 時仍正確回傳（pct 接近 0）。"""
+    resolved = datetime.now(timezone.utc) - timedelta(days=1)
+    fast = 0.01  # hours
+    issues = [
+        make_issue("A-0", resolved=resolved, phase_durations={"dev": fast}),
+    ] + [
+        make_issue(f"A-{i}", resolved=resolved, phase_durations={"dev": 2.0})
+        for i in range(1, 10)
+    ]
+    ct = make_cycle_time({"dev": 0.05})  # p50 < 1d
+
+    insights = _compute_phase_insights(issues, PHASES_FOR_INSIGHTS, ct)
+
+    assert len(insights) == 1
+    insight = insights[0]
+    assert insight["pass_through_count"] == 1
+    assert insight["total_in_phase"] == 10
+    assert abs(insight["pass_through_pct"] - 10.0) < 0.1
+
+
+def test_phase_insights_excludes_backlog_done_unmapped():
+    """backlog 和 done 不應出現在 insights 中（EXCLUDED_FROM_TOTAL）。"""
+    resolved = datetime.now(timezone.utc) - timedelta(days=1)
+    issues = [
+        make_issue("A-1", resolved=resolved, phase_durations={"backlog": 0.001, "done": 0.001}),
+    ]
+    ct = make_cycle_time({"backlog": 0.001 / 24, "done": 0.001 / 24})
+
+    insights = _compute_phase_insights(issues, PHASES_FOR_INSIGHTS, ct)
+
+    assert insights == []
+
+
+def test_phase_insights_empty_issues():
+    """空 issues 列表 → 回傳 []。"""
+    ct = make_cycle_time({"planning": 0.01})
+
+    insights = _compute_phase_insights([], PHASES_FOR_INSIGHTS, ct)
+
+    assert insights == []
+
+
+def test_phase_insights_no_resolved_issues():
+    """所有 issue 未 resolved → 回傳 []。"""
+    issues = [
+        make_issue("A-1", resolved=None, phase_durations={"planning": 0.001}),
+    ]
+    ct = make_cycle_time({"planning": 0.001 / 24})
+
+    insights = _compute_phase_insights(issues, PHASES_FOR_INSIGHTS, ct)
+
+    assert insights == []
+
+
+def test_phase_insights_in_aggregate_output():
+    """aggregate() 輸出的 teams[id].aggregated 應包含 phase_insights 欄位。"""
+    resolved = datetime.now(timezone.utc) - timedelta(days=1)
+    issues = [
+        make_issue("PROJ-A-1", resolved=resolved, phase_durations={"dev": 48.0}),
+    ]
+
+    result = aggregate(SAMPLE_CONFIG, issues)
+    team = result["teams"]["team-alpha"]
+
+    assert "phase_insights" in team["aggregated"]
+    assert isinstance(team["aggregated"]["phase_insights"], list)

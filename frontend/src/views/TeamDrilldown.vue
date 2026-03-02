@@ -82,6 +82,24 @@
         </table>
       </section>
 
+      <!-- Phase Insights -->
+      <section v-if="phaseInsights.length" class="card" style="margin-top: 1rem">
+        <h3>Phase Insights</h3>
+        <ul class="insights-list">
+          <li v-for="insight in phaseInsights" :key="insight.phase_id" class="insight-item">
+            <span class="phase-badge" :style="{ background: insight.color + '33', color: insight.color }">
+              {{ insight.label }}
+            </span>
+            p50 {{ insight.p50 }}d —
+            {{ insight.pass_through_count }}/{{ insight.total_in_phase }}
+            ({{ insight.pass_through_pct }}%) resolved issues 停留 &lt; 1 min
+            <template v-if="insight.pass_through_pct >= 50">
+              — 可能為 Jira 自動化穿越
+            </template>
+          </li>
+        </ul>
+      </section>
+
       <!-- PR Metrics -->
       <section class="card" style="margin-top: 1rem">
         <h3>PR Metrics</h3>
@@ -160,6 +178,22 @@ const bottleneck = computed(() => {
 const bottleneckIssues = computed(() =>
   currentTeam.value?.aggregated.bottleneck_issues ?? [],
 )
+
+const phaseInsights = computed(() => {
+  const raw = currentTeam.value?.aggregated.phase_insights ?? []
+  const phases = data.value?.meta.phases ?? []
+  const ct = currentTeam.value?.aggregated.cycle_time ?? {}
+  return raw.map(insight => {
+    const phase = phases.find(p => p.id === insight.phase_id)
+    const stat = ct[insight.phase_id]
+    return {
+      ...insight,
+      label: phase?.label ?? insight.phase_id,
+      color: phase?.color ?? '#888',
+      p50: stat?.p50 ?? 0,
+    }
+  })
+})
 
 function parentUrl(issue) {
   // 從 issue.url 推導 base，替換 issue key 為 parent key
@@ -271,5 +305,20 @@ function parentUrl(issue) {
 
 .muted {
   color: var(--text-muted);
+}
+
+.insights-list {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.insight-item {
+  font-size: 0.8125rem;
+  color: var(--text-primary);
+  line-height: 1.6;
 }
 </style>
