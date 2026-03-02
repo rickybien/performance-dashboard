@@ -82,6 +82,28 @@
         </table>
       </section>
 
+      <!-- Dev Source Info -->
+      <section v-if="devSourceStats && devSourceStats.total > 0" class="card" style="margin-top: 1rem">
+        <h3>Development 數據來源</h3>
+        <ul class="dev-source-list">
+          <li>Jira status 時間：<strong>{{ devSourceStats.jira_count }}</strong> 筆</li>
+          <li v-if="devSourceStats.github_count > 0">
+            GitHub commit 時間補充：<strong>{{ devSourceStats.github_count }}</strong> 筆
+          </li>
+          <template v-if="devFilteredStats">
+            <li>
+              過濾 (dev &lt; {{ devFilteredStats.threshold_hours }}h)：排除
+              <strong>{{ devFilteredStats.excluded_count }}</strong> 筆
+            </li>
+            <li>
+              原始 p50：{{ devRawP50 }}d →
+              過濾後 p50：<strong>{{ devFilteredStats.p50 }}d</strong>
+              (n={{ devFilteredStats.count }})
+            </li>
+          </template>
+        </ul>
+      </section>
+
       <!-- Phase Insights -->
       <section v-if="phaseInsights.length" class="card" style="margin-top: 1rem">
         <h3>Phase Insights</h3>
@@ -194,6 +216,19 @@ const phaseInsights = computed(() => {
     }
   })
 })
+
+const devSourceStats = computed(() =>
+  currentTeam.value?.aggregated.dev_source_stats ?? null,
+)
+
+const devFilteredStats = computed(() => {
+  const ct = currentTeam.value?.aggregated.cycle_time
+  return ct?.dev?.filtered ?? null
+})
+
+const devRawP50 = computed(() =>
+  currentTeam.value?.aggregated.cycle_time?.dev?.p50 ?? 0,
+)
 
 function parentUrl(issue) {
   // 從 issue.url 推導 base，替換 issue key 為 parent key
@@ -317,6 +352,18 @@ function parentUrl(issue) {
 }
 
 .insight-item {
+  font-size: 0.8125rem;
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+.dev-source-list {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
   font-size: 0.8125rem;
   color: var(--text-primary);
   line-height: 1.6;

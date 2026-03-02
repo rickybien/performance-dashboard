@@ -168,11 +168,21 @@ def _compute_iso_week_label(now: datetime, weeks_ago: int) -> str:
 def _compute_cycle_time_for_project(
     issues: list[IssueMetrics],
     phases: list[dict],
+    dev_filter_threshold_hours: float = 1.0,
 ) -> dict:
     """計算單一專案的週期時間統計。
 
+    對 dev phase 額外計算 filtered 版本（排除 dev < threshold 的 issue），
+    以過濾掉 Jira 批次拖票造成的 pass-through 干擾。
+
+    Args:
+        issues: IssueMetrics 列表
+        phases: config phases 列表
+        dev_filter_threshold_hours: 過濾 dev phase 的門檻（小時），預設 1 小時
+
     Returns:
-        {phase_id: {"p50": float, "p85": float, "count": int}, ..., "total": {...}}
+        {phase_id: {"p50": float, "p75": float, "p90": float, "count": int}, ..., "total": {...}}
+        dev phase 額外包含 "filtered": {"p50", ..., "excluded_count", "threshold_hours"}
     """
     # 只計算已解決的 issue
     resolved_issues = [issue for issue in issues if issue.resolved is not None]
@@ -186,7 +196,17 @@ def _compute_cycle_time_for_project(
             for issue in resolved_issues
             if phase_id in issue.phase_durations and issue.phase_durations[phase_id] > 0
         ]
-        cycle_time[phase_id] = compute_percentile_stats(values)
+        stat = compute_percentile_stats(values)
+
+        # 對 dev phase 額外計算 filtered 版本
+        if phase_id == "dev" and values:
+            filtered_values = [v for v in values if v >= dev_filter_threshold_hours]
+            filtered_stat = compute_percentile_stats(filtered_values)
+            filtered_stat["excluded_count"] = len(values) - len(filtered_values)
+            filtered_stat["threshold_hours"] = dev_filter_threshold_hours
+            stat["filtered"] = filtered_stat
+
+        cycle_time[phase_id] = stat
 
     # 計算 total（排除 backlog、done、unmapped）
     total_values: list[float] = []
@@ -260,13 +280,41 @@ def _compute_pr_dev_hours(prs: list) -> float:
     return max(hours, 0.0)
 
 
+def _compute_pr_coding_hours(prs: list) -> float:
+    """從 PR 的 first_commit_authored_at → created_at 計算 coding 時間（小時）。
+
+    邏輯：取所有 PR 中最早的 first_commit 時間到最早的 PR 建立時間之差。
+    此值代表「開始寫 code 到開 PR」的時間，比 Jira 狀態更準確。
+
+    Args:
+        prs: 關聯到同一 issue 的 merged PRMetrics 列表
+
+    Returns:
+        coding 時間（小時），若無 first_commit 資料則回傳 0.0
+    """
+    if not prs:
+        return 0.0
+
+    first_commits = [pr.first_commit_authored_at for pr in prs if pr.first_commit_authored_at is not None]
+    if not first_commits:
+        return 0.0
+
+    earliest_commit = min(first_commits)
+    earliest_pr_created = min(pr.created_at for pr in prs)
+
+    hours = (earliest_pr_created - earliest_commit).total_seconds() / 3600
+    return max(hours, 0.0)
+
+
 def _enhance_dev_durations_with_prs(
     issues: list[IssueMetrics],
     pr_index: dict[str, list],
 ) -> int:
     """用 PR 數據補充 issue 的 development phase 時間（原地修改）。
 
-    對每個 resolved issue，取 max(jira_dev, pr_dev) 作為有效 dev 時間。
+    優先使用 first_commit_authored_at → PR_created_at 作為 coding 時間；
+    若無 first_commit 資料，fallback 使用 PR_created_at → first_review_at。
+    取 max(jira_dev, pr_dev) 作為有效 dev 時間，並記錄數據來源。
 
     Args:
         issues: IssueMetrics 列表（resolved issues 會被原地修改）
@@ -283,13 +331,20 @@ def _enhance_dev_durations_with_prs(
         if not related_prs:
             continue
 
-        pr_dev = _compute_pr_dev_hours(related_prs)
-        if pr_dev <= 0:
+        # 優先使用 first_commit → PR_created coding 時間
+        effective_hours = _compute_pr_coding_hours(related_prs)
+        if effective_hours <= 0:
+            # Fallback：使用 PR_created → first_review 時間（舊行為）
+            effective_hours = _compute_pr_dev_hours(related_prs)
+
+        if effective_hours <= 0:
             continue
 
         jira_dev = issue.phase_durations.get("dev", 0.0)
-        if pr_dev > jira_dev:
-            issue.phase_durations["dev"] = pr_dev
+        if effective_hours > jira_dev:
+            issue.dev_original_hours = jira_dev
+            issue.phase_durations["dev"] = effective_hours
+            issue.dev_source = "github"
             enhanced_count += 1
 
     return enhanced_count
@@ -648,6 +703,7 @@ def aggregate(
     collection_config = config.get("collection", {})
     lookback_days = collection_config.get("lookback_days", 90)
     recent_days = collection_config.get("recent_days", 30)
+    dev_filter_threshold_hours = collection_config.get("dev_filter_threshold_hours", 1.0)
     phases = config.get("phases", [])
     jira_base_url = config.get("jira", {}).get("base_url", "")
 
@@ -738,7 +794,7 @@ def aggregate(
                 sa_sd_hours = []
                 all_team_issues.extend(project_issues)
 
-            cycle_time = _compute_cycle_time_for_project(normal_issues, phases)
+            cycle_time = _compute_cycle_time_for_project(normal_issues, phases, dev_filter_threshold_hours)
             _merge_sa_sd_into_planning(cycle_time, normal_issues, sa_sd_hours)
             throughput = compute_throughput(normal_issues, recent_days)
 
@@ -749,7 +805,7 @@ def aggregate(
             }
 
         # Team 聚合（跨所有 project）
-        team_cycle_time = _compute_cycle_time_for_project(all_team_issues, phases)
+        team_cycle_time = _compute_cycle_time_for_project(all_team_issues, phases, dev_filter_threshold_hours)
 
         # 先偵測瓶頸（在 SA/SD 合併之前，避免 planning p50 被 SA/SD 數據虛高汙染）
         bottleneck_phase_id = None
@@ -777,6 +833,18 @@ def aggregate(
 
         phase_insights = _compute_phase_insights(all_team_issues, phases, team_cycle_time)
 
+        # 統計 dev phase 數據來源（Jira vs GitHub commit time）
+        dev_issues = [
+            i for i in all_team_issues
+            if i.resolved is not None and i.phase_durations.get("dev", 0) > 0
+        ]
+        github_dev_count = sum(1 for i in dev_issues if i.dev_source == "github")
+        dev_source_stats = {
+            "jira_count": len(dev_issues) - github_dev_count,
+            "github_count": github_dev_count,
+            "total": len(dev_issues),
+        }
+
         teams_output[team_id] = {
             "name": team_name,
             "projects": projects_output,
@@ -788,6 +856,7 @@ def aggregate(
                 "bottleneck_phase": bottleneck_phase_id,
                 "bottleneck_issues": bottleneck_issues,
                 "phase_insights": phase_insights,
+                "dev_source_stats": dev_source_stats,
             },
         }
 

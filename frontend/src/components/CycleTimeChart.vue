@@ -40,7 +40,14 @@ const chartData = computed(() => {
 
   const datasets = activePhases.map((phase) => ({
     label: phase.label,
-    data: projectKeys.map((pk) => props.projects[pk].cycle_time[phase.id]?.p50 ?? 0),
+    data: projectKeys.map((pk) => {
+      const stat = props.projects[pk].cycle_time[phase.id]
+      // dev phase：優先使用 filtered p50（排除 pass-through 後的真實值）
+      if (phase.id === 'dev' && stat?.filtered?.count > 0) {
+        return stat.filtered.p50 ?? 0
+      }
+      return stat?.p50 ?? 0
+    }),
     backgroundColor: phase.color + 'cc',  // 80% opacity
     borderColor: phase.color,
     borderWidth: 1,
@@ -67,9 +74,19 @@ const chartOptions = {
         label: (ctx) => {
           const pk = ctx.chart.data.labels[ctx.dataIndex]
           const phase = ctx.chart.data.datasets[ctx.datasetIndex]
-          // 從 props 取得當前 project + phase 的 p75/p90
           const phaseId = props.phases.find((p) => p.label === phase.label)?.id
           const stat = phaseId ? props.projects[pk]?.cycle_time?.[phaseId] : null
+
+          // dev phase 有 filtered 數據時，顯示原始 vs 過濾後對比
+          if (stat?.filtered?.count > 0) {
+            const excl = stat.filtered.excluded_count
+            const thr = stat.filtered.threshold_hours
+            return [
+              ` ${phase.label}: ${stat.filtered.p50}d (filtered p50, n=${stat.filtered.count})`,
+              ` 原始 p50: ${stat.p50}d  已排除 ${excl} 筆 (dev < ${thr}h)`,
+            ]
+          }
+
           const extra = stat
             ? `  p75: ${stat.p75}d  p90: ${stat.p90}d`
             : ''

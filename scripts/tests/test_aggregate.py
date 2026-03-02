@@ -15,6 +15,7 @@ from aggregate import (
     _build_jira_pr_index,
     _build_sa_sd_matcher,
     _compute_phase_insights,
+    _compute_pr_coding_hours,
     _compute_pr_dev_hours,
     _compute_sa_sd_planning_hours,
     _enhance_dev_durations_with_prs,
@@ -1083,3 +1084,145 @@ def test_phase_insights_in_aggregate_output():
 
     assert "phase_insights" in team["aggregated"]
     assert isinstance(team["aggregated"]["phase_insights"], list)
+
+
+# ============================================================
+# Dev Phase 過濾與 GitHub Commit 時間補足測試
+# ============================================================
+
+
+def make_pr_with_commit(
+    repo: str = "repo-a",
+    jira_keys: list[str] | None = None,
+    commit_offset_h: float = -24,   # 相對 PR_BASE 的小時偏移（負數=PR 建立之前）
+    created_offset_h: float = 0,
+    first_review_offset_h: float | None = None,
+    merged_offset_h: float = 20,
+    pr_number: int = 1,
+) -> PRMetrics:
+    """建立含 first_commit_authored_at 的合成 PRMetrics。"""
+    created = PR_BASE + timedelta(hours=created_offset_h)
+    first_commit = PR_BASE + timedelta(hours=commit_offset_h)
+    first_review = (
+        PR_BASE + timedelta(hours=first_review_offset_h)
+        if first_review_offset_h is not None
+        else None
+    )
+    merged = PR_BASE + timedelta(hours=merged_offset_h)
+    return PRMetrics(
+        repo=repo,
+        pr_number=pr_number,
+        title="test PR with commit",
+        jira_keys=jira_keys or [],
+        created_at=created,
+        first_review_at=first_review,
+        merged_at=merged,
+        lines_added=50,
+        lines_deleted=10,
+        is_large=False,
+        first_commit_authored_at=first_commit,
+    )
+
+
+def test_compute_pr_coding_hours_basic():
+    """first_commit → PR_created 應正確計算 coding 時間。"""
+    # commit 在 PR 建立前 24 小時
+    pr = make_pr_with_commit(commit_offset_h=-24, created_offset_h=0)
+    hours = _compute_pr_coding_hours([pr])
+    assert hours == 24.0
+
+
+def test_compute_pr_coding_hours_no_commit():
+    """無 first_commit_authored_at 時應回傳 0.0。"""
+    pr = make_pr(jira_keys=["PROJ-A-1"], created_offset_h=0, merged_offset_h=20)
+    # make_pr 不設定 first_commit_authored_at，預設為 None
+    assert pr.first_commit_authored_at is None
+    hours = _compute_pr_coding_hours([pr])
+    assert hours == 0.0
+
+
+def test_enhance_dev_tracks_source():
+    """當 coding_hours > jira_dev 時，dev_source 應設為 'github'，並記錄 dev_original_hours。"""
+    resolved = BASE_TIME + timedelta(days=5)
+    issue = make_issue("PROJ-A-1", resolved=resolved, phase_durations={"dev": 0.5})
+    # first_commit 在 PR 建立前 36 小時 → coding_hours = 36h > jira_dev = 0.5h
+    pr = make_pr_with_commit(
+        jira_keys=["PROJ-A-1"],
+        commit_offset_h=-36,
+        created_offset_h=0,
+        merged_offset_h=40,
+    )
+
+    count = _enhance_dev_durations_with_prs([issue], _build_jira_pr_index([pr]))
+
+    assert count == 1
+    assert issue.dev_source == "github"
+    assert issue.dev_original_hours == 0.5
+    assert issue.phase_durations["dev"] == 36.0
+
+
+def test_cycle_time_filtered_dev():
+    """filtered.p50 應排除 dev < 1h 的 issue；excluded_count 正確。"""
+    from aggregate import _compute_cycle_time_for_project
+
+    resolved = datetime.now(timezone.utc) - timedelta(days=1)
+    phases = [{"id": "dev", "label": "Development"}]
+
+    # 5 筆正常（dev >= 1h）+ 3 筆 pass-through（dev < 1h）
+    normal_issues = [
+        make_issue(f"A-{i}", resolved=resolved, phase_durations={"dev": float(i * 12)})
+        for i in range(1, 6)  # 12h, 24h, 36h, 48h, 60h
+    ]
+    pass_through_issues = [
+        make_issue(f"B-{i}", resolved=resolved, phase_durations={"dev": 0.3})
+        for i in range(3)  # 0.3h < 1h
+    ]
+
+    ct = _compute_cycle_time_for_project(
+        normal_issues + pass_through_issues, phases, dev_filter_threshold_hours=1.0
+    )
+
+    assert "filtered" in ct["dev"]
+    filtered = ct["dev"]["filtered"]
+    assert filtered["count"] == 5              # 只有 5 筆 >= 1h
+    assert filtered["excluded_count"] == 3     # 3 筆被排除
+    assert filtered["threshold_hours"] == 1.0
+    # 原始 p50 包含全部 8 筆；filtered p50 只含 5 筆（12,24,36,48,60h）
+    assert ct["dev"]["count"] == 8
+    assert filtered["p50"] < ct["dev"]["p50"] or filtered["count"] < ct["dev"]["count"]
+
+
+def test_dev_source_stats_in_output():
+    """aggregate() 輸出應包含 dev_source_stats，github_count 正確反映補充數量。"""
+    resolved = NOW - timedelta(days=1)
+    config = {
+        **SAMPLE_CONFIG,
+        "teams": [
+            {
+                "id": "team-alpha",
+                "name": "Team Alpha",
+                "jira_projects": ["PROJ-A"],
+                "github_repos": ["repo-a"],
+            }
+        ],
+    }
+
+    # issue dev = 0.5h（pass-through），PR commit = 36h 前
+    issue1 = make_issue("PROJ-A-1", project="PROJ-A", resolved=resolved, phase_durations={"dev": 0.5})
+    # issue dev = 48h（正常），無 PR
+    issue2 = make_issue("PROJ-A-2", project="PROJ-A", resolved=resolved, phase_durations={"dev": 48.0})
+
+    pr = make_pr_with_commit(
+        repo="repo-a",
+        jira_keys=["PROJ-A-1"],
+        commit_offset_h=-36,
+        created_offset_h=0,
+        merged_offset_h=40,
+    )
+
+    result = aggregate(config, [issue1, issue2], github_data=[pr])
+    stats = result["teams"]["team-alpha"]["aggregated"]["dev_source_stats"]
+
+    assert stats["github_count"] == 1  # issue1 被 GitHub commit 取代
+    assert stats["jira_count"] == 1    # issue2 保留 Jira 值
+    assert stats["total"] == 2

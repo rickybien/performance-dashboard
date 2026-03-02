@@ -148,11 +148,13 @@ def _serialize_pr(pr: PRMetrics) -> dict:
         "lines_added": pr.lines_added,
         "lines_deleted": pr.lines_deleted,
         "is_large": pr.is_large,
+        "first_commit_authored_at": pr.first_commit_authored_at.isoformat() if pr.first_commit_authored_at else None,
     }
 
 
 def _deserialize_pr(d: dict) -> PRMetrics:
     """從 dict 還原 PRMetrics。"""
+    raw_fc = d.get("first_commit_authored_at")
     return PRMetrics(
         repo=d["repo"],
         pr_number=d["pr_number"],
@@ -164,6 +166,7 @@ def _deserialize_pr(d: dict) -> PRMetrics:
         lines_added=d["lines_added"],
         lines_deleted=d["lines_deleted"],
         is_large=d["is_large"],
+        first_commit_authored_at=datetime.fromisoformat(raw_fc) if raw_fc else None,
     )
 
 

@@ -33,6 +33,7 @@ class PRMetrics:
     lines_added: int
     lines_deleted: int
     is_large: bool
+    first_commit_authored_at: Optional[datetime] = None  # 最早 commit 的作者時間
 
 
 def _extract_jira_keys(text: str, pattern: str) -> list[str]:
@@ -133,6 +134,17 @@ def collect_github_prs(config: dict, since_hours: Optional[int] = None) -> list[
 
                     lines_changed = (pr.additions or 0) + (pr.deletions or 0)
 
+                    first_commit_authored_at = None
+                    try:
+                        commits = list(pr.get_commits())
+                        if commits:
+                            authored = commits[0].commit.author.date
+                            if authored.tzinfo is None:
+                                authored = authored.replace(tzinfo=timezone.utc)
+                            first_commit_authored_at = authored
+                    except Exception:
+                        pass
+
                     results.append(
                         PRMetrics(
                             repo=repo_name,
@@ -145,6 +157,7 @@ def collect_github_prs(config: dict, since_hours: Optional[int] = None) -> list[
                             lines_added=pr.additions or 0,
                             lines_deleted=pr.deletions or 0,
                             is_large=lines_changed > large_pr_threshold,
+                            first_commit_authored_at=first_commit_authored_at,
                         )
                     )
 

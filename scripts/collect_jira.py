@@ -34,6 +34,8 @@ class IssueMetrics:
     parent_issue_type: Optional[str] = None  # parent 的 issue type（如 "Epic"）
     status_transitions: list[dict] = field(default_factory=list)
     # 每個 dict: {"timestamp": "ISO str", "from_status": str, "to_status": str}
+    dev_source: str = "jira"           # "jira" 或 "github"（被 PR coding time 取代時）
+    dev_original_hours: Optional[float] = None  # 被取代前的 Jira 原始 dev hours
 
 
 def build_status_lookup(config: dict, project_key: str) -> dict[str, str]:
