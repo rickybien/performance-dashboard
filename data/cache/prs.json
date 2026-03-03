@@ -4104,137 +4104,6 @@
     "is_large": false,
     "first_commit_authored_at": "2025-09-04T08:59:58+00:00"
   },
-  "kkday-product-service#6791": {
-    "repo": "kkday-product-service",
-    "pr_number": 6791,
-    "title": "feat(BE2PROD-5347): [AJ] 取得商品和方案客製化描述模組 (#6781)",
-    "jira_keys": [
-      "BE2PROD-5347"
-    ],
-    "created_at": "2025-09-04T02:45:36+00:00",
-    "first_review_at": null,
-    "merged_at": "2025-09-04T03:11:47+00:00",
-    "lines_added": 974,
-    "lines_deleted": 14,
-    "is_large": true,
-    "first_commit_authored_at": "2025-09-04T02:45:13+00:00"
-  },
-  "kkday-product-service#6788": {
-    "repo": "kkday-product-service",
-    "pr_number": 6788,
-    "title": "fix(BE2PROD-5283): [mkt-tag] 修正回傳拿mapping的更新資訊",
-    "jira_keys": [
-      "BE2PROD-5283"
-    ],
-    "created_at": "2025-09-03T10:03:09+00:00",
-    "first_review_at": "2025-09-04T07:23:35+00:00",
-    "merged_at": "2025-09-04T07:34:24+00:00",
-    "lines_added": 4,
-    "lines_deleted": 4,
-    "is_large": false,
-    "first_commit_authored_at": "2025-09-03T10:02:19+00:00"
-  },
-  "kkday-product-service#6793": {
-    "repo": "kkday-product-service",
-    "pr_number": 6793,
-    "title": "feat(BE2PROD-5278): 標籤刪除綁定套餐 modify_user 移到外層",
-    "jira_keys": [
-      "BE2PROD-5278"
-    ],
-    "created_at": "2025-09-04T05:34:29+00:00",
-    "first_review_at": "2025-09-04T07:23:24+00:00",
-    "merged_at": "2025-09-04T07:34:04+00:00",
-    "lines_added": 32,
-    "lines_deleted": 33,
-    "is_large": false,
-    "first_commit_authored_at": "2025-09-04T05:32:29+00:00"
-  },
-  "kkday-product-service#6183": {
-    "repo": "kkday-product-service",
-    "pr_number": 6183,
-    "title": "exception 可以根據 status code 設定 log level",
-    "jira_keys": [],
-    "created_at": "2025-01-29T14:16:24+00:00",
-    "first_review_at": "2025-07-08T05:43:50+00:00",
-    "merged_at": "2025-09-04T03:31:16+00:00",
-    "lines_added": 43,
-    "lines_deleted": 28,
-    "is_large": false,
-    "first_commit_authored_at": "2025-01-29T12:33:44+00:00"
-  },
-  "kkday-product-service#6784": {
-    "repo": "kkday-product-service",
-    "pr_number": 6784,
-    "title": "refactor: 使用 Mockery 替代內建 mock 方法以增強測試可讀性",
-    "jira_keys": [],
-    "created_at": "2025-09-02T07:03:35+00:00",
-    "first_review_at": "2025-09-03T01:21:44+00:00",
-    "merged_at": "2025-09-04T03:17:52+00:00",
-    "lines_added": 40,
-    "lines_deleted": 106,
-    "is_large": false,
-    "first_commit_authored_at": "2025-09-02T05:35:48+00:00"
-  },
-  "kkday-product-service#6780": {
-    "repo": "kkday-product-service",
-    "pr_number": 6780,
-    "title": "feat(BE2PROD-5369): scm增加訪問proxy權限",
-    "jira_keys": [
-      "BE2PROD-5369"
-    ],
-    "created_at": "2025-09-02T02:41:52+00:00",
-    "first_review_at": null,
-    "merged_at": "2025-09-04T03:03:41+00:00",
-    "lines_added": 1,
-    "lines_deleted": 1,
-    "is_large": false,
-    "first_commit_authored_at": "2025-09-02T02:41:26+00:00"
-  },
-  "kkday-product-service#6761": {
-    "repo": "kkday-product-service",
-    "pr_number": 6761,
-    "title": "feat(BE2PROD-5354): 綁定元件的最少最多驗證與前台切齊 (#6757)",
-    "jira_keys": [
-      "BE2PROD-5354"
-    ],
-    "created_at": "2025-08-26T02:12:00+00:00",
-    "first_review_at": null,
-    "merged_at": "2025-09-04T03:03:05+00:00",
-    "lines_added": 62,
-    "lines_deleted": 13,
-    "is_large": false,
-    "first_commit_authored_at": "2025-08-26T02:11:34+00:00"
-  },
-  "kkday-product-service#6760": {
-    "repo": "kkday-product-service",
-    "pr_number": 6760,
-    "title": "fix(BE2PROD-5356): 修正booking config拿不到情境 ",
-    "jira_keys": [
-      "BE2PROD-5356"
-    ],
-    "created_at": "2025-08-26T02:09:00+00:00",
-    "first_review_at": null,
-    "merged_at": "2025-09-04T03:02:37+00:00",
-    "lines_added": 1,
-    "lines_deleted": 1,
-    "is_large": false,
-    "first_commit_authored_at": "2025-08-26T02:08:06+00:00"
-  },
-  "kkday-product-service#6781": {
-    "repo": "kkday-product-service",
-    "pr_number": 6781,
-    "title": "feat(BE2PROD-5347): [AJ] 取得商品和方案客製化描述模組",
-    "jira_keys": [
-      "BE2PROD-5347"
-    ],
-    "created_at": "2025-09-02T03:24:20+00:00",
-    "first_review_at": "2025-09-03T01:24:25+00:00",
-    "merged_at": "2025-09-04T02:45:13+00:00",
-    "lines_added": 974,
-    "lines_deleted": 14,
-    "is_large": true,
-    "first_commit_authored_at": "2025-09-02T03:22:17+00:00"
-  },
   "kkday-be2-web#3522": {
     "repo": "kkday-be2-web",
     "pr_number": 3522,
@@ -7525,21 +7394,6 @@
     "is_large": false,
     "first_commit_authored_at": "2025-09-09T01:55:35+00:00"
   },
-  "kkday-product-external-api#60": {
-    "repo": "kkday-product-external-api",
-    "pr_number": 60,
-    "title": "feat(BE2PROD-5212): model not found log 降級",
-    "jira_keys": [
-      "BE2PROD-5212"
-    ],
-    "created_at": "2025-09-04T03:30:12+00:00",
-    "first_review_at": "2025-09-04T04:29:20+00:00",
-    "merged_at": "2025-09-04T05:05:32+00:00",
-    "lines_added": 24,
-    "lines_deleted": 9,
-    "is_large": false,
-    "first_commit_authored_at": "2025-09-04T03:29:44+00:00"
-  },
   "kkday-robot-order-api#159": {
     "repo": "kkday-robot-order-api",
     "pr_number": 159,
@@ -9146,32 +9000,6 @@
     "lines_deleted": 1462,
     "is_large": true,
     "first_commit_authored_at": "2025-08-18T06:55:07+00:00"
-  },
-  "kkday-be2-b2b#479": {
-    "repo": "kkday-be2-b2b",
-    "pr_number": 479,
-    "title": "Feature/rob 3324",
-    "jira_keys": [],
-    "created_at": "2025-09-04T02:51:45+00:00",
-    "first_review_at": null,
-    "merged_at": "2025-09-04T06:57:36+00:00",
-    "lines_added": 84,
-    "lines_deleted": 0,
-    "is_large": false,
-    "first_commit_authored_at": "2025-09-02T04:55:51+00:00"
-  },
-  "kkday-be2-b2b#477": {
-    "repo": "kkday-be2-b2b",
-    "pr_number": 477,
-    "title": "Feature/rob 3324",
-    "jira_keys": [],
-    "created_at": "2025-09-02T05:05:38+00:00",
-    "first_review_at": "2025-09-02T05:59:28+00:00",
-    "merged_at": "2025-09-04T02:51:22+00:00",
-    "lines_added": 84,
-    "lines_deleted": 0,
-    "is_large": false,
-    "first_commit_authored_at": "2025-09-02T04:55:51+00:00"
   },
   "kkday-psp#685": {
     "repo": "kkday-psp",
@@ -19670,205 +19498,6 @@
     "is_large": false,
     "first_commit_authored_at": "2025-09-02T02:56:27+00:00"
   },
-  "kkday-b2b-api#6185": {
-    "repo": "kkday-b2b-api",
-    "pr_number": 6185,
-    "title": "Release/250825",
-    "jira_keys": [],
-    "created_at": "2025-09-04T09:41:13+00:00",
-    "first_review_at": null,
-    "merged_at": "2025-09-04T09:53:11+00:00",
-    "lines_added": 7,
-    "lines_deleted": 8,
-    "is_large": false,
-    "first_commit_authored_at": "2025-09-04T08:46:56+00:00"
-  },
-  "kkday-b2b-api#6184": {
-    "repo": "kkday-b2b-api",
-    "pr_number": 6184,
-    "title": "Feature/rob 3521 tl lin coln add occupancy to price",
-    "jira_keys": [],
-    "created_at": "2025-09-04T09:32:03+00:00",
-    "first_review_at": null,
-    "merged_at": "2025-09-04T09:41:03+00:00",
-    "lines_added": 7,
-    "lines_deleted": 8,
-    "is_large": false,
-    "first_commit_authored_at": "2025-09-04T08:46:56+00:00"
-  },
-  "kkday-b2b-api#6181": {
-    "repo": "kkday-b2b-api",
-    "pr_number": 6181,
-    "title": "調整最小入住人數搜尋邏輯，簡化程式碼並改善錯誤處理",
-    "jira_keys": [],
-    "created_at": "2025-09-04T08:49:17+00:00",
-    "first_review_at": "2025-09-04T08:53:48+00:00",
-    "merged_at": "2025-09-04T09:31:02+00:00",
-    "lines_added": 7,
-    "lines_deleted": 8,
-    "is_large": false,
-    "first_commit_authored_at": "2025-09-04T08:46:56+00:00"
-  },
-  "kkday-b2b-api#6183": {
-    "repo": "kkday-b2b-api",
-    "pr_number": 6183,
-    "title": "fix: 修正 inspect 取日期的邏輯",
-    "jira_keys": [],
-    "created_at": "2025-09-04T09:01:44+00:00",
-    "first_review_at": null,
-    "merged_at": "2025-09-04T09:01:52+00:00",
-    "lines_added": 186,
-    "lines_deleted": 126,
-    "is_large": false,
-    "first_commit_authored_at": "2025-09-04T07:40:06+00:00"
-  },
-  "kkday-b2b-api#6174": {
-    "repo": "kkday-b2b-api",
-    "pr_number": 6174,
-    "title": "Feature/rob 3508 遠雄海洋公園 查orderStatus｜review PR",
-    "jira_keys": [
-      "ROB-3508"
-    ],
-    "created_at": "2025-09-04T02:33:10+00:00",
-    "first_review_at": "2025-09-04T02:38:12+00:00",
-    "merged_at": "2025-09-04T02:51:30+00:00",
-    "lines_added": 482,
-    "lines_deleted": 0,
-    "is_large": true,
-    "first_commit_authored_at": "2025-09-04T02:12:07+00:00"
-  },
-  "kkday-b2b-api#6178": {
-    "repo": "kkday-b2b-api",
-    "pr_number": 6178,
-    "title": "Release/250825",
-    "jira_keys": [],
-    "created_at": "2025-09-04T06:16:55+00:00",
-    "first_review_at": null,
-    "merged_at": "2025-09-04T06:30:38+00:00",
-    "lines_added": 1016,
-    "lines_deleted": 286,
-    "is_large": true,
-    "first_commit_authored_at": "2025-09-02T04:24:27+00:00"
-  },
-  "kkday-b2b-api#6175": {
-    "repo": "kkday-b2b-api",
-    "pr_number": 6175,
-    "title": "Feature/rob 3224 add interface",
-    "jira_keys": [],
-    "created_at": "2025-09-04T02:50:31+00:00",
-    "first_review_at": null,
-    "merged_at": "2025-09-04T06:15:58+00:00",
-    "lines_added": 239,
-    "lines_deleted": 132,
-    "is_large": false,
-    "first_commit_authored_at": "2025-09-02T04:24:27+00:00"
-  },
-  "kkday-b2b-api#6177": {
-    "repo": "kkday-b2b-api",
-    "pr_number": 6177,
-    "title": "Feature/rob 3521 tl lin coln add occupancy to price",
-    "jira_keys": [],
-    "created_at": "2025-09-04T06:03:28+00:00",
-    "first_review_at": null,
-    "merged_at": "2025-09-04T06:11:38+00:00",
-    "lines_added": 71,
-    "lines_deleted": 60,
-    "is_large": false,
-    "first_commit_authored_at": "2025-09-02T09:07:49+00:00"
-  },
-  "kkday-b2b-api#6176": {
-    "repo": "kkday-b2b-api",
-    "pr_number": 6176,
-    "title": "Feature/rob 3508 遠雄海洋公園 查orderStatus｜release PR",
-    "jira_keys": [
-      "ROB-3508"
-    ],
-    "created_at": "2025-09-04T02:52:27+00:00",
-    "first_review_at": null,
-    "merged_at": "2025-09-04T06:06:29+00:00",
-    "lines_added": 487,
-    "lines_deleted": 1,
-    "is_large": true,
-    "first_commit_authored_at": "2025-09-02T09:07:49+00:00"
-  },
-  "kkday-b2b-api#6173": {
-    "repo": "kkday-b2b-api",
-    "pr_number": 6173,
-    "title": "Feature/rob 3516 page100",
-    "jira_keys": [],
-    "created_at": "2025-09-04T02:28:30+00:00",
-    "first_review_at": null,
-    "merged_at": "2025-09-04T06:05:54+00:00",
-    "lines_added": 8,
-    "lines_deleted": 4,
-    "is_large": false,
-    "first_commit_authored_at": "2025-09-02T09:07:49+00:00"
-  },
-  "kkday-b2b-api#6172": {
-    "repo": "kkday-b2b-api",
-    "pr_number": 6172,
-    "title": "Feature/rob 3494 aj voucher with base64",
-    "jira_keys": [],
-    "created_at": "2025-09-04T02:12:26+00:00",
-    "first_review_at": null,
-    "merged_at": "2025-09-04T06:05:42+00:00",
-    "lines_added": 226,
-    "lines_deleted": 92,
-    "is_large": false,
-    "first_commit_authored_at": "2025-08-29T02:09:36+00:00"
-  },
-  "kkday-b2b-api#6159": {
-    "repo": "kkday-b2b-api",
-    "pr_number": 6159,
-    "title": "feat: 新增功能查詢類別",
-    "jira_keys": [],
-    "created_at": "2025-09-02T04:25:19+00:00",
-    "first_review_at": "2025-09-02T09:09:27+00:00",
-    "merged_at": "2025-09-04T02:50:05+00:00",
-    "lines_added": 239,
-    "lines_deleted": 132,
-    "is_large": false,
-    "first_commit_authored_at": "2025-09-02T04:24:27+00:00"
-  },
-  "kkday-b2b-api#6169": {
-    "repo": "kkday-b2b-api",
-    "pr_number": 6169,
-    "title": "feat: 調整分頁大小",
-    "jira_keys": [],
-    "created_at": "2025-09-03T09:49:22+00:00",
-    "first_review_at": "2025-09-03T09:52:24+00:00",
-    "merged_at": "2025-09-04T02:26:51+00:00",
-    "lines_added": 3,
-    "lines_deleted": 3,
-    "is_large": false,
-    "first_commit_authored_at": "2025-09-03T09:48:46+00:00"
-  },
-  "kkday-b2b-api#6170": {
-    "repo": "kkday-b2b-api",
-    "pr_number": 6170,
-    "title": "fix: 修測試",
-    "jira_keys": [],
-    "created_at": "2025-09-03T12:37:42+00:00",
-    "first_review_at": "2025-09-04T00:53:55+00:00",
-    "merged_at": "2025-09-04T02:12:02+00:00",
-    "lines_added": 5,
-    "lines_deleted": 5,
-    "is_large": false,
-    "first_commit_authored_at": "2025-09-03T12:35:25+00:00"
-  },
-  "kkday-b2b-api#6171": {
-    "repo": "kkday-b2b-api",
-    "pr_number": 6171,
-    "title": "調整價格設定邏輯以考慮最小入住人數",
-    "jira_keys": [],
-    "created_at": "2025-09-03T16:19:37+00:00",
-    "first_review_at": "2025-09-04T00:56:39+00:00",
-    "merged_at": "2025-09-04T02:11:02+00:00",
-    "lines_added": 66,
-    "lines_deleted": 59,
-    "is_large": false,
-    "first_commit_authored_at": "2025-09-03T16:18:07+00:00"
-  },
   "kkday-supplier-web#2342": {
     "repo": "kkday-supplier-web",
     "pr_number": 2342,
@@ -21898,36 +21527,6 @@
     "is_large": false,
     "first_commit_authored_at": "2025-09-09T05:37:53+00:00"
   },
-  "kkday-supplier-web#2193": {
-    "repo": "kkday-supplier-web",
-    "pr_number": 2193,
-    "title": "[CL] SCMWEB-2375 更新 Prod Tag API",
-    "jira_keys": [
-      "SCMWEB-2375"
-    ],
-    "created_at": "2025-09-04T09:01:51+00:00",
-    "first_review_at": null,
-    "merged_at": "2025-09-04T09:32:29+00:00",
-    "lines_added": 54,
-    "lines_deleted": 65,
-    "is_large": false,
-    "first_commit_authored_at": "2025-09-03T03:51:54+00:00"
-  },
-  "kkday-supplier-web#2195": {
-    "repo": "kkday-supplier-web",
-    "pr_number": 2195,
-    "title": "[CL] SCMWEB-2014 註冊頁 SG UEN for auto invoice 開發",
-    "jira_keys": [
-      "SCMWEB-2014"
-    ],
-    "created_at": "2025-09-04T09:05:19+00:00",
-    "first_review_at": null,
-    "merged_at": "2025-09-04T09:32:07+00:00",
-    "lines_added": 483,
-    "lines_deleted": 64,
-    "is_large": true,
-    "first_commit_authored_at": "2025-08-25T13:01:50+00:00"
-  },
   "kkday-supplier-web#2200": {
     "repo": "kkday-supplier-web",
     "pr_number": 2200,
@@ -22003,21 +21602,6 @@
     "lines_deleted": 2,
     "is_large": false,
     "first_commit_authored_at": "2025-09-05T02:36:22+00:00"
-  },
-  "kkday-supplier-web#2194": {
-    "repo": "kkday-supplier-web",
-    "pr_number": 2194,
-    "title": "[CL] SCMWEB-2330 庫存模式",
-    "jira_keys": [
-      "SCMWEB-2330"
-    ],
-    "created_at": "2025-09-04T09:03:32+00:00",
-    "first_review_at": null,
-    "merged_at": "2025-09-04T09:32:19+00:00",
-    "lines_added": 1112,
-    "lines_deleted": 179,
-    "is_large": true,
-    "first_commit_authored_at": "2025-08-21T07:51:49+00:00"
   },
   "kkday-supplier-api#773": {
     "repo": "kkday-supplier-api",
@@ -26335,21 +25919,6 @@
     "is_large": false,
     "first_commit_authored_at": "2025-08-29T07:25:38+00:00"
   },
-  "kkday-scm-backend#672": {
-    "repo": "kkday-scm-backend",
-    "pr_number": 672,
-    "title": "[CL] SCMWEB-2346 半/一/多 日遊資料 改接 api",
-    "jira_keys": [
-      "SCMWEB-2346"
-    ],
-    "created_at": "2025-09-04T09:09:18+00:00",
-    "first_review_at": "2025-09-04T09:35:34+00:00",
-    "merged_at": "2025-09-04T09:36:31+00:00",
-    "lines_added": 81,
-    "lines_deleted": 66,
-    "is_large": false,
-    "first_commit_authored_at": "2025-09-03T03:44:54+00:00"
-  },
   "kkday-scm-frontend#928": {
     "repo": "kkday-scm-frontend",
     "pr_number": 928,
@@ -29453,21 +29022,6 @@
     "is_large": false,
     "first_commit_authored_at": "2025-09-12T07:57:45+00:00"
   },
-  "kkday-scm-frontend#705": {
-    "repo": "kkday-scm-frontend",
-    "pr_number": 705,
-    "title": "[CL] SCMWEB-2358 調整中轉後 BubbleHint 被蓋到問題",
-    "jira_keys": [
-      "SCMWEB-2358"
-    ],
-    "created_at": "2025-09-04T09:00:53+00:00",
-    "first_review_at": null,
-    "merged_at": "2025-09-04T09:31:19+00:00",
-    "lines_added": 35,
-    "lines_deleted": 1,
-    "is_large": false,
-    "first_commit_authored_at": "2025-08-28T05:31:02+00:00"
-  },
   "kkday-scm-frontend#707": {
     "repo": "kkday-scm-frontend",
     "pr_number": 707,
@@ -29497,5 +29051,368 @@
     "lines_deleted": 14,
     "is_large": false,
     "first_commit_authored_at": "2025-09-09T07:17:52+00:00"
+  },
+  "kkday-product-service#7106": {
+    "repo": "kkday-product-service",
+    "pr_number": 7106,
+    "title": "feat(BE2PROD-5823)：快通 API Timeout 從 2s 放寬至 3s",
+    "jira_keys": [
+      "BE2PROD-5823"
+    ],
+    "created_at": "2026-03-03T10:02:04+00:00",
+    "first_review_at": "2026-03-03T10:03:19+00:00",
+    "merged_at": "2026-03-03T10:30:08+00:00",
+    "lines_added": 1,
+    "lines_deleted": 1,
+    "is_large": false,
+    "first_commit_authored_at": "2026-03-03T10:01:12+00:00"
+  },
+  "kkday-product-service#7102": {
+    "repo": "kkday-product-service",
+    "pr_number": 7102,
+    "title": "feat(BE2PROD-5789): 複製商品的圖片優化 (#7094)",
+    "jira_keys": [
+      "BE2PROD-5789"
+    ],
+    "created_at": "2026-03-03T07:36:54+00:00",
+    "first_review_at": "2026-03-03T08:08:02+00:00",
+    "merged_at": "2026-03-03T08:03:09+00:00",
+    "lines_added": 91,
+    "lines_deleted": 55,
+    "is_large": false,
+    "first_commit_authored_at": "2026-03-03T07:36:32+00:00"
+  },
+  "kkday-product-service#7103": {
+    "repo": "kkday-product-service",
+    "pr_number": 7103,
+    "title": "feat(BE2PROD-5800): 開放 SCM 平台呼叫更新可編輯平台 API ",
+    "jira_keys": [
+      "BE2PROD-5800"
+    ],
+    "created_at": "2026-03-03T07:46:03+00:00",
+    "first_review_at": null,
+    "merged_at": "2026-03-03T08:03:32+00:00",
+    "lines_added": 99,
+    "lines_deleted": 73,
+    "is_large": false,
+    "first_commit_authored_at": "2026-03-03T07:45:19+00:00"
+  },
+  "kkday-product-service#7096": {
+    "repo": "kkday-product-service",
+    "pr_number": 7096,
+    "title": "feat(BE2PROD-5772):  預覽加上每日最低價 & action-flow api (#7082)",
+    "jira_keys": [
+      "BE2PROD-5772"
+    ],
+    "created_at": "2026-03-02T02:36:28+00:00",
+    "first_review_at": "2026-03-03T08:03:05+00:00",
+    "merged_at": "2026-03-03T07:59:27+00:00",
+    "lines_added": 387,
+    "lines_deleted": 0,
+    "is_large": false,
+    "first_commit_authored_at": "2026-03-02T02:36:09+00:00"
+  },
+  "kkday-product-service#7098": {
+    "repo": "kkday-product-service",
+    "pr_number": 7098,
+    "title": "feat(BE2PROD-5767): MICE 商品可以使用組合商品功能 (#7093)",
+    "jira_keys": [
+      "BE2PROD-5767"
+    ],
+    "created_at": "2026-03-02T06:03:21+00:00",
+    "first_review_at": null,
+    "merged_at": "2026-03-03T07:58:48+00:00",
+    "lines_added": 39,
+    "lines_deleted": 1,
+    "is_large": false,
+    "first_commit_authored_at": "2026-03-02T06:03:01+00:00"
+  },
+  "kkday-product-service#7091": {
+    "repo": "kkday-product-service",
+    "pr_number": 7091,
+    "title": "feat(BE2PROD-5800): 開放 SCM 平台呼叫更新可編輯平台 API ",
+    "jira_keys": [
+      "BE2PROD-5800"
+    ],
+    "created_at": "2026-02-24T06:33:50+00:00",
+    "first_review_at": "2026-02-24T06:42:27+00:00",
+    "merged_at": "2026-03-03T07:45:20+00:00",
+    "lines_added": 99,
+    "lines_deleted": 73,
+    "is_large": false,
+    "first_commit_authored_at": "2026-02-24T05:14:01+00:00"
+  },
+  "kkday-product-service#7094": {
+    "repo": "kkday-product-service",
+    "pr_number": 7094,
+    "title": "feat(BE2PROD-5789): 複製商品的圖片優化",
+    "jira_keys": [
+      "BE2PROD-5789"
+    ],
+    "created_at": "2026-02-26T06:28:36+00:00",
+    "first_review_at": "2026-03-02T05:26:19+00:00",
+    "merged_at": "2026-03-03T07:36:32+00:00",
+    "lines_added": 91,
+    "lines_deleted": 55,
+    "is_large": false,
+    "first_commit_authored_at": "2026-02-26T06:26:25+00:00"
+  },
+  "kkday-product-service#7099": {
+    "repo": "kkday-product-service",
+    "pr_number": 7099,
+    "title": "feat(BE2PROD-5818): [GYG] 定版檢查移除 spec-room 阻擋 for GYG",
+    "jira_keys": [
+      "BE2PROD-5818"
+    ],
+    "created_at": "2026-03-02T09:45:34+00:00",
+    "first_review_at": "2026-03-03T02:47:10+00:00",
+    "merged_at": "2026-03-03T03:19:54+00:00",
+    "lines_added": 50,
+    "lines_deleted": 1,
+    "is_large": false,
+    "first_commit_authored_at": "2026-03-02T09:40:17+00:00"
+  },
+  "kkday-psp#687": {
+    "repo": "kkday-psp",
+    "pr_number": 687,
+    "title": "Update Master",
+    "jira_keys": [],
+    "created_at": "2026-03-03T15:31:02+00:00",
+    "first_review_at": null,
+    "merged_at": "2026-03-03T15:31:18+00:00",
+    "lines_added": 4360,
+    "lines_deleted": 452,
+    "is_large": true,
+    "first_commit_authored_at": "2026-02-03T03:38:11+00:00"
+  },
+  "kkday-psp#686": {
+    "repo": "kkday-psp",
+    "pr_number": 686,
+    "title": "feat: 地點庫 & 行程模組/地點模組 下放套餐",
+    "jira_keys": [],
+    "created_at": "2026-02-04T09:31:43+00:00",
+    "first_review_at": "2026-03-02T01:54:53+00:00",
+    "merged_at": "2026-03-03T15:30:46+00:00",
+    "lines_added": 4360,
+    "lines_deleted": 452,
+    "is_large": true,
+    "first_commit_authored_at": "2026-02-03T03:38:11+00:00"
+  },
+  "kkday-b2b-api#6973": {
+    "repo": "kkday-b2b-api",
+    "pr_number": 6973,
+    "title": "ROB-4128 JTR｜修改｜訂單備註紀錄供應商訂單編號",
+    "jira_keys": [
+      "ROB-4128"
+    ],
+    "created_at": "2026-03-03T08:56:32+00:00",
+    "first_review_at": null,
+    "merged_at": "2026-03-03T16:10:46+00:00",
+    "lines_added": 838,
+    "lines_deleted": 4,
+    "is_large": true,
+    "first_commit_authored_at": "2026-03-03T01:10:21+00:00"
+  },
+  "kkday-b2b-api#6972": {
+    "repo": "kkday-b2b-api",
+    "pr_number": 6972,
+    "title": "feature/ROB-4075 Swiss Activities｜修改｜移除訂單人數與憑證數量的檢查｜release PR",
+    "jira_keys": [
+      "ROB-4075"
+    ],
+    "created_at": "2026-03-03T08:45:39+00:00",
+    "first_review_at": null,
+    "merged_at": "2026-03-03T16:10:16+00:00",
+    "lines_added": 133,
+    "lines_deleted": 43,
+    "is_large": false,
+    "first_commit_authored_at": "2026-03-03T01:12:01+00:00"
+  },
+  "kkday-b2b-api#6970": {
+    "repo": "kkday-b2b-api",
+    "pr_number": 6970,
+    "title": "feature/ROB-4096 Rezdy｜修改｜跳過不需 bookingFields 的商品旅規檢查｜release PR",
+    "jira_keys": [
+      "ROB-4096"
+    ],
+    "created_at": "2026-03-03T07:47:55+00:00",
+    "first_review_at": null,
+    "merged_at": "2026-03-03T16:10:00+00:00",
+    "lines_added": 52,
+    "lines_deleted": 1,
+    "is_large": false,
+    "first_commit_authored_at": "2026-03-02T11:35:52+00:00"
+  },
+  "kkday-b2b-api#6960": {
+    "repo": "kkday-b2b-api",
+    "pr_number": 6960,
+    "title": "Feature/rob 4123 AnTank supplier report｜review PR",
+    "jira_keys": [
+      "ROB-4123"
+    ],
+    "created_at": "2026-03-02T07:38:34+00:00",
+    "first_review_at": "2026-03-03T02:33:27+00:00",
+    "merged_at": "2026-03-03T08:58:20+00:00",
+    "lines_added": 1826,
+    "lines_deleted": 0,
+    "is_large": true,
+    "first_commit_authored_at": "2026-02-26T07:08:16+00:00"
+  },
+  "kkday-b2b-api#6967": {
+    "repo": "kkday-b2b-api",
+    "pr_number": 6967,
+    "title": "ROB-4128 JTR｜修改｜訂單備註紀錄供應商訂單編號",
+    "jira_keys": [
+      "ROB-4128"
+    ],
+    "created_at": "2026-03-03T03:21:44+00:00",
+    "first_review_at": "2026-03-03T03:34:16+00:00",
+    "merged_at": "2026-03-03T08:56:09+00:00",
+    "lines_added": 838,
+    "lines_deleted": 4,
+    "is_large": true,
+    "first_commit_authored_at": "2026-03-03T03:20:11+00:00"
+  },
+  "kkday-b2b-api#6964": {
+    "repo": "kkday-b2b-api",
+    "pr_number": 6964,
+    "title": "feature/ROB-4075 Swiss Activities｜修改｜移除訂單人數與憑證數量的檢查｜review PR",
+    "jira_keys": [
+      "ROB-4075"
+    ],
+    "created_at": "2026-03-03T01:12:50+00:00",
+    "first_review_at": "2026-03-03T02:31:42+00:00",
+    "merged_at": "2026-03-03T08:45:02+00:00",
+    "lines_added": 133,
+    "lines_deleted": 43,
+    "is_large": false,
+    "first_commit_authored_at": "2026-03-03T01:12:01+00:00"
+  },
+  "kkday-b2b-api#6962": {
+    "repo": "kkday-b2b-api",
+    "pr_number": 6962,
+    "title": "feature/ROB-4096 Rezdy｜修改｜跳過不需 bookingFields 的商品旅規檢查｜review PR",
+    "jira_keys": [
+      "ROB-4096"
+    ],
+    "created_at": "2026-03-02T11:36:11+00:00",
+    "first_review_at": "2026-03-03T02:32:07+00:00",
+    "merged_at": "2026-03-03T07:46:22+00:00",
+    "lines_added": 52,
+    "lines_deleted": 1,
+    "is_large": false,
+    "first_commit_authored_at": "2026-03-02T11:35:52+00:00"
+  },
+  "kkday-b2b-api#6968": {
+    "repo": "kkday-b2b-api",
+    "pr_number": 6968,
+    "title": "Rob 4010 3",
+    "jira_keys": [],
+    "created_at": "2026-03-03T07:21:00+00:00",
+    "first_review_at": null,
+    "merged_at": "2026-03-03T07:21:09+00:00",
+    "lines_added": 1,
+    "lines_deleted": 2,
+    "is_large": false,
+    "first_commit_authored_at": "2026-03-03T07:20:41+00:00"
+  },
+  "kkday-b2b-api#6965": {
+    "repo": "kkday-b2b-api",
+    "pr_number": 6965,
+    "title": "Rob 4010 3",
+    "jira_keys": [],
+    "created_at": "2026-03-03T03:01:03+00:00",
+    "first_review_at": null,
+    "merged_at": "2026-03-03T03:01:12+00:00",
+    "lines_added": 644,
+    "lines_deleted": 54,
+    "is_large": true,
+    "first_commit_authored_at": "2026-03-02T09:21:38+00:00"
+  },
+  "kkday-b2b-api#6963": {
+    "repo": "kkday-b2b-api",
+    "pr_number": 6963,
+    "title": "Release/260116",
+    "jira_keys": [],
+    "created_at": "2026-03-03T01:09:54+00:00",
+    "first_review_at": null,
+    "merged_at": "2026-03-03T01:10:21+00:00",
+    "lines_added": 723,
+    "lines_deleted": 5,
+    "is_large": true,
+    "first_commit_authored_at": "2026-02-03T08:11:42+00:00"
+  },
+  "kkday-b2b-api#6959": {
+    "repo": "kkday-b2b-api",
+    "pr_number": 6959,
+    "title": "feature/ROB-4126 USJ｜修改｜價格規則 margin 改為非必填｜release PR",
+    "jira_keys": [
+      "ROB-4126"
+    ],
+    "created_at": "2026-03-02T03:01:35+00:00",
+    "first_review_at": null,
+    "merged_at": "2026-03-03T01:09:40+00:00",
+    "lines_added": 1,
+    "lines_deleted": 1,
+    "is_large": false,
+    "first_commit_authored_at": "2026-02-26T13:55:24+00:00"
+  },
+  "kkday-b2b-api#6932": {
+    "repo": "kkday-b2b-api",
+    "pr_number": 6932,
+    "title": "Feature/rob 4092 redeam add usage date judgement",
+    "jira_keys": [],
+    "created_at": "2026-02-25T08:35:44+00:00",
+    "first_review_at": null,
+    "merged_at": "2026-03-03T01:09:25+00:00",
+    "lines_added": 722,
+    "lines_deleted": 4,
+    "is_large": true,
+    "first_commit_authored_at": "2026-02-03T08:11:42+00:00"
+  },
+  "kkday-supplier-api#775": {
+    "repo": "kkday-supplier-api",
+    "pr_number": 775,
+    "title": "feat(SCMWEB-3134): 當 msgHandler 為 KKDAY 時禁止發送訊息",
+    "jira_keys": [
+      "SCMWEB-3134"
+    ],
+    "created_at": "2026-03-03T10:10:09+00:00",
+    "first_review_at": "2026-03-03T10:39:37+00:00",
+    "merged_at": "2026-03-03T10:55:40+00:00",
+    "lines_added": 51,
+    "lines_deleted": 34,
+    "is_large": false,
+    "first_commit_authored_at": "2026-03-03T10:30:46+00:00"
+  },
+  "kkday-supplier-api#774": {
+    "repo": "kkday-supplier-api",
+    "pr_number": 774,
+    "title": "feat(SCMWEB-3134): fix env template",
+    "jira_keys": [
+      "SCMWEB-3134"
+    ],
+    "created_at": "2026-03-03T06:27:17+00:00",
+    "first_review_at": "2026-03-03T06:28:50+00:00",
+    "merged_at": "2026-03-03T06:29:16+00:00",
+    "lines_added": 1,
+    "lines_deleted": 1,
+    "is_large": false,
+    "first_commit_authored_at": "2026-03-03T06:26:40+00:00"
+  },
+  "kkday-scm-backend#953": {
+    "repo": "kkday-scm-backend",
+    "pr_number": 953,
+    "title": "fix(SCMWEB-2653): reset retry and step on re-import",
+    "jira_keys": [
+      "SCMWEB-2653"
+    ],
+    "created_at": "2026-03-03T08:21:32+00:00",
+    "first_review_at": "2026-03-03T08:29:58+00:00",
+    "merged_at": "2026-03-03T08:30:27+00:00",
+    "lines_added": 4,
+    "lines_deleted": 2,
+    "is_large": false,
+    "first_commit_authored_at": "2026-03-03T08:20:49+00:00"
   }
 }
