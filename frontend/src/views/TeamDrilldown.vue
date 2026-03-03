@@ -90,18 +90,42 @@
           <li v-if="devSourceStats.github_count > 0">
             GitHub commit 時間補充：<strong>{{ devSourceStats.github_count }}</strong> 筆
           </li>
-          <template v-if="devFilteredStats">
-            <li>
-              過濾 (dev &lt; {{ devFilteredStats.threshold_hours }}h)：排除
-              <strong>{{ devFilteredStats.excluded_count }}</strong> 筆
-            </li>
-            <li>
-              原始 p50：{{ devRawP50 }}d →
-              過濾後 p50：<strong>{{ devFilteredStats.p50 }}d</strong>
-              (n={{ devFilteredStats.count }})
-            </li>
-          </template>
         </ul>
+      </section>
+
+      <!-- Pass-Through 過濾統計（所有 active phase） -->
+      <section v-if="filteredPhaseStats.length" class="card" style="margin-top: 1rem">
+        <h3>Pass-Through 過濾統計</h3>
+        <p class="chart-subtitle">
+          排除停留 &lt; {{ filteredPhaseStats[0]?.threshold_hours }}h 的 issue（Jira 批次拖票），還原各 phase 真實等待時間
+        </p>
+        <table class="filter-table">
+          <thead>
+            <tr>
+              <th>Phase</th>
+              <th class="num-col">原始 p50</th>
+              <th class="num-col">過濾後 p50</th>
+              <th class="num-col">排除筆數</th>
+              <th class="num-col">n (過濾後)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="s in filteredPhaseStats" :key="s.id">
+              <td>
+                <span class="phase-badge" :style="{ background: s.color + '33', color: s.color }">
+                  {{ s.label }}
+                </span>
+              </td>
+              <td class="num-col muted">{{ s.raw_p50 }}d</td>
+              <td class="num-col emphasized">{{ s.filtered_p50 }}d</td>
+              <td class="num-col">
+                {{ s.excluded_count }} 筆
+                <span class="muted">({{ s.excluded_pct }}%)</span>
+              </td>
+              <td class="num-col muted">{{ s.filtered_count }}</td>
+            </tr>
+          </tbody>
+        </table>
       </section>
 
       <!-- Phase Insights -->
@@ -221,14 +245,29 @@ const devSourceStats = computed(() =>
   currentTeam.value?.aggregated.dev_source_stats ?? null,
 )
 
-const devFilteredStats = computed(() => {
-  const ct = currentTeam.value?.aggregated.cycle_time
-  return ct?.dev?.filtered ?? null
+const filteredPhaseStats = computed(() => {
+  if (!currentTeam.value || !data.value) return []
+  const ct = currentTeam.value.aggregated.cycle_time
+  const phases = data.value.meta.phases
+  return phases
+    .filter(phase => ct[phase.id]?.filtered)
+    .map(phase => {
+      const stat = ct[phase.id]
+      const f = stat.filtered
+      return {
+        id: phase.id,
+        label: phase.label,
+        color: phase.color,
+        raw_p50: stat.p50,
+        raw_count: stat.count,
+        filtered_p50: f.p50,
+        filtered_count: f.count,
+        excluded_count: f.excluded_count,
+        excluded_pct: stat.count > 0 ? Math.round(f.excluded_count / stat.count * 100) : 0,
+        threshold_hours: f.threshold_hours,
+      }
+    })
 })
-
-const devRawP50 = computed(() =>
-  currentTeam.value?.aggregated.cycle_time?.dev?.p50 ?? 0,
-)
 
 function parentUrl(issue) {
   // 從 issue.url 推導 base，替換 issue key 為 parent key
@@ -367,5 +406,36 @@ function parentUrl(issue) {
   font-size: 0.8125rem;
   color: var(--text-primary);
   line-height: 1.6;
+}
+
+.filter-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8125rem;
+  margin-top: 0.75rem;
+}
+
+.filter-table th,
+.filter-table td {
+  padding: 0.45rem 0.75rem;
+  border-bottom: 1px solid var(--border-color, #e5e7eb);
+}
+
+.filter-table th {
+  font-weight: 600;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.num-col {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.emphasized {
+  font-weight: 700;
+  color: var(--text-primary);
 }
 </style>
