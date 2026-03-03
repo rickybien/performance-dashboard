@@ -251,6 +251,7 @@ teams:
 collection:
   lookback_days: 180
   recent_days: 30
+  trend_weeks: 12  # 趨勢圖週數（前端可切片顯示 4W/8W/12W）
   jira_jql_filter: "issuetype in (Story, Bug, Task, Sub-task)"
   pr_issue_pattern: "([A-Z][A-Z0-9]+-\\d+)"
   api_delay_seconds: 0.5              # Delay between Jira search API calls (between pages/projects)

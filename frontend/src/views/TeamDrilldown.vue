@@ -31,12 +31,24 @@
 
         <!-- Throughput Trend -->
         <section class="card chart-card">
-          <h3>Weekly Throughput Trend</h3>
-          <p class="chart-subtitle">Completed issues + cycle time p50</p>
+          <div class="section-header">
+            <div>
+              <h3>Weekly Throughput Trend</h3>
+              <p class="chart-subtitle">Completed issues + cycle time p50</p>
+            </div>
+            <div class="range-buttons">
+              <button
+                v-for="opt in rangeOptions"
+                :key="opt"
+                :class="['range-btn', { active: trendRange === opt }]"
+                @click="trendRange = opt"
+              >{{ opt }}W</button>
+            </div>
+          </div>
           <ThroughputChart
-            :weeks="teamTrend?.weeks ?? []"
-            :throughput="teamTrend?.throughput ?? []"
-            :cycle-time-p50="teamTrend?.cycle_time_p50 ?? []"
+            :weeks="slicedWeeks"
+            :throughput="slicedThroughput"
+            :cycle-time-p50="slicedCycleTimeP50"
           />
         </section>
       </div>
@@ -178,6 +190,7 @@ const { data, loading, error } = useMetrics()
 
 const selectedTeamId = ref(props.teamId)
 const selectedProjectKey = ref('')
+const trendRange = ref(12)
 
 // 切換 team 時清空 project 選擇
 watch(selectedTeamId, () => { selectedProjectKey.value = '' })
@@ -189,6 +202,26 @@ const currentTeam = computed(() =>
 const teamTrend = computed(() =>
   data.value ? data.value.trends[selectedTeamId.value] : null,
 )
+
+const rangeOptions = computed(() => {
+  const total = teamTrend.value?.weeks?.length ?? 0
+  return [4, 8, 12].filter(n => n <= total)
+})
+
+const slicedWeeks = computed(() => {
+  const weeks = teamTrend.value?.weeks ?? []
+  return weeks.slice(-trendRange.value)
+})
+
+const slicedThroughput = computed(() => {
+  const arr = teamTrend.value?.throughput ?? []
+  return arr.slice(-trendRange.value)
+})
+
+const slicedCycleTimeP50 = computed(() => {
+  const arr = teamTrend.value?.cycle_time_p50 ?? []
+  return arr.slice(-trendRange.value)
+})
 
 // 依選擇的 project 篩選，或顯示所有 project
 const displayProjects = computed(() => {
@@ -312,6 +345,41 @@ function parentUrl(issue) {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
+}
+
+.section-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.range-buttons {
+  display: flex;
+  gap: 0.25rem;
+  flex-shrink: 0;
+}
+
+.range-btn {
+  padding: 0.2rem 0.55rem;
+  font-size: 0.75rem;
+  border-radius: 4px;
+  border: 1px solid var(--border-color, #e5e7eb);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.range-btn:hover {
+  background: var(--hover-bg, #f3f4f6);
+  color: var(--text-primary);
+}
+
+.range-btn.active {
+  background: var(--accent, #3b82f6);
+  color: #fff;
+  border-color: var(--accent, #3b82f6);
 }
 
 .chart-subtitle {

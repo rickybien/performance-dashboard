@@ -104,12 +104,13 @@ def group_by_team_project(
     return result
 
 
-def compute_throughput(issues: list[IssueMetrics], recent_days: int) -> dict:
+def compute_throughput(issues: list[IssueMetrics], recent_days: int, num_weeks: int = 4) -> dict:
     """計算吞吐量統計。
 
     Args:
         issues: issue 列表
         recent_days: 計算最近幾天的完成數
+        num_weeks: 週趨勢計算週數
 
     Returns:
         {"completed_issues": int, "story_points": null, "weekly_trend": [int, ...]}
@@ -122,7 +123,7 @@ def compute_throughput(issues: list[IssueMetrics], recent_days: int) -> dict:
         if issue.resolved is not None and issue.resolved >= cutoff
     ]
 
-    weekly_trend = compute_weekly_trend(issues, num_weeks=4)
+    weekly_trend = compute_weekly_trend(issues, num_weeks=num_weeks)
 
     return {
         "completed_issues": len(resolved_issues),
@@ -492,7 +493,7 @@ def _compute_build_weekly_trend(builds: list, num_weeks: int = 4) -> list[int]:
     return week_counts
 
 
-def _compute_build_metrics(builds: list) -> Optional[dict]:
+def _compute_build_metrics(builds: list, num_weeks: int = 4) -> Optional[dict]:
     """計算 Jenkins 建置指標摘要。
 
     Args:
@@ -511,7 +512,7 @@ def _compute_build_metrics(builds: list) -> Optional[dict]:
     durations = [b.duration_ms / 60000 for b in completed if b.duration_ms > 0]
     avg_duration = round(sum(durations) / len(durations), 1) if durations else 0.0
 
-    weekly_trend = _compute_build_weekly_trend(builds, num_weeks=4)
+    weekly_trend = _compute_build_weekly_trend(builds, num_weeks=num_weeks)
 
     return {
         "success_rate": success_rate,
@@ -704,6 +705,7 @@ def aggregate(
     collection_config = config.get("collection", {})
     lookback_days = collection_config.get("lookback_days", 90)
     recent_days = collection_config.get("recent_days", 30)
+    trend_weeks = collection_config.get("trend_weeks", 12)
     filter_threshold_hours = collection_config.get(
         "filter_threshold_hours",
         collection_config.get("dev_filter_threshold_hours", 1.0),
@@ -764,7 +766,7 @@ def aggregate(
     # 建構 teams 結構
     teams_output: dict = {}
     trends_output: dict = {}
-    week_labels = _get_week_labels(now, num_weeks=4)
+    week_labels = _get_week_labels(now, num_weeks=trend_weeks)
 
     for team in config.get("teams", []):
         team_id = team["id"]
@@ -800,7 +802,7 @@ def aggregate(
 
             cycle_time = _compute_cycle_time_for_project(normal_issues, phases, filter_threshold_hours)
             _merge_sa_sd_into_planning(cycle_time, normal_issues, sa_sd_hours)
-            throughput = compute_throughput(normal_issues, recent_days)
+            throughput = compute_throughput(normal_issues, recent_days, num_weeks=trend_weeks)
 
             projects_output[project_key] = {
                 "cycle_time": cycle_time,
@@ -825,9 +827,9 @@ def aggregate(
 
         # 再合併 SA/SD → planning（不影響已偵測的 bottleneck）
         _merge_sa_sd_into_planning(team_cycle_time, all_team_issues, all_team_sa_sd_hours)
-        team_throughput = compute_throughput(all_team_issues, recent_days)
+        team_throughput = compute_throughput(all_team_issues, recent_days, num_weeks=trend_weeks)
         team_pr_metrics = _compute_pr_metrics(team_prs, large_pr_threshold)
-        team_build_metrics = _compute_build_metrics(team_builds)
+        team_build_metrics = _compute_build_metrics(team_builds, num_weeks=trend_weeks)
 
         bottleneck_issues = []
         if bottleneck_phase_id and jira_base_url:
@@ -865,8 +867,8 @@ def aggregate(
         }
 
         # 趨勢資料
-        team_resolved_weekly = compute_weekly_trend(all_team_issues, num_weeks=4)
-        team_cycle_p50_weekly = _compute_weekly_cycle_time_p50(all_team_issues, num_weeks=4)
+        team_resolved_weekly = compute_weekly_trend(all_team_issues, num_weeks=trend_weeks)
+        team_cycle_p50_weekly = _compute_weekly_cycle_time_p50(all_team_issues, num_weeks=trend_weeks)
 
         # PR pickup trend：取 team pr_metrics 中的 p50（單一值，非週趨勢）
         team_pr_pickup_p50 = (

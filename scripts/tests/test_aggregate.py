@@ -244,6 +244,17 @@ def test_aggregate_weekly_trend_correct_weeks():
     assert trend[0] == 1  # 第四週
 
 
+def test_compute_throughput_custom_num_weeks():
+    """傳入 num_weeks=8 時 weekly_trend 長度應為 8。"""
+    now = datetime.now(timezone.utc)
+    issues = [
+        make_issue("A-1", resolved=now - timedelta(days=1)),
+        make_issue("A-2", resolved=now - timedelta(days=10)),
+    ]
+    throughput = compute_throughput(issues, recent_days=30, num_weeks=8)
+    assert len(throughput["weekly_trend"]) == 8
+
+
 # ============================================================
 # aggregate 整合測試
 # ============================================================
@@ -380,8 +391,8 @@ def test_aggregate_trends_structure():
         assert "throughput" in trend
         assert "pr_pickup_hours" in trend
         assert trend["pr_pickup_hours"] is None
-        assert len(trend["weeks"]) == 4
-        assert len(trend["throughput"]) == 4
+        assert len(trend["weeks"]) == 12
+        assert len(trend["throughput"]) == 12
 
 
 # ============================================================
