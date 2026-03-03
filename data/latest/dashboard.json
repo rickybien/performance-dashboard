@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-03T17:14:01.742112+00:00",
+  "generated_at": "2026-03-03T17:46:05.491490+00:00",
   "period": {
     "start": "2025-09-04",
     "end": "2026-03-03"
@@ -417,6 +417,628 @@
           "github_count": 60,
           "total": 141
         }
+      },
+      "by_window": {
+        "4": {
+          "cycle_time": {
+            "backlog": {
+              "p50": 0.04,
+              "p75": 1.73,
+              "p90": 3.14,
+              "count": 30
+            },
+            "planning": {
+              "p50": 16.36,
+              "p75": 35.19,
+              "p90": 56.2,
+              "count": 6
+            },
+            "dev": {
+              "p50": 0.08,
+              "p75": 30.09,
+              "p90": 97.31,
+              "count": 27,
+              "filtered": {
+                "p50": 7.04,
+                "p75": 96.36,
+                "p90": 99.46,
+                "count": 16,
+                "excluded_count": 11,
+                "threshold_hours": 1.0
+              }
+            },
+            "review": {
+              "p50": 3.03,
+              "p75": 6.0,
+              "p90": 8.3,
+              "count": 26,
+              "filtered": {
+                "p50": 3.43,
+                "p75": 6.45,
+                "p90": 8.51,
+                "count": 24,
+                "excluded_count": 2,
+                "threshold_hours": 1.0
+              }
+            },
+            "dev_test": {
+              "p50": 0.0,
+              "p75": 0.0,
+              "p90": 4.94,
+              "count": 25,
+              "filtered": {
+                "p50": 6.84,
+                "p75": 8.19,
+                "p90": 10.5,
+                "count": 4,
+                "excluded_count": 21,
+                "threshold_hours": 1.0
+              }
+            },
+            "qa": {
+              "p50": 7.0,
+              "p75": 8.47,
+              "p90": 9.36,
+              "count": 3,
+              "filtered": {
+                "p50": 8.47,
+                "p75": 9.21,
+                "p90": 9.65,
+                "count": 2,
+                "excluded_count": 1,
+                "threshold_hours": 1.0
+              }
+            },
+            "staging": {
+              "p50": 0.0,
+              "p75": 0.8,
+              "p90": 13.14,
+              "count": 26,
+              "filtered": {
+                "p50": 8.66,
+                "p75": 14.06,
+                "p90": 16.79,
+                "count": 8,
+                "excluded_count": 18,
+                "threshold_hours": 1.0
+              }
+            },
+            "done": {
+              "p50": 0.0,
+              "p75": 17.02,
+              "p90": 38.88,
+              "count": 30
+            },
+            "total": {
+              "p50": 6.97,
+              "p75": 45.91,
+              "p90": 107.12,
+              "count": 27
+            }
+          },
+          "throughput": {
+            "completed_issues": 30,
+            "story_points": null,
+            "weekly_trend": [
+              8,
+              2,
+              14,
+              6
+            ]
+          },
+          "pr_metrics": {
+            "total_prs_merged": 56,
+            "pickup_hours": {
+              "p50": 0.2,
+              "p75": 26.7,
+              "p90": 97.1,
+              "count": 39
+            },
+            "merge_time_hours": {
+              "p50": 21.5,
+              "p75": 103.5,
+              "p90": 227.5,
+              "count": 56
+            },
+            "large_pr_pct": 8.9
+          },
+          "build_metrics": null,
+          "bottleneck_phase": "qa",
+          "bottleneck_issues": [
+            {
+              "key": "BE2PROD-5694",
+              "summary": "[be2-web] 動物園年票團體票",
+              "parent_key": "B2CPM-814",
+              "parent_summary": "JP DX - 円山動物園訂購年票/團體票",
+              "phase_duration_days": 9.95,
+              "url": "https://kkday.atlassian.net/browse/BE2PROD-5694"
+            },
+            {
+              "key": "BE2PROD-5700",
+              "summary": "[product-api]動物園開發",
+              "parent_key": "B2CPM-814",
+              "parent_summary": "JP DX - 円山動物園訂購年票/團體票",
+              "phase_duration_days": 7.0,
+              "url": "https://kkday.atlassian.net/browse/BE2PROD-5700"
+            },
+            {
+              "key": "BE2PROD-5762",
+              "summary": "[be2-web] 移除 Mixpanel Session Replay",
+              "parent_key": "BE2PROD-5761",
+              "parent_summary": "移除 Mixpanel Session Replay",
+              "phase_duration_days": 0.0,
+              "url": "https://kkday.atlassian.net/browse/BE2PROD-5762"
+            }
+          ],
+          "phase_insights": [
+            {
+              "phase_id": "dev",
+              "pass_through_count": 0,
+              "total_in_phase": 27,
+              "pass_through_pct": 0.0
+            },
+            {
+              "phase_id": "dev_test",
+              "pass_through_count": 21,
+              "total_in_phase": 25,
+              "pass_through_pct": 84.0
+            },
+            {
+              "phase_id": "staging",
+              "pass_through_count": 16,
+              "total_in_phase": 26,
+              "pass_through_pct": 61.5
+            }
+          ],
+          "dev_source_stats": {
+            "jira_count": 15,
+            "github_count": 12,
+            "total": 27
+          },
+          "projects": {
+            "BE2PROD": {
+              "cycle_time": {
+                "backlog": {
+                  "p50": 0.04,
+                  "p75": 1.73,
+                  "p90": 3.14,
+                  "count": 30
+                },
+                "planning": {
+                  "p50": 16.36,
+                  "p75": 35.19,
+                  "p90": 56.2,
+                  "count": 6
+                },
+                "dev": {
+                  "p50": 0.08,
+                  "p75": 30.09,
+                  "p90": 97.31,
+                  "count": 27,
+                  "filtered": {
+                    "p50": 7.04,
+                    "p75": 96.36,
+                    "p90": 99.46,
+                    "count": 16,
+                    "excluded_count": 11,
+                    "threshold_hours": 1.0
+                  }
+                },
+                "review": {
+                  "p50": 3.03,
+                  "p75": 6.0,
+                  "p90": 8.3,
+                  "count": 26,
+                  "filtered": {
+                    "p50": 3.43,
+                    "p75": 6.45,
+                    "p90": 8.51,
+                    "count": 24,
+                    "excluded_count": 2,
+                    "threshold_hours": 1.0
+                  }
+                },
+                "dev_test": {
+                  "p50": 0.0,
+                  "p75": 0.0,
+                  "p90": 4.94,
+                  "count": 25,
+                  "filtered": {
+                    "p50": 6.84,
+                    "p75": 8.19,
+                    "p90": 10.5,
+                    "count": 4,
+                    "excluded_count": 21,
+                    "threshold_hours": 1.0
+                  }
+                },
+                "qa": {
+                  "p50": 7.0,
+                  "p75": 8.47,
+                  "p90": 9.36,
+                  "count": 3,
+                  "filtered": {
+                    "p50": 8.47,
+                    "p75": 9.21,
+                    "p90": 9.65,
+                    "count": 2,
+                    "excluded_count": 1,
+                    "threshold_hours": 1.0
+                  }
+                },
+                "staging": {
+                  "p50": 0.0,
+                  "p75": 0.8,
+                  "p90": 13.14,
+                  "count": 26,
+                  "filtered": {
+                    "p50": 8.66,
+                    "p75": 14.06,
+                    "p90": 16.79,
+                    "count": 8,
+                    "excluded_count": 18,
+                    "threshold_hours": 1.0
+                  }
+                },
+                "done": {
+                  "p50": 0.0,
+                  "p75": 17.02,
+                  "p90": 38.88,
+                  "count": 30
+                },
+                "total": {
+                  "p50": 6.97,
+                  "p75": 45.91,
+                  "p90": 107.12,
+                  "count": 27
+                }
+              }
+            }
+          }
+        },
+        "8": {
+          "cycle_time": {
+            "backlog": {
+              "p50": 0.03,
+              "p75": 1.97,
+              "p90": 6.05,
+              "count": 68
+            },
+            "planning": {
+              "p50": 16.36,
+              "p75": 35.19,
+              "p90": 56.2,
+              "count": 6
+            },
+            "dev": {
+              "p50": 0.05,
+              "p75": 3.23,
+              "p90": 82.27,
+              "count": 64,
+              "filtered": {
+                "p50": 1.88,
+                "p75": 66.72,
+                "p90": 96.65,
+                "count": 34,
+                "excluded_count": 30,
+                "threshold_hours": 1.0
+              }
+            },
+            "review": {
+              "p50": 3.06,
+              "p75": 6.08,
+              "p90": 10.75,
+              "count": 63,
+              "filtered": {
+                "p50": 3.75,
+                "p75": 6.73,
+                "p90": 12.18,
+                "count": 58,
+                "excluded_count": 5,
+                "threshold_hours": 1.0
+              }
+            },
+            "dev_test": {
+              "p50": 0.0,
+              "p75": 0.0,
+              "p90": 0.65,
+              "count": 51,
+              "filtered": {
+                "p50": 4.57,
+                "p75": 6.88,
+                "p90": 9.47,
+                "count": 6,
+                "excluded_count": 45,
+                "threshold_hours": 1.0
+              }
+            },
+            "qa": {
+              "p50": 0.0,
+              "p75": 0.4,
+              "p90": 6.4,
+              "count": 12,
+              "filtered": {
+                "p50": 3.99,
+                "p75": 7.74,
+                "p90": 9.06,
+                "count": 4,
+                "excluded_count": 8,
+                "threshold_hours": 1.0
+              }
+            },
+            "staging": {
+              "p50": 0.18,
+              "p75": 3.23,
+              "p90": 8.86,
+              "count": 58,
+              "filtered": {
+                "p50": 3.23,
+                "p75": 4.14,
+                "p90": 16.79,
+                "count": 30,
+                "excluded_count": 28,
+                "threshold_hours": 1.0
+              }
+            },
+            "done": {
+              "p50": 0.0,
+              "p75": 0.0,
+              "p90": 17.02,
+              "count": 68
+            },
+            "total": {
+              "p50": 7.09,
+              "p75": 24.39,
+              "p90": 95.04,
+              "count": 64
+            }
+          },
+          "throughput": {
+            "completed_issues": 30,
+            "story_points": null,
+            "weekly_trend": [
+              5,
+              15,
+              9,
+              9,
+              8,
+              2,
+              14,
+              6
+            ]
+          },
+          "pr_metrics": {
+            "total_prs_merged": 138,
+            "pickup_hours": {
+              "p50": 0.2,
+              "p75": 22.9,
+              "p90": 96.9,
+              "count": 91
+            },
+            "merge_time_hours": {
+              "p50": 20.0,
+              "p75": 96.6,
+              "p90": 168.2,
+              "count": 138
+            },
+            "large_pr_pct": 17.4
+          },
+          "build_metrics": null,
+          "bottleneck_phase": "review",
+          "bottleneck_issues": [
+            {
+              "key": "BE2PROD-5500",
+              "summary": "[be2-web] TOUR 下放",
+              "parent_key": "BE2PROD-5520",
+              "parent_summary": "[Prod]  地點 / 行程模組下放 Pkg 層級 （ 因應 tour prod page 特化）",
+              "phase_duration_days": 57.06,
+              "url": "https://kkday.atlassian.net/browse/BE2PROD-5500"
+            },
+            {
+              "key": "BE2PROD-5647",
+              "summary": "[be2-web] 修正地點庫同步資料問題",
+              "parent_key": null,
+              "parent_summary": null,
+              "phase_duration_days": 22.08,
+              "url": "https://kkday.atlassian.net/browse/BE2PROD-5647"
+            },
+            {
+              "key": "BE2PROD-5705",
+              "summary": "[product-api]注意事項 (售後) 欄位資訊 從 對外 Product API 移除",
+              "parent_key": null,
+              "parent_summary": null,
+              "phase_duration_days": 20.88,
+              "url": "https://kkday.atlassian.net/browse/BE2PROD-5705"
+            },
+            {
+              "key": "BE2PROD-5649",
+              "summary": "[be2-web] Tour 下放介面操作優化",
+              "parent_key": null,
+              "parent_summary": null,
+              "phase_duration_days": 20.28,
+              "url": "https://kkday.atlassian.net/browse/BE2PROD-5649"
+            },
+            {
+              "key": "BE2PROD-5656",
+              "summary": "[prodouct-api] 以prod_oid取得所有item銷售月曆 ",
+              "parent_key": "BE2PROD-5613",
+              "parent_summary": "跨方案『編輯』銷售月曆 ",
+              "phase_duration_days": 17.2,
+              "url": "https://kkday.atlassian.net/browse/BE2PROD-5656"
+            },
+            {
+              "key": "BE2PROD-5661",
+              "summary": "[be2-web] 調整旅規下放地點相關邏輯",
+              "parent_key": null,
+              "parent_summary": null,
+              "phase_duration_days": 15.28,
+              "url": "https://kkday.atlassian.net/browse/BE2PROD-5661"
+            },
+            {
+              "key": "BE2PROD-5632",
+              "summary": "複制方案 / 自動延展月曆時保留預設庫存設定",
+              "parent_key": "BE2PROD-5604",
+              "parent_summary": "複制方案 / 自動延展月曆時保留預設庫存設定",
+              "phase_duration_days": 10.86,
+              "url": "https://kkday.atlassian.net/browse/BE2PROD-5632"
+            },
+            {
+              "key": "BE2PROD-5664",
+              "summary": "[be2-web] 跨方案編輯銷售月曆",
+              "parent_key": "BE2PROD-5613",
+              "parent_summary": "跨方案『編輯』銷售月曆 ",
+              "phase_duration_days": 10.33,
+              "url": "https://kkday.atlassian.net/browse/BE2PROD-5664"
+            },
+            {
+              "key": "BE2PROD-5710",
+              "summary": "[product-api]cart-data/availability log優化",
+              "parent_key": "BE2PROD-5709",
+              "parent_summary": "商品系統增加監控",
+              "phase_duration_days": 9.13,
+              "url": "https://kkday.atlassian.net/browse/BE2PROD-5710"
+            },
+            {
+              "key": "BE2PROD-5740",
+              "summary": "[product-api]定價負毛利自動填低毛原因失效 - 競價規則判斷與毛利率計算邏輯修正",
+              "parent_key": null,
+              "parent_summary": null,
+              "phase_duration_days": 8.86,
+              "url": "https://kkday.atlassian.net/browse/BE2PROD-5740"
+            }
+          ],
+          "phase_insights": [
+            {
+              "phase_id": "dev",
+              "pass_through_count": 1,
+              "total_in_phase": 64,
+              "pass_through_pct": 1.6
+            },
+            {
+              "phase_id": "dev_test",
+              "pass_through_count": 41,
+              "total_in_phase": 51,
+              "pass_through_pct": 80.4
+            },
+            {
+              "phase_id": "qa",
+              "pass_through_count": 7,
+              "total_in_phase": 12,
+              "pass_through_pct": 58.3
+            },
+            {
+              "phase_id": "staging",
+              "pass_through_count": 22,
+              "total_in_phase": 58,
+              "pass_through_pct": 37.9
+            }
+          ],
+          "dev_source_stats": {
+            "jira_count": 36,
+            "github_count": 28,
+            "total": 64
+          },
+          "projects": {
+            "BE2PROD": {
+              "cycle_time": {
+                "backlog": {
+                  "p50": 0.03,
+                  "p75": 1.97,
+                  "p90": 6.05,
+                  "count": 68
+                },
+                "planning": {
+                  "p50": 16.36,
+                  "p75": 35.19,
+                  "p90": 56.2,
+                  "count": 6
+                },
+                "dev": {
+                  "p50": 0.05,
+                  "p75": 3.23,
+                  "p90": 82.27,
+                  "count": 64,
+                  "filtered": {
+                    "p50": 1.88,
+                    "p75": 66.72,
+                    "p90": 96.65,
+                    "count": 34,
+                    "excluded_count": 30,
+                    "threshold_hours": 1.0
+                  }
+                },
+                "review": {
+                  "p50": 3.06,
+                  "p75": 6.08,
+                  "p90": 10.75,
+                  "count": 63,
+                  "filtered": {
+                    "p50": 3.75,
+                    "p75": 6.73,
+                    "p90": 12.18,
+                    "count": 58,
+                    "excluded_count": 5,
+                    "threshold_hours": 1.0
+                  }
+                },
+                "dev_test": {
+                  "p50": 0.0,
+                  "p75": 0.0,
+                  "p90": 0.65,
+                  "count": 51,
+                  "filtered": {
+                    "p50": 4.57,
+                    "p75": 6.88,
+                    "p90": 9.47,
+                    "count": 6,
+                    "excluded_count": 45,
+                    "threshold_hours": 1.0
+                  }
+                },
+                "qa": {
+                  "p50": 0.0,
+                  "p75": 0.4,
+                  "p90": 6.4,
+                  "count": 12,
+                  "filtered": {
+                    "p50": 3.99,
+                    "p75": 7.74,
+                    "p90": 9.06,
+                    "count": 4,
+                    "excluded_count": 8,
+                    "threshold_hours": 1.0
+                  }
+                },
+                "staging": {
+                  "p50": 0.18,
+                  "p75": 3.23,
+                  "p90": 8.86,
+                  "count": 58,
+                  "filtered": {
+                    "p50": 3.23,
+                    "p75": 4.14,
+                    "p90": 16.79,
+                    "count": 30,
+                    "excluded_count": 28,
+                    "threshold_hours": 1.0
+                  }
+                },
+                "done": {
+                  "p50": 0.0,
+                  "p75": 0.0,
+                  "p90": 17.02,
+                  "count": 68
+                },
+                "total": {
+                  "p50": 7.09,
+                  "p75": 24.39,
+                  "p90": 95.04,
+                  "count": 64
+                }
+              }
+            }
+          }
+        }
       }
     },
     "team-b2b": {
@@ -786,6 +1408,676 @@
           "github_count": 103,
           "total": 359
         }
+      },
+      "by_window": {
+        "4": {
+          "cycle_time": {
+            "backlog": {
+              "p50": 6.58,
+              "p75": 23.17,
+              "p90": 48.23,
+              "count": 18
+            },
+            "planning": {
+              "p50": 0.0,
+              "p75": 1.16,
+              "p90": 22.4,
+              "count": 21
+            },
+            "dev": {
+              "p50": 0.22,
+              "p75": 1.18,
+              "p90": 3.12,
+              "count": 18,
+              "filtered": {
+                "p50": 1.19,
+                "p75": 2.79,
+                "p90": 4.0,
+                "count": 9,
+                "excluded_count": 9,
+                "threshold_hours": 1.0
+              }
+            },
+            "review": {
+              "p50": 19.87,
+              "p75": 22.69,
+              "p90": 22.81,
+              "count": 9,
+              "filtered": {
+                "p50": 22.66,
+                "p75": 22.75,
+                "p90": 22.81,
+                "count": 7,
+                "excluded_count": 2,
+                "threshold_hours": 1.0
+              }
+            },
+            "dev_test": {
+              "p50": 0.45,
+              "p75": 1.69,
+              "p90": 3.95,
+              "count": 12,
+              "filtered": {
+                "p50": 0.91,
+                "p75": 3.92,
+                "p90": 3.99,
+                "count": 8,
+                "excluded_count": 4,
+                "threshold_hours": 1.0
+              }
+            },
+            "qa": {
+              "p50": 1.15,
+              "p75": 1.15,
+              "p90": 1.15,
+              "count": 1,
+              "filtered": {
+                "p50": 1.15,
+                "p75": 1.15,
+                "p90": 1.15,
+                "count": 1,
+                "excluded_count": 0,
+                "threshold_hours": 1.0
+              }
+            },
+            "staging": {
+              "p50": 2.71,
+              "p75": 2.82,
+              "p90": 3.35,
+              "count": 6,
+              "filtered": {
+                "p50": 2.71,
+                "p75": 2.82,
+                "p90": 3.35,
+                "count": 6,
+                "excluded_count": 0,
+                "threshold_hours": 1.0
+              }
+            },
+            "done": {
+              "p50": 0.12,
+              "p75": 0.12,
+              "p90": 0.12,
+              "count": 1
+            },
+            "total": {
+              "p50": 1.38,
+              "p75": 27.19,
+              "p90": 31.35,
+              "count": 18
+            }
+          },
+          "throughput": {
+            "completed_issues": 18,
+            "story_points": null,
+            "weekly_trend": [
+              3,
+              3,
+              1,
+              11
+            ]
+          },
+          "pr_metrics": {
+            "total_prs_merged": 74,
+            "pickup_hours": {
+              "p50": 1.9,
+              "p75": 19.5,
+              "p90": 127.1,
+              "count": 27
+            },
+            "merge_time_hours": {
+              "p50": 0.5,
+              "p75": 7.4,
+              "p90": 47.6,
+              "count": 74
+            },
+            "large_pr_pct": 43.2
+          },
+          "build_metrics": null,
+          "bottleneck_phase": "review",
+          "bottleneck_issues": [
+            {
+              "key": "ROB-4056",
+              "summary": "Common｜開發｜[後端]RBMS Product Syncs 搬家 BE2",
+              "parent_key": null,
+              "parent_summary": null,
+              "phase_duration_days": 22.81,
+              "url": "https://kkday.atlassian.net/browse/ROB-4056"
+            },
+            {
+              "key": "ROB-4018",
+              "summary": "Common｜新增｜RBMS Product Syncs 搬家 BE2",
+              "parent_key": "ROB-4016",
+              "parent_summary": "Be2V3｜Product Syncs",
+              "phase_duration_days": 22.81,
+              "url": "https://kkday.atlassian.net/browse/ROB-4018"
+            },
+            {
+              "key": "ROB-4055",
+              "summary": "Common｜開發｜[前端]RBMS Product Syncs 搬家 BE2",
+              "parent_key": null,
+              "parent_summary": null,
+              "phase_duration_days": 22.69,
+              "url": "https://kkday.atlassian.net/browse/ROB-4055"
+            },
+            {
+              "key": "ROB-4047",
+              "summary": "Common｜調整｜價格global config 改用 interface",
+              "parent_key": "ROB-3881",
+              "parent_summary": "be2-b2b｜價格規則 mapping",
+              "phase_duration_days": 22.66,
+              "url": "https://kkday.atlassian.net/browse/ROB-4047"
+            },
+            {
+              "key": "ROB-4069",
+              "summary": "Common｜調整｜價格比對按鈕 各service 一致性",
+              "parent_key": "ROB-3881",
+              "parent_summary": "be2-b2b｜價格規則 mapping",
+              "phase_duration_days": 19.87,
+              "url": "https://kkday.atlassian.net/browse/ROB-4069"
+            },
+            {
+              "key": "ROB-4094",
+              "summary": "USJ｜修改｜憑證 URL 收齊後，判斷訂單狀態為已處理才可阻擋重發",
+              "parent_key": "ROB-4095",
+              "parent_summary": "USJ｜B2B 串接",
+              "phase_duration_days": 1.72,
+              "url": "https://kkday.atlassian.net/browse/ROB-4094"
+            },
+            {
+              "key": "ROB-4073",
+              "summary": "HanaTour｜修正｜錯誤異常",
+              "parent_key": "ROB-2",
+              "parent_summary": "Hana Tour",
+              "phase_duration_days": 0.94,
+              "url": "https://kkday.atlassian.net/browse/ROB-4073"
+            },
+            {
+              "key": "ROB-4057",
+              "summary": "Common｜盤點｜SystemSetting 預設填寫 SupplierOid 影響範圍",
+              "parent_key": null,
+              "parent_summary": null,
+              "phase_duration_days": 0.0,
+              "url": "https://kkday.atlassian.net/browse/ROB-4057"
+            },
+            {
+              "key": "ROB-3831",
+              "summary": "Tabelog｜2026 02 更新",
+              "parent_key": "KBP-667",
+              "parent_summary": "Tabelog｜上線後更新",
+              "phase_duration_days": 0.0,
+              "url": "https://kkday.atlassian.net/browse/ROB-3831"
+            }
+          ],
+          "phase_insights": [
+            {
+              "phase_id": "planning",
+              "pass_through_count": 10,
+              "total_in_phase": 18,
+              "pass_through_pct": 55.6
+            },
+            {
+              "phase_id": "dev",
+              "pass_through_count": 8,
+              "total_in_phase": 18,
+              "pass_through_pct": 44.4
+            },
+            {
+              "phase_id": "dev_test",
+              "pass_through_count": 4,
+              "total_in_phase": 12,
+              "pass_through_pct": 33.3
+            }
+          ],
+          "dev_source_stats": {
+            "jira_count": 14,
+            "github_count": 4,
+            "total": 18
+          },
+          "projects": {
+            "ROB": {
+              "cycle_time": {
+                "backlog": {
+                  "p50": 6.58,
+                  "p75": 23.17,
+                  "p90": 48.23,
+                  "count": 18
+                },
+                "planning": {
+                  "p50": 0.0,
+                  "p75": 1.16,
+                  "p90": 22.4,
+                  "count": 21
+                },
+                "dev": {
+                  "p50": 0.22,
+                  "p75": 1.18,
+                  "p90": 3.12,
+                  "count": 18,
+                  "filtered": {
+                    "p50": 1.19,
+                    "p75": 2.79,
+                    "p90": 4.0,
+                    "count": 9,
+                    "excluded_count": 9,
+                    "threshold_hours": 1.0
+                  }
+                },
+                "review": {
+                  "p50": 19.87,
+                  "p75": 22.69,
+                  "p90": 22.81,
+                  "count": 9,
+                  "filtered": {
+                    "p50": 22.66,
+                    "p75": 22.75,
+                    "p90": 22.81,
+                    "count": 7,
+                    "excluded_count": 2,
+                    "threshold_hours": 1.0
+                  }
+                },
+                "dev_test": {
+                  "p50": 0.45,
+                  "p75": 1.69,
+                  "p90": 3.95,
+                  "count": 12,
+                  "filtered": {
+                    "p50": 0.91,
+                    "p75": 3.92,
+                    "p90": 3.99,
+                    "count": 8,
+                    "excluded_count": 4,
+                    "threshold_hours": 1.0
+                  }
+                },
+                "qa": {
+                  "p50": 1.15,
+                  "p75": 1.15,
+                  "p90": 1.15,
+                  "count": 1,
+                  "filtered": {
+                    "p50": 1.15,
+                    "p75": 1.15,
+                    "p90": 1.15,
+                    "count": 1,
+                    "excluded_count": 0,
+                    "threshold_hours": 1.0
+                  }
+                },
+                "staging": {
+                  "p50": 2.71,
+                  "p75": 2.82,
+                  "p90": 3.35,
+                  "count": 6,
+                  "filtered": {
+                    "p50": 2.71,
+                    "p75": 2.82,
+                    "p90": 3.35,
+                    "count": 6,
+                    "excluded_count": 0,
+                    "threshold_hours": 1.0
+                  }
+                },
+                "done": {
+                  "p50": 0.12,
+                  "p75": 0.12,
+                  "p90": 0.12,
+                  "count": 1
+                },
+                "total": {
+                  "p50": 1.38,
+                  "p75": 27.19,
+                  "p90": 31.35,
+                  "count": 18
+                }
+              }
+            }
+          }
+        },
+        "8": {
+          "cycle_time": {
+            "backlog": {
+              "p50": 1.12,
+              "p75": 6.5,
+              "p90": 27.07,
+              "count": 100
+            },
+            "planning": {
+              "p50": 0.0,
+              "p75": 1.12,
+              "p90": 8.38,
+              "count": 103
+            },
+            "dev": {
+              "p50": 0.14,
+              "p75": 1.76,
+              "p90": 5.48,
+              "count": 100,
+              "filtered": {
+                "p50": 1.72,
+                "p75": 4.41,
+                "p90": 17.17,
+                "count": 53,
+                "excluded_count": 47,
+                "threshold_hours": 1.0
+              }
+            },
+            "review": {
+              "p50": 0.1,
+              "p75": 2.0,
+              "p90": 5.89,
+              "count": 79,
+              "filtered": {
+                "p50": 2.0,
+                "p75": 3.67,
+                "p90": 18.79,
+                "count": 42,
+                "excluded_count": 37,
+                "threshold_hours": 1.0
+              }
+            },
+            "dev_test": {
+              "p50": 0.01,
+              "p75": 1.03,
+              "p90": 4.97,
+              "count": 90,
+              "filtered": {
+                "p50": 1.74,
+                "p75": 4.02,
+                "p90": 7.37,
+                "count": 43,
+                "excluded_count": 47,
+                "threshold_hours": 1.0
+              }
+            },
+            "qa": {
+              "p50": 1.43,
+              "p75": 4.8,
+              "p90": 6.99,
+              "count": 18,
+              "filtered": {
+                "p50": 1.85,
+                "p75": 5.15,
+                "p90": 7.0,
+                "count": 16,
+                "excluded_count": 2,
+                "threshold_hours": 1.0
+              }
+            },
+            "staging": {
+              "p50": 1.06,
+              "p75": 2.61,
+              "p90": 3.39,
+              "count": 48,
+              "filtered": {
+                "p50": 1.13,
+                "p75": 2.68,
+                "p90": 3.4,
+                "count": 45,
+                "excluded_count": 3,
+                "threshold_hours": 1.0
+              }
+            },
+            "done": {
+              "p50": 0.12,
+              "p75": 3.49,
+              "p90": 5.51,
+              "count": 3
+            },
+            "total": {
+              "p50": 3.86,
+              "p75": 10.58,
+              "p90": 29.95,
+              "count": 100
+            }
+          },
+          "throughput": {
+            "completed_issues": 19,
+            "story_points": null,
+            "weekly_trend": [
+              17,
+              22,
+              22,
+              21,
+              3,
+              3,
+              1,
+              11
+            ]
+          },
+          "pr_metrics": {
+            "total_prs_merged": 307,
+            "pickup_hours": {
+              "p50": 0.3,
+              "p75": 5.2,
+              "p90": 21.4,
+              "count": 133
+            },
+            "merge_time_hours": {
+              "p50": 0.8,
+              "p75": 17.3,
+              "p90": 47.3,
+              "count": 307
+            },
+            "large_pr_pct": 35.5
+          },
+          "build_metrics": null,
+          "bottleneck_phase": "qa",
+          "bottleneck_issues": [
+            {
+              "key": "ROB-3877",
+              "summary": "Mandai｜修改｜訂購規則新增 detail type 選項＆discounts ID 參數",
+              "parent_key": "ROB-1678",
+              "parent_summary": "Mandai｜首次串接",
+              "phase_duration_days": 13.72,
+              "url": "https://kkday.atlassian.net/browse/ROB-3877"
+            },
+            {
+              "key": "ROB-3845",
+              "summary": "香港海洋公園｜評估｜訂購規則 V1 轉 V2",
+              "parent_key": "ROB-198",
+              "parent_summary": "香港海洋公園｜首次串接｜系統換新",
+              "phase_duration_days": 7.0,
+              "url": "https://kkday.atlassian.net/browse/ROB-3845"
+            },
+            {
+              "key": "ROB-3956",
+              "summary": "AJ｜開發｜訂購未完成前發起訂單取消",
+              "parent_key": "AJ-1625",
+              "parent_summary": "[25/Q2]Integrating PSP API",
+              "phase_duration_days": 6.99,
+              "url": "https://kkday.atlassian.net/browse/ROB-3956"
+            },
+            {
+              "key": "ROB-3975",
+              "summary": "上海迪士尼｜調整｜價格更新率＆落單後關閉日期場次",
+              "parent_key": "ROB-744",
+              "parent_summary": "上海迪士尼｜首次串接",
+              "phase_duration_days": 5.75,
+              "url": "https://kkday.atlassian.net/browse/ROB-3975"
+            },
+            {
+              "key": "ROB-4046",
+              "summary": "Musement｜刷資料｜B2S 匯入商品綁定 PSP 商品更新 0123",
+              "parent_key": "ROB-1400",
+              "parent_summary": "Musement",
+              "phase_duration_days": 4.96,
+              "url": "https://kkday.atlassian.net/browse/ROB-4046"
+            },
+            {
+              "key": "ROB-3904",
+              "summary": "be2-b2b｜開發｜CSV匯入頁面新增價格匯入、導出V2模板",
+              "parent_key": "ROB-3881",
+              "parent_summary": "be2-b2b｜價格規則 mapping",
+              "phase_duration_days": 4.34,
+              "url": "https://kkday.atlassian.net/browse/ROB-3904"
+            },
+            {
+              "key": "ROB-3899",
+              "summary": "Common｜測試｜驗證 Tour 資訊下放",
+              "parent_key": "ROB-1339",
+              "parent_summary": "b2b-api 基礎建設",
+              "phase_duration_days": 2.46,
+              "url": "https://kkday.atlassian.net/browse/ROB-3899"
+            },
+            {
+              "key": "ROB-4043",
+              "summary": "Japan Ticket｜修改｜比對檢查 externalProductId （供應商＆mapping code）",
+              "parent_key": "ROB-410",
+              "parent_summary": "Japan Ticket｜首次串接",
+              "phase_duration_days": 1.99,
+              "url": "https://kkday.atlassian.net/browse/ROB-4043"
+            },
+            {
+              "key": "ROB-3990",
+              "summary": "SkiData｜調整｜調整 訂購相關邏輯 IsDepotTicket/ValidFrom",
+              "parent_key": "ROB-491",
+              "parent_summary": "Skidata｜首次串接",
+              "phase_duration_days": 1.72,
+              "url": "https://kkday.atlassian.net/browse/ROB-3990"
+            },
+            {
+              "key": "ROB-4018",
+              "summary": "Common｜新增｜RBMS Product Syncs 搬家 BE2",
+              "parent_key": "ROB-4016",
+              "parent_summary": "Be2V3｜Product Syncs",
+              "phase_duration_days": 1.15,
+              "url": "https://kkday.atlassian.net/browse/ROB-4018"
+            }
+          ],
+          "phase_insights": [
+            {
+              "phase_id": "planning",
+              "pass_through_count": 54,
+              "total_in_phase": 100,
+              "pass_through_pct": 54.0
+            },
+            {
+              "phase_id": "dev",
+              "pass_through_count": 32,
+              "total_in_phase": 100,
+              "pass_through_pct": 32.0
+            },
+            {
+              "phase_id": "review",
+              "pass_through_count": 30,
+              "total_in_phase": 79,
+              "pass_through_pct": 38.0
+            },
+            {
+              "phase_id": "dev_test",
+              "pass_through_count": 45,
+              "total_in_phase": 90,
+              "pass_through_pct": 50.0
+            }
+          ],
+          "dev_source_stats": {
+            "jira_count": 71,
+            "github_count": 29,
+            "total": 100
+          },
+          "projects": {
+            "ROB": {
+              "cycle_time": {
+                "backlog": {
+                  "p50": 1.12,
+                  "p75": 6.5,
+                  "p90": 27.07,
+                  "count": 100
+                },
+                "planning": {
+                  "p50": 0.0,
+                  "p75": 1.12,
+                  "p90": 8.38,
+                  "count": 103
+                },
+                "dev": {
+                  "p50": 0.14,
+                  "p75": 1.76,
+                  "p90": 5.48,
+                  "count": 100,
+                  "filtered": {
+                    "p50": 1.72,
+                    "p75": 4.41,
+                    "p90": 17.17,
+                    "count": 53,
+                    "excluded_count": 47,
+                    "threshold_hours": 1.0
+                  }
+                },
+                "review": {
+                  "p50": 0.1,
+                  "p75": 2.0,
+                  "p90": 5.89,
+                  "count": 79,
+                  "filtered": {
+                    "p50": 2.0,
+                    "p75": 3.67,
+                    "p90": 18.79,
+                    "count": 42,
+                    "excluded_count": 37,
+                    "threshold_hours": 1.0
+                  }
+                },
+                "dev_test": {
+                  "p50": 0.01,
+                  "p75": 1.03,
+                  "p90": 4.97,
+                  "count": 90,
+                  "filtered": {
+                    "p50": 1.74,
+                    "p75": 4.02,
+                    "p90": 7.37,
+                    "count": 43,
+                    "excluded_count": 47,
+                    "threshold_hours": 1.0
+                  }
+                },
+                "qa": {
+                  "p50": 1.43,
+                  "p75": 4.8,
+                  "p90": 6.99,
+                  "count": 18,
+                  "filtered": {
+                    "p50": 1.85,
+                    "p75": 5.15,
+                    "p90": 7.0,
+                    "count": 16,
+                    "excluded_count": 2,
+                    "threshold_hours": 1.0
+                  }
+                },
+                "staging": {
+                  "p50": 1.06,
+                  "p75": 2.61,
+                  "p90": 3.39,
+                  "count": 48,
+                  "filtered": {
+                    "p50": 1.13,
+                    "p75": 2.68,
+                    "p90": 3.4,
+                    "count": 45,
+                    "excluded_count": 3,
+                    "threshold_hours": 1.0
+                  }
+                },
+                "done": {
+                  "p50": 0.12,
+                  "p75": 3.49,
+                  "p90": 5.51,
+                  "count": 3
+                },
+                "total": {
+                  "p50": 3.86,
+                  "p75": 10.58,
+                  "p90": 29.95,
+                  "count": 100
+                }
+              }
+            }
+          }
+        }
       }
     },
     "team-scm": {
@@ -1154,6 +2446,684 @@
           "jira_count": 396,
           "github_count": 73,
           "total": 469
+        }
+      },
+      "by_window": {
+        "4": {
+          "cycle_time": {
+            "backlog": {
+              "p50": 2.36,
+              "p75": 9.05,
+              "p90": 49.49,
+              "count": 56
+            },
+            "planning": {
+              "p50": 8.46,
+              "p75": 18.41,
+              "p90": 26.32,
+              "count": 4
+            },
+            "dev": {
+              "p50": 0.08,
+              "p75": 2.76,
+              "p90": 5.26,
+              "count": 56,
+              "filtered": {
+                "p50": 2.72,
+                "p75": 4.92,
+                "p90": 18.95,
+                "count": 31,
+                "excluded_count": 25,
+                "threshold_hours": 1.0
+              }
+            },
+            "review": {
+              "p50": 0.81,
+              "p75": 3.28,
+              "p90": 12.19,
+              "count": 55,
+              "filtered": {
+                "p50": 3.28,
+                "p75": 8.03,
+                "p90": 15.04,
+                "count": 33,
+                "excluded_count": 22,
+                "threshold_hours": 1.0
+              }
+            },
+            "dev_test": {
+              "p50": 2.22,
+              "p75": 4.02,
+              "p90": 4.02,
+              "count": 41,
+              "filtered": {
+                "p50": 4.02,
+                "p75": 4.02,
+                "p90": 4.02,
+                "count": 23,
+                "excluded_count": 18,
+                "threshold_hours": 1.0
+              }
+            },
+            "qa": {
+              "p50": 0.17,
+              "p75": 1.93,
+              "p90": 2.04,
+              "count": 51,
+              "filtered": {
+                "p50": 1.92,
+                "p75": 2.02,
+                "p90": 2.97,
+                "count": 27,
+                "excluded_count": 24,
+                "threshold_hours": 1.0
+              }
+            },
+            "staging": {
+              "p50": 13.07,
+              "p75": 21.81,
+              "p90": 21.83,
+              "count": 55,
+              "filtered": {
+                "p50": 21.71,
+                "p75": 21.83,
+                "p90": 21.83,
+                "count": 37,
+                "excluded_count": 18,
+                "threshold_hours": 1.0
+              }
+            },
+            "done": {
+              "p50": 0.02,
+              "p75": 0.08,
+              "p90": 1.03,
+              "count": 6
+            },
+            "total": {
+              "p50": 18.23,
+              "p75": 33.83,
+              "p90": 38.09,
+              "count": 56
+            }
+          },
+          "throughput": {
+            "completed_issues": 56,
+            "story_points": null,
+            "weekly_trend": [
+              12,
+              3,
+              2,
+              39
+            ]
+          },
+          "pr_metrics": {
+            "total_prs_merged": 64,
+            "pickup_hours": {
+              "p50": 0.1,
+              "p75": 0.2,
+              "p90": 1.6,
+              "count": 63
+            },
+            "merge_time_hours": {
+              "p50": 0.3,
+              "p75": 1.0,
+              "p90": 14.0,
+              "count": 64
+            },
+            "large_pr_pct": 31.2
+          },
+          "build_metrics": null,
+          "bottleneck_phase": "staging",
+          "bottleneck_issues": [
+            {
+              "key": "SCMWEB-3066",
+              "summary": "[FE] 票種的身高改為整數",
+              "parent_key": null,
+              "parent_summary": null,
+              "phase_duration_days": 26.89,
+              "url": "https://kkday.atlassian.net/browse/SCMWEB-3066"
+            },
+            {
+              "key": "SCMWEB-3062",
+              "summary": "[FE] 選供應商的表單顯示 supplier oid",
+              "parent_key": null,
+              "parent_summary": null,
+              "phase_duration_days": 26.88,
+              "url": "https://kkday.atlassian.net/browse/SCMWEB-3062"
+            },
+            {
+              "key": "SCMWEB-3065",
+              "summary": "[BE] 補 step-fill-status 的 unit test",
+              "parent_key": null,
+              "parent_summary": null,
+              "phase_duration_days": 23.74,
+              "url": "https://kkday.atlassian.net/browse/SCMWEB-3065"
+            },
+            {
+              "key": "SCMWEB-2742",
+              "summary": "[FE] BE2 特殊毛利設定 UI 排版",
+              "parent_key": null,
+              "parent_summary": null,
+              "phase_duration_days": 21.83,
+              "url": "https://kkday.atlassian.net/browse/SCMWEB-2742"
+            },
+            {
+              "key": "SCMWEB-2776",
+              "summary": "[FE] BE2 特殊毛利設定 API 串接",
+              "parent_key": null,
+              "parent_summary": null,
+              "phase_duration_days": 21.83,
+              "url": "https://kkday.atlassian.net/browse/SCMWEB-2776"
+            },
+            {
+              "key": "SCMWEB-2854",
+              "summary": "[FE] BE2 特殊毛利埋 GTM Code",
+              "parent_key": null,
+              "parent_summary": null,
+              "phase_duration_days": 21.83,
+              "url": "https://kkday.atlassian.net/browse/SCMWEB-2854"
+            },
+            {
+              "key": "SCMWEB-2878",
+              "summary": "[FE] BE2 特殊毛利 unit test",
+              "parent_key": null,
+              "parent_summary": null,
+              "phase_duration_days": 21.83,
+              "url": "https://kkday.atlassian.net/browse/SCMWEB-2878"
+            },
+            {
+              "key": "SCMWEB-2991",
+              "summary": "[BE] 取得國家列表",
+              "parent_key": null,
+              "parent_summary": null,
+              "phase_duration_days": 21.83,
+              "url": "https://kkday.atlassian.net/browse/SCMWEB-2991"
+            },
+            {
+              "key": "SCMWEB-2992",
+              "summary": "[BE] 搜尋供應商（列表 auto complete）",
+              "parent_key": null,
+              "parent_summary": null,
+              "phase_duration_days": 21.83,
+              "url": "https://kkday.atlassian.net/browse/SCMWEB-2992"
+            },
+            {
+              "key": "SCMWEB-2993",
+              "summary": "[BE] 取得 BD 列表",
+              "parent_key": null,
+              "parent_summary": null,
+              "phase_duration_days": 21.83,
+              "url": "https://kkday.atlassian.net/browse/SCMWEB-2993"
+            }
+          ],
+          "phase_insights": [
+            {
+              "phase_id": "dev",
+              "pass_through_count": 9,
+              "total_in_phase": 56,
+              "pass_through_pct": 16.1
+            },
+            {
+              "phase_id": "review",
+              "pass_through_count": 14,
+              "total_in_phase": 55,
+              "pass_through_pct": 25.5
+            },
+            {
+              "phase_id": "qa",
+              "pass_through_count": 16,
+              "total_in_phase": 51,
+              "pass_through_pct": 31.4
+            }
+          ],
+          "dev_source_stats": {
+            "jira_count": 49,
+            "github_count": 7,
+            "total": 56
+          },
+          "projects": {
+            "SCMWEB": {
+              "cycle_time": {
+                "backlog": {
+                  "p50": 2.36,
+                  "p75": 9.05,
+                  "p90": 49.49,
+                  "count": 56
+                },
+                "planning": {
+                  "p50": 8.46,
+                  "p75": 18.41,
+                  "p90": 26.32,
+                  "count": 4
+                },
+                "dev": {
+                  "p50": 0.08,
+                  "p75": 2.76,
+                  "p90": 5.26,
+                  "count": 56,
+                  "filtered": {
+                    "p50": 2.72,
+                    "p75": 4.92,
+                    "p90": 18.95,
+                    "count": 31,
+                    "excluded_count": 25,
+                    "threshold_hours": 1.0
+                  }
+                },
+                "review": {
+                  "p50": 0.81,
+                  "p75": 3.28,
+                  "p90": 12.19,
+                  "count": 55,
+                  "filtered": {
+                    "p50": 3.28,
+                    "p75": 8.03,
+                    "p90": 15.04,
+                    "count": 33,
+                    "excluded_count": 22,
+                    "threshold_hours": 1.0
+                  }
+                },
+                "dev_test": {
+                  "p50": 2.22,
+                  "p75": 4.02,
+                  "p90": 4.02,
+                  "count": 41,
+                  "filtered": {
+                    "p50": 4.02,
+                    "p75": 4.02,
+                    "p90": 4.02,
+                    "count": 23,
+                    "excluded_count": 18,
+                    "threshold_hours": 1.0
+                  }
+                },
+                "qa": {
+                  "p50": 0.17,
+                  "p75": 1.93,
+                  "p90": 2.04,
+                  "count": 51,
+                  "filtered": {
+                    "p50": 1.92,
+                    "p75": 2.02,
+                    "p90": 2.97,
+                    "count": 27,
+                    "excluded_count": 24,
+                    "threshold_hours": 1.0
+                  }
+                },
+                "staging": {
+                  "p50": 13.07,
+                  "p75": 21.81,
+                  "p90": 21.83,
+                  "count": 55,
+                  "filtered": {
+                    "p50": 21.71,
+                    "p75": 21.83,
+                    "p90": 21.83,
+                    "count": 37,
+                    "excluded_count": 18,
+                    "threshold_hours": 1.0
+                  }
+                },
+                "done": {
+                  "p50": 0.02,
+                  "p75": 0.08,
+                  "p90": 1.03,
+                  "count": 6
+                },
+                "total": {
+                  "p50": 18.23,
+                  "p75": 33.83,
+                  "p90": 38.09,
+                  "count": 56
+                }
+              }
+            }
+          }
+        },
+        "8": {
+          "cycle_time": {
+            "backlog": {
+              "p50": 1.0,
+              "p75": 8.98,
+              "p90": 29.08,
+              "count": 189
+            },
+            "planning": {
+              "p50": 2.91,
+              "p75": 22.81,
+              "p90": 41.72,
+              "count": 7
+            },
+            "dev": {
+              "p50": 0.08,
+              "p75": 2.72,
+              "p90": 6.86,
+              "count": 189,
+              "filtered": {
+                "p50": 2.71,
+                "p75": 5.52,
+                "p90": 14.98,
+                "count": 101,
+                "excluded_count": 88,
+                "threshold_hours": 1.0
+              }
+            },
+            "review": {
+              "p50": 0.1,
+              "p75": 3.28,
+              "p90": 8.03,
+              "count": 188,
+              "filtered": {
+                "p50": 3.28,
+                "p75": 7.9,
+                "p90": 11.77,
+                "count": 102,
+                "excluded_count": 86,
+                "threshold_hours": 1.0
+              }
+            },
+            "dev_test": {
+              "p50": 0.01,
+              "p75": 4.02,
+              "p90": 4.02,
+              "count": 63,
+              "filtered": {
+                "p50": 4.02,
+                "p75": 4.02,
+                "p90": 4.02,
+                "count": 29,
+                "excluded_count": 34,
+                "threshold_hours": 1.0
+              }
+            },
+            "qa": {
+              "p50": 0.96,
+              "p75": 5.97,
+              "p90": 6.22,
+              "count": 177,
+              "filtered": {
+                "p50": 2.02,
+                "p75": 6.16,
+                "p90": 7.25,
+                "count": 122,
+                "excluded_count": 55,
+                "threshold_hours": 1.0
+              }
+            },
+            "staging": {
+              "p50": 13.38,
+              "p75": 22.04,
+              "p90": 29.78,
+              "count": 188,
+              "filtered": {
+                "p50": 20.78,
+                "p75": 28.71,
+                "p90": 30.36,
+                "count": 134,
+                "excluded_count": 54,
+                "threshold_hours": 1.0
+              }
+            },
+            "done": {
+              "p50": 0.0,
+              "p75": 0.07,
+              "p90": 1.95,
+              "count": 11
+            },
+            "total": {
+              "p50": 16.82,
+              "p75": 37.76,
+              "p90": 51.67,
+              "count": 189
+            }
+          },
+          "throughput": {
+            "completed_issues": 65,
+            "story_points": null,
+            "weekly_trend": [
+              12,
+              20,
+              11,
+              90,
+              12,
+              3,
+              2,
+              39
+            ]
+          },
+          "pr_metrics": {
+            "total_prs_merged": 179,
+            "pickup_hours": {
+              "p50": 0.1,
+              "p75": 0.4,
+              "p90": 1.9,
+              "count": 176
+            },
+            "merge_time_hours": {
+              "p50": 0.3,
+              "p75": 1.6,
+              "p90": 19.1,
+              "count": 179
+            },
+            "large_pr_pct": 24.6
+          },
+          "build_metrics": null,
+          "bottleneck_phase": "staging",
+          "bottleneck_issues": [
+            {
+              "key": "SCMWEB-2685",
+              "summary": "[FE] TOUR 類型的節點 2-3, 5-1 調整",
+              "parent_key": null,
+              "parent_summary": null,
+              "phase_duration_days": 42.68,
+              "url": "https://kkday.atlassian.net/browse/SCMWEB-2685"
+            },
+            {
+              "key": "SCMWEB-2669",
+              "summary": "[FE] 行程管理 - 調整 libs/prodSidemenu.js 檔案",
+              "parent_key": null,
+              "parent_summary": null,
+              "phase_duration_days": 42.67,
+              "url": "https://kkday.atlassian.net/browse/SCMWEB-2669"
+            },
+            {
+              "key": "SCMWEB-2755",
+              "summary": "[BE] 方案特點修改跟取得",
+              "parent_key": null,
+              "parent_summary": null,
+              "phase_duration_days": 42.67,
+              "url": "https://kkday.atlassian.net/browse/SCMWEB-2755"
+            },
+            {
+              "key": "SCMWEB-2711",
+              "summary": "(02) TOUR 商品可依方案設定導覽語系",
+              "parent_key": "SCMWEB-2592",
+              "parent_summary": "[商品] Tour 特化下放方案",
+              "phase_duration_days": 42.67,
+              "url": "https://kkday.atlassian.net/browse/SCMWEB-2711"
+            },
+            {
+              "key": "SCMWEB-2686",
+              "summary": "[FE] 商品資訊 - 基本資訊頁面點擊「儲存」要重 call /steps api",
+              "parent_key": null,
+              "parent_summary": null,
+              "phase_duration_days": 42.66,
+              "url": "https://kkday.atlassian.net/browse/SCMWEB-2686"
+            },
+            {
+              "key": "SCMWEB-2744",
+              "summary": "[BE] DB 調整",
+              "parent_key": null,
+              "parent_summary": null,
+              "phase_duration_days": 42.66,
+              "url": "https://kkday.atlassian.net/browse/SCMWEB-2744"
+            },
+            {
+              "key": "SCMWEB-2756",
+              "summary": "[BE] 商品基本資料",
+              "parent_key": null,
+              "parent_summary": null,
+              "phase_duration_days": 42.66,
+              "url": "https://kkday.atlassian.net/browse/SCMWEB-2756"
+            },
+            {
+              "key": "SCMWEB-2759",
+              "summary": "[BE] 使用者填寫節點",
+              "parent_key": null,
+              "parent_summary": null,
+              "phase_duration_days": 42.66,
+              "url": "https://kkday.atlassian.net/browse/SCMWEB-2759"
+            },
+            {
+              "key": "SCMWEB-2721",
+              "summary": "(01) 側邊欄依商品類型變化",
+              "parent_key": "SCMWEB-2592",
+              "parent_summary": "[商品] Tour 特化下放方案",
+              "phase_duration_days": 42.66,
+              "url": "https://kkday.atlassian.net/browse/SCMWEB-2721"
+            },
+            {
+              "key": "SCMWEB-2787",
+              "summary": "[BE] 側邊欄依商品類型變化 串測",
+              "parent_key": null,
+              "parent_summary": null,
+              "phase_duration_days": 42.66,
+              "url": "https://kkday.atlassian.net/browse/SCMWEB-2787"
+            }
+          ],
+          "phase_insights": [
+            {
+              "phase_id": "dev",
+              "pass_through_count": 33,
+              "total_in_phase": 189,
+              "pass_through_pct": 17.5
+            },
+            {
+              "phase_id": "review",
+              "pass_through_count": 56,
+              "total_in_phase": 188,
+              "pass_through_pct": 29.8
+            },
+            {
+              "phase_id": "dev_test",
+              "pass_through_count": 18,
+              "total_in_phase": 63,
+              "pass_through_pct": 28.6
+            },
+            {
+              "phase_id": "qa",
+              "pass_through_count": 41,
+              "total_in_phase": 177,
+              "pass_through_pct": 23.2
+            }
+          ],
+          "dev_source_stats": {
+            "jira_count": 161,
+            "github_count": 28,
+            "total": 189
+          },
+          "projects": {
+            "SCMWEB": {
+              "cycle_time": {
+                "backlog": {
+                  "p50": 1.0,
+                  "p75": 8.98,
+                  "p90": 29.08,
+                  "count": 189
+                },
+                "planning": {
+                  "p50": 2.91,
+                  "p75": 22.81,
+                  "p90": 41.72,
+                  "count": 7
+                },
+                "dev": {
+                  "p50": 0.08,
+                  "p75": 2.72,
+                  "p90": 6.86,
+                  "count": 189,
+                  "filtered": {
+                    "p50": 2.71,
+                    "p75": 5.52,
+                    "p90": 14.98,
+                    "count": 101,
+                    "excluded_count": 88,
+                    "threshold_hours": 1.0
+                  }
+                },
+                "review": {
+                  "p50": 0.1,
+                  "p75": 3.28,
+                  "p90": 8.03,
+                  "count": 188,
+                  "filtered": {
+                    "p50": 3.28,
+                    "p75": 7.9,
+                    "p90": 11.77,
+                    "count": 102,
+                    "excluded_count": 86,
+                    "threshold_hours": 1.0
+                  }
+                },
+                "dev_test": {
+                  "p50": 0.01,
+                  "p75": 4.02,
+                  "p90": 4.02,
+                  "count": 63,
+                  "filtered": {
+                    "p50": 4.02,
+                    "p75": 4.02,
+                    "p90": 4.02,
+                    "count": 29,
+                    "excluded_count": 34,
+                    "threshold_hours": 1.0
+                  }
+                },
+                "qa": {
+                  "p50": 0.96,
+                  "p75": 5.97,
+                  "p90": 6.22,
+                  "count": 177,
+                  "filtered": {
+                    "p50": 2.02,
+                    "p75": 6.16,
+                    "p90": 7.25,
+                    "count": 122,
+                    "excluded_count": 55,
+                    "threshold_hours": 1.0
+                  }
+                },
+                "staging": {
+                  "p50": 13.38,
+                  "p75": 22.04,
+                  "p90": 29.78,
+                  "count": 188,
+                  "filtered": {
+                    "p50": 20.78,
+                    "p75": 28.71,
+                    "p90": 30.36,
+                    "count": 134,
+                    "excluded_count": 54,
+                    "threshold_hours": 1.0
+                  }
+                },
+                "done": {
+                  "p50": 0.0,
+                  "p75": 0.07,
+                  "p90": 1.95,
+                  "count": 11
+                },
+                "total": {
+                  "p50": 16.82,
+                  "p75": 37.76,
+                  "p90": 51.67,
+                  "count": 189
+                }
+              }
+            }
+          }
         }
       }
     }
