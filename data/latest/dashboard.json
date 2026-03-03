@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-03T17:46:05.491490+00:00",
+  "generated_at": "2026-03-03T18:43:00.735814+00:00",
   "period": {
     "start": "2025-09-04",
     "end": "2026-03-03"
@@ -1148,8 +1148,8 @@
               20,
               31,
               9,
-              11,
-              17,
+              13,
+              15,
               22,
               22,
               21,
@@ -1266,8 +1266,8 @@
             20,
             31,
             9,
-            11,
-            17,
+            13,
+            15,
             22,
             22,
             21,
@@ -1421,7 +1421,7 @@
             "planning": {
               "p50": 0.0,
               "p75": 1.16,
-              "p90": 22.4,
+              "p90": 22.44,
               "count": 21
             },
             "dev": {
@@ -1646,7 +1646,7 @@
                 "planning": {
                   "p50": 0.0,
                   "p75": 1.16,
-                  "p90": 22.4,
+                  "p90": 22.44,
                   "count": 21
                 },
                 "dev": {
@@ -1738,28 +1738,28 @@
         "8": {
           "cycle_time": {
             "backlog": {
-              "p50": 1.12,
-              "p75": 6.5,
-              "p90": 27.07,
-              "count": 100
+              "p50": 1.06,
+              "p75": 6.04,
+              "p90": 26.74,
+              "count": 98
             },
             "planning": {
               "p50": 0.0,
-              "p75": 1.12,
-              "p90": 8.38,
-              "count": 103
+              "p75": 1.09,
+              "p90": 7.02,
+              "count": 101
             },
             "dev": {
-              "p50": 0.14,
-              "p75": 1.76,
-              "p90": 5.48,
-              "count": 100,
+              "p50": 0.17,
+              "p75": 1.81,
+              "p90": 6.07,
+              "count": 98,
               "filtered": {
                 "p50": 1.72,
                 "p75": 4.41,
                 "p90": 17.17,
                 "count": 53,
-                "excluded_count": 47,
+                "excluded_count": 45,
                 "threshold_hours": 1.0
               }
             },
@@ -1820,23 +1820,23 @@
               }
             },
             "done": {
-              "p50": 0.12,
-              "p75": 3.49,
-              "p90": 5.51,
-              "count": 3
+              "p50": 3.49,
+              "p75": 5.17,
+              "p90": 6.18,
+              "count": 2
             },
             "total": {
               "p50": 3.86,
-              "p75": 10.58,
-              "p90": 29.95,
-              "count": 100
+              "p75": 9.75,
+              "p90": 29.7,
+              "count": 98
             }
           },
           "throughput": {
             "completed_issues": 19,
             "story_points": null,
             "weekly_trend": [
-              17,
+              15,
               22,
               22,
               21,
@@ -1949,15 +1949,15 @@
           "phase_insights": [
             {
               "phase_id": "planning",
-              "pass_through_count": 54,
-              "total_in_phase": 100,
-              "pass_through_pct": 54.0
+              "pass_through_count": 53,
+              "total_in_phase": 98,
+              "pass_through_pct": 54.1
             },
             {
               "phase_id": "dev",
-              "pass_through_count": 32,
-              "total_in_phase": 100,
-              "pass_through_pct": 32.0
+              "pass_through_count": 30,
+              "total_in_phase": 98,
+              "pass_through_pct": 30.6
             },
             {
               "phase_id": "review",
@@ -1973,36 +1973,36 @@
             }
           ],
           "dev_source_stats": {
-            "jira_count": 71,
+            "jira_count": 69,
             "github_count": 29,
-            "total": 100
+            "total": 98
           },
           "projects": {
             "ROB": {
               "cycle_time": {
                 "backlog": {
-                  "p50": 1.12,
-                  "p75": 6.5,
-                  "p90": 27.07,
-                  "count": 100
+                  "p50": 1.06,
+                  "p75": 6.04,
+                  "p90": 26.74,
+                  "count": 98
                 },
                 "planning": {
                   "p50": 0.0,
-                  "p75": 1.12,
-                  "p90": 8.38,
-                  "count": 103
+                  "p75": 1.09,
+                  "p90": 7.02,
+                  "count": 101
                 },
                 "dev": {
-                  "p50": 0.14,
-                  "p75": 1.76,
-                  "p90": 5.48,
-                  "count": 100,
+                  "p50": 0.17,
+                  "p75": 1.81,
+                  "p90": 6.07,
+                  "count": 98,
                   "filtered": {
                     "p50": 1.72,
                     "p75": 4.41,
                     "p90": 17.17,
                     "count": 53,
-                    "excluded_count": 47,
+                    "excluded_count": 45,
                     "threshold_hours": 1.0
                   }
                 },
@@ -2063,16 +2063,16 @@
                   }
                 },
                 "done": {
-                  "p50": 0.12,
-                  "p75": 3.49,
-                  "p90": 5.51,
-                  "count": 3
+                  "p50": 3.49,
+                  "p75": 5.17,
+                  "p90": 6.18,
+                  "count": 2
                 },
                 "total": {
                   "p50": 3.86,
-                  "p75": 10.58,
-                  "p90": 29.95,
-                  "count": 100
+                  "p75": 9.75,
+                  "p90": 29.7,
+                  "count": 98
                 }
               }
             }
@@ -3207,8 +3207,8 @@
         20,
         31,
         9,
-        11,
-        17,
+        13,
+        15,
         22,
         22,
         21,
