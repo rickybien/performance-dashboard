@@ -9,6 +9,14 @@
       <div class="drilldown-header">
         <router-link to="/" class="back-link">← Overview</router-link>
         <h1>{{ currentTeam?.name ?? teamId }}</h1>
+        <div class="range-buttons">
+          <button
+            v-for="opt in rangeOptions"
+            :key="opt"
+            :class="['range-btn', { active: trendRange === opt }]"
+            @click="trendRange = opt"
+          >{{ opt }}W</button>
+        </div>
       </div>
 
       <!-- Team / Project Selector -->
@@ -31,20 +39,8 @@
 
         <!-- Throughput Trend -->
         <section class="card chart-card">
-          <div class="section-header">
-            <div>
-              <h3>Weekly Throughput Trend</h3>
-              <p class="chart-subtitle">Completed issues + cycle time p50</p>
-            </div>
-            <div class="range-buttons">
-              <button
-                v-for="opt in rangeOptions"
-                :key="opt"
-                :class="['range-btn', { active: trendRange === opt }]"
-                @click="trendRange = opt"
-              >{{ opt }}W</button>
-            </div>
-          </div>
+          <h3>Weekly Throughput Trend</h3>
+          <p class="chart-subtitle">Completed issues + cycle time p50</p>
           <ThroughputChart
             :weeks="slicedWeeks"
             :throughput="slicedThroughput"
@@ -161,13 +157,13 @@
       <!-- PR Metrics -->
       <section class="card" style="margin-top: 1rem">
         <h3>PR Metrics</h3>
-        <PrMetricsCard :pr-metrics="currentTeam?.aggregated.pr_metrics ?? null" />
+        <PrMetricsCard :pr-metrics="currentAggregated?.pr_metrics ?? null" />
       </section>
 
       <!-- Build Metrics（只在有資料時顯示） -->
-      <section v-if="currentTeam?.aggregated.build_metrics" class="card" style="margin-top: 1rem">
+      <section v-if="currentAggregated?.build_metrics" class="card" style="margin-top: 1rem">
         <h3>Build Metrics</h3>
-        <BuildMetricsCard :build-metrics="currentTeam.aggregated.build_metrics" />
+        <BuildMetricsCard :build-metrics="currentAggregated.build_metrics" />
       </section>
     </template>
   </div>
@@ -223,10 +219,30 @@ const slicedCycleTimeP50 = computed(() => {
   return arr.slice(-trendRange.value)
 })
 
-// 依選擇的 project 篩選，或顯示所有 project
+// 依選擇的時間區間決定讀取 by_window 或 aggregated
+const currentAggregated = computed(() => {
+  if (!currentTeam.value) return null
+  const maxWeeks = teamTrend.value?.weeks?.length ?? 12
+  if (trendRange.value >= maxWeeks) return currentTeam.value.aggregated
+  return currentTeam.value.by_window?.[String(trendRange.value)]
+    ?? currentTeam.value.aggregated
+})
+
+// 依選擇的 project 篩選，或顯示所有 project；4W/8W 時使用 windowed cycle_time
 const displayProjects = computed(() => {
   if (!currentTeam.value) return {}
-  const projects = currentTeam.value.projects
+  let projects = currentTeam.value.projects
+  const maxWeeks = teamTrend.value?.weeks?.length ?? 12
+  if (trendRange.value < maxWeeks) {
+    const wp = currentTeam.value.by_window?.[String(trendRange.value)]?.projects
+    if (wp) {
+      const merged = {}
+      for (const [pk, proj] of Object.entries(projects)) {
+        merged[pk] = { ...proj, cycle_time: wp[pk]?.cycle_time ?? proj.cycle_time }
+      }
+      projects = merged
+    }
+  }
   if (selectedProjectKey.value && projects[selectedProjectKey.value]) {
     return { [selectedProjectKey.value]: projects[selectedProjectKey.value] }
   }
@@ -235,9 +251,9 @@ const displayProjects = computed(() => {
 
 // 找出 p50 最高的 phase（排除 total）
 const bottleneck = computed(() => {
-  if (!currentTeam.value || !data.value) return null
+  if (!currentAggregated.value || !data.value) return null
 
-  const ct = currentTeam.value.aggregated.cycle_time
+  const ct = currentAggregated.value.cycle_time
   const phases = data.value.meta.phases
 
   let maxPhase = null
@@ -255,13 +271,13 @@ const bottleneck = computed(() => {
 })
 
 const bottleneckIssues = computed(() =>
-  currentTeam.value?.aggregated.bottleneck_issues ?? [],
+  currentAggregated.value?.bottleneck_issues ?? [],
 )
 
 const phaseInsights = computed(() => {
-  const raw = currentTeam.value?.aggregated.phase_insights ?? []
+  const raw = currentAggregated.value?.phase_insights ?? []
   const phases = data.value?.meta.phases ?? []
-  const ct = currentTeam.value?.aggregated.cycle_time ?? {}
+  const ct = currentAggregated.value?.cycle_time ?? {}
   return raw.map(insight => {
     const phase = phases.find(p => p.id === insight.phase_id)
     const stat = ct[insight.phase_id]
@@ -275,12 +291,12 @@ const phaseInsights = computed(() => {
 })
 
 const devSourceStats = computed(() =>
-  currentTeam.value?.aggregated.dev_source_stats ?? null,
+  currentAggregated.value?.dev_source_stats ?? null,
 )
 
 const filteredPhaseStats = computed(() => {
-  if (!currentTeam.value || !data.value) return []
-  const ct = currentTeam.value.aggregated.cycle_time
+  if (!currentAggregated.value || !data.value) return []
+  const ct = currentAggregated.value.cycle_time
   const phases = data.value.meta.phases
   return phases
     .filter(phase => ct[phase.id]?.filtered)
@@ -328,35 +344,10 @@ function parentUrl(issue) {
   color: var(--text-primary);
 }
 
-.charts-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-  margin-top: 1.25rem;
-}
-
-@media (max-width: 768px) {
-  .charts-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-.chart-card {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.section-header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 0.75rem;
-}
-
 .range-buttons {
   display: flex;
   gap: 0.25rem;
+  margin-left: auto;
   flex-shrink: 0;
 }
 
@@ -380,6 +371,25 @@ function parentUrl(issue) {
   background: var(--accent, #3b82f6);
   color: #fff;
   border-color: var(--accent, #3b82f6);
+}
+
+.charts-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+
+@media (max-width: 768px) {
+  .charts-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.chart-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
 .chart-subtitle {

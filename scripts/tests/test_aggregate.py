@@ -18,7 +18,9 @@ from aggregate import (
     _compute_pr_coding_hours,
     _compute_pr_dev_hours,
     _compute_sa_sd_planning_hours,
+    _compute_team_aggregated,
     _enhance_dev_durations_with_prs,
+    _filter_sa_sd_by_window,
     _find_bottleneck_issues,
     _is_sa_sd_issue,
     _merge_sa_sd_into_planning,
@@ -1313,3 +1315,188 @@ def test_cycle_time_no_filtered_when_all_pass_threshold():
     assert "filtered" in ct["dev"]
     assert ct["dev"]["filtered"]["excluded_count"] == 0
     assert ct["dev"]["filtered"]["count"] == 3
+
+
+# ============================================================
+# Windowed 聚合測試（by_window）
+# ============================================================
+
+
+def test_merge_sa_sd_into_planning_with_tuples():
+    """_merge_sa_sd_into_planning 接受 tuple list，行為與舊版（list[float]）一致。"""
+    resolved = datetime.now(timezone.utc) - timedelta(days=1)
+    normal = make_issue("PROJ-A-1", resolved=resolved, phase_durations={"planning": 24.0})
+    cycle_time = {"planning": {"p50": 1.0, "p75": 1.0, "p90": 1.0, "count": 1}}
+
+    # sa_sd_entries: (hours, resolved)
+    sa_sd_entries = [(48.0, resolved), (72.0, resolved)]
+    _merge_sa_sd_into_planning(cycle_time, [normal], sa_sd_entries)
+
+    # planning 現在應包含 3 個數據點：24h, 48h, 72h
+    # p50 of [24, 48, 72] = 48h = 2.0d
+    assert cycle_time["planning"]["count"] == 3
+    assert abs(cycle_time["planning"]["p50"] - 2.0) < 0.01
+
+
+def test_filter_sa_sd_by_window_basic():
+    """_filter_sa_sd_by_window 應過濾掉 resolved < cutoff 的 entries。"""
+    now = datetime.now(timezone.utc)
+    cutoff = now - timedelta(weeks=4)
+
+    # 3 筆：一筆在 cutoff 內，一筆超出，一筆 resolved=None
+    entries = [
+        (48.0, now - timedelta(weeks=2)),   # 在 4W 內 → 保留
+        (24.0, now - timedelta(weeks=6)),   # 超出 4W → 排除
+        (36.0, None),                        # resolved=None → 保留
+    ]
+
+    result = _filter_sa_sd_by_window(entries, cutoff)
+
+    assert len(result) == 2
+    assert result[0][0] == 48.0
+    assert result[1][0] == 36.0
+
+
+def test_filter_sa_sd_by_window_empty():
+    """空 entries 應回傳空 list。"""
+    now = datetime.now(timezone.utc)
+    assert _filter_sa_sd_by_window([], now - timedelta(weeks=4)) == []
+
+
+def test_compute_team_aggregated_structure():
+    """_compute_team_aggregated 應回傳正確的結構。"""
+    resolved = datetime.now(timezone.utc) - timedelta(days=1)
+    issues = [
+        make_issue("PROJ-A-1", resolved=resolved, phase_durations={"dev": 48.0}),
+        make_issue("PROJ-A-2", resolved=resolved, phase_durations={"dev": 24.0}),
+    ]
+    phases = [
+        {"id": "dev", "label": "Development"},
+        {"id": "done", "label": "Done"},
+    ]
+
+    result = _compute_team_aggregated(
+        issues=issues,
+        sa_sd_entries=[],
+        prs=[],
+        builds=[],
+        phases=phases,
+        filter_threshold_hours=1.0,
+        large_pr_threshold=400,
+        jira_base_url="https://example.atlassian.net",
+        num_weeks=4,
+        recent_days=28,
+    )
+
+    required_keys = {
+        "cycle_time", "throughput", "pr_metrics", "build_metrics",
+        "bottleneck_phase", "bottleneck_issues", "phase_insights", "dev_source_stats",
+    }
+    assert required_keys.issubset(result.keys())
+    assert result["cycle_time"]["dev"]["count"] == 2
+    assert result["bottleneck_phase"] == "dev"
+
+
+def test_aggregate_by_window_structure():
+    """config trend_windows=[4, 8] 時，teams[id].by_window 應有 '4' 和 '8' 兩個 key。"""
+    config_with_windows = {
+        **SAMPLE_CONFIG,
+        "collection": {
+            **SAMPLE_CONFIG.get("collection", {}),
+            "lookback_days": 90,
+            "recent_days": 30,
+            "trend_windows": [4, 8],
+        },
+    }
+    resolved = datetime.now(timezone.utc) - timedelta(days=1)
+    issues = [make_issue("PROJ-A-1", resolved=resolved, phase_durations={"dev": 24.0})]
+
+    result = aggregate(config_with_windows, issues)
+    team = result["teams"]["team-alpha"]
+
+    assert "by_window" in team
+    assert "4" in team["by_window"]
+    assert "8" in team["by_window"]
+
+    # 每個 window 應有正確結構
+    for w_key in ("4", "8"):
+        w = team["by_window"][w_key]
+        assert "cycle_time" in w
+        assert "throughput" in w
+        assert "bottleneck_phase" in w
+        assert "projects" in w
+
+
+def test_aggregate_by_window_filters_by_resolved():
+    """4W window 只包含 4 週內 resolved 的 issue；6W 前的不應計入。"""
+    now = datetime.now(timezone.utc)
+    config_with_windows = {
+        **SAMPLE_CONFIG,
+        "collection": {
+            **SAMPLE_CONFIG.get("collection", {}),
+            "lookback_days": 90,
+            "recent_days": 30,
+            "trend_windows": [4],
+        },
+    }
+
+    # issue1 在 1W 前 resolved（在 4W 內）
+    issue1 = make_issue(
+        "PROJ-A-1", resolved=now - timedelta(weeks=1), phase_durations={"dev": 24.0}
+    )
+    # issue2 在 6W 前 resolved（超出 4W）
+    issue2 = make_issue(
+        "PROJ-A-2", resolved=now - timedelta(weeks=6), phase_durations={"dev": 48.0}
+    )
+
+    result = aggregate(config_with_windows, [issue1, issue2])
+    w4 = result["teams"]["team-alpha"]["by_window"]["4"]
+
+    # 4W window 只計入 issue1
+    assert w4["cycle_time"]["dev"]["count"] == 1
+    assert abs(w4["cycle_time"]["dev"]["p50"] - 1.0) < 0.01  # 24h = 1d
+
+
+def test_aggregate_by_window_project_level():
+    """by_window 應包含 project-level cycle_time，也按 window 過濾。"""
+    now = datetime.now(timezone.utc)
+    config_with_windows = {
+        **SAMPLE_CONFIG,
+        "collection": {
+            **SAMPLE_CONFIG.get("collection", {}),
+            "lookback_days": 90,
+            "recent_days": 30,
+            "trend_windows": [4],
+        },
+    }
+
+    # PROJ-A: 一筆在 1W 前，一筆在 6W 前
+    issue_recent = make_issue(
+        "PROJ-A-1", "PROJ-A", resolved=now - timedelta(weeks=1), phase_durations={"dev": 24.0}
+    )
+    issue_old = make_issue(
+        "PROJ-A-2", "PROJ-A", resolved=now - timedelta(weeks=6), phase_durations={"dev": 96.0}
+    )
+
+    result = aggregate(config_with_windows, [issue_recent, issue_old])
+    w4_projects = result["teams"]["team-alpha"]["by_window"]["4"]["projects"]
+
+    assert "PROJ-A" in w4_projects
+    # 4W 只含 issue_recent（24h = 1d）
+    assert w4_projects["PROJ-A"]["cycle_time"]["dev"]["count"] == 1
+    assert abs(w4_projects["PROJ-A"]["cycle_time"]["dev"]["p50"] - 1.0) < 0.01
+
+
+def test_aggregate_no_trend_windows_compat():
+    """config 無 trend_windows 時，by_window 為空 dict，aggregated 不變。"""
+    # SAMPLE_CONFIG 沒有 trend_windows
+    resolved = datetime.now(timezone.utc) - timedelta(days=1)
+    issues = [make_issue("PROJ-A-1", resolved=resolved, phase_durations={"dev": 24.0})]
+
+    result = aggregate(SAMPLE_CONFIG, issues)
+    team = result["teams"]["team-alpha"]
+
+    assert "by_window" in team
+    assert team["by_window"] == {}
+    # aggregated 正常存在
+    assert "cycle_time" in team["aggregated"]

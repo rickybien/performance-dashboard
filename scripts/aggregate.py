@@ -573,13 +573,13 @@ def _compute_sa_sd_planning_hours(issue: IssueMetrics) -> float:
 def _merge_sa_sd_into_planning(
     cycle_time: dict,
     normal_issues: list[IssueMetrics],
-    sa_sd_hours: list[float],
+    sa_sd_entries: list[tuple[float, Optional[datetime]]],
 ) -> None:
     """將 SA/SD 活躍小時數併入 cycle_time["planning"]（原地修改）。
 
-    只在 sa_sd_hours 非空時才修改，避免不必要的重算。
+    只在 sa_sd_entries 非空時才修改，避免不必要的重算。
     """
-    if not sa_sd_hours:
+    if not sa_sd_entries:
         return
     planning_values = [
         issue.phase_durations["planning"]
@@ -588,11 +588,19 @@ def _merge_sa_sd_into_planning(
         and "planning" in issue.phase_durations
         and issue.phase_durations["planning"] > 0
     ]
-    planning_values.extend(sa_sd_hours)
+    planning_values.extend(h for h, _ in sa_sd_entries)
     cycle_time["planning"] = compute_percentile_stats(planning_values)
 
 
 PASS_THROUGH_THRESHOLD_HOURS = 1 / 60  # < 1 分鐘視為自動穿越
+
+
+def _filter_sa_sd_by_window(
+    entries: list[tuple[float, Optional[datetime]]],
+    cutoff: datetime,
+) -> list[tuple[float, Optional[datetime]]]:
+    """過濾 SA/SD entries，只保留 resolved >= cutoff 或 resolved 為 None 的項目。"""
+    return [(h, r) for h, r in entries if r is None or r >= cutoff]
 
 
 def _compute_phase_insights(
@@ -684,6 +692,87 @@ def _find_bottleneck_issues(
     return result
 
 
+def _compute_team_aggregated(
+    issues: list[IssueMetrics],
+    sa_sd_entries: list[tuple[float, Optional[datetime]]],
+    prs: list,
+    builds: list,
+    phases: list[dict],
+    filter_threshold_hours: float,
+    large_pr_threshold: int,
+    jira_base_url: str,
+    num_weeks: int,
+    recent_days: int,
+) -> dict:
+    """計算 team 層級聚合指標（可用於全量或 windowed 計算）。
+
+    Args:
+        issues: 該 team 的 normal IssueMetrics（已排除 SA/SD）
+        sa_sd_entries: SA/SD 活躍小時數 + resolved 時間的 tuple 列表
+        prs: 該 team 的 PRMetrics 列表
+        builds: 該 team 的 BuildResult 列表
+        phases: config phases 列表
+        filter_threshold_hours: pass-through 過濾門檻（小時）
+        large_pr_threshold: 大型 PR 行數門檻
+        jira_base_url: Jira base URL，用於組裝 issue 連結
+        num_weeks: 趨勢週數
+        recent_days: 計算 throughput completed_issues 的天數範圍
+
+    Returns:
+        aggregated dict（不含 projects，由呼叫方自行加入）
+    """
+    team_cycle_time = _compute_cycle_time_for_project(issues, phases, filter_threshold_hours)
+
+    # 先偵測瓶頸（在 SA/SD 合併之前，避免 planning p50 被 SA/SD 數據虛高汙染）
+    bottleneck_phase_id = None
+    max_p50 = 0.0
+    for phase in phases:
+        pid = phase["id"]
+        if pid in EXCLUDED_FROM_TOTAL:
+            continue
+        stat = team_cycle_time.get(pid)
+        if stat and stat["count"] > 0 and stat["p50"] > max_p50:
+            max_p50 = stat["p50"]
+            bottleneck_phase_id = pid
+
+    # 再合併 SA/SD → planning（不影響已偵測的 bottleneck）
+    _merge_sa_sd_into_planning(team_cycle_time, issues, sa_sd_entries)
+    team_throughput = compute_throughput(issues, recent_days, num_weeks=num_weeks)
+    team_pr_metrics = _compute_pr_metrics(prs, large_pr_threshold)
+    team_build_metrics = _compute_build_metrics(builds, num_weeks=num_weeks)
+
+    bottleneck_issues = []
+    if bottleneck_phase_id and jira_base_url:
+        bottleneck_issues = _find_bottleneck_issues(
+            issues, bottleneck_phase_id, jira_base_url,
+        )
+
+    phase_insights = _compute_phase_insights(issues, phases, team_cycle_time)
+
+    # 統計 dev phase 數據來源（Jira vs GitHub commit time）
+    dev_issues = [
+        i for i in issues
+        if i.resolved is not None and i.phase_durations.get("dev", 0) > 0
+    ]
+    github_dev_count = sum(1 for i in dev_issues if i.dev_source == "github")
+    dev_source_stats = {
+        "jira_count": len(dev_issues) - github_dev_count,
+        "github_count": github_dev_count,
+        "total": len(dev_issues),
+    }
+
+    return {
+        "cycle_time": team_cycle_time,
+        "throughput": team_throughput,
+        "pr_metrics": team_pr_metrics,
+        "build_metrics": team_build_metrics,
+        "bottleneck_phase": bottleneck_phase_id,
+        "bottleneck_issues": bottleneck_issues,
+        "phase_insights": phase_insights,
+        "dev_source_stats": dev_source_stats,
+    }
+
+
 def aggregate(
     config: dict,
     jira_data: list[IssueMetrics],
@@ -714,6 +803,7 @@ def aggregate(
     jira_base_url = config.get("jira", {}).get("base_url", "")
 
     large_pr_threshold = config.get("dashboard", {}).get("large_pr_threshold", 400)
+    trend_windows: list[int] = collection_config.get("trend_windows", [])
 
     period_start = now - timedelta(days=lookback_days)
 
@@ -780,28 +870,33 @@ def aggregate(
 
         projects_output: dict = {}
         all_team_issues: list[IssueMetrics] = []
-        all_team_sa_sd_hours: list[float] = []
+        all_team_sa_sd_entries: list[tuple[float, Optional[datetime]]] = []
+        project_normal_map: dict[str, list[IssueMetrics]] = {}
+        project_sa_sd_map: dict[str, list[tuple[float, Optional[datetime]]]] = {}
 
         for project_key, project_issues in team_projects.items():
             if has_sa_sd:
                 normal_issues: list[IssueMetrics] = []
-                sa_sd_hours: list[float] = []
+                sa_sd_entries: list[tuple[float, Optional[datetime]]] = []
                 for issue in project_issues:
                     if _is_sa_sd_issue(issue, sa_sd_types, sa_sd_pats):
                         h = _compute_sa_sd_planning_hours(issue)
                         if h > 0:
-                            sa_sd_hours.append(h)
+                            sa_sd_entries.append((h, issue.resolved))
                     else:
                         normal_issues.append(issue)
-                all_team_sa_sd_hours.extend(sa_sd_hours)
+                all_team_sa_sd_entries.extend(sa_sd_entries)
                 all_team_issues.extend(normal_issues)
             else:
                 normal_issues = project_issues
-                sa_sd_hours = []
+                sa_sd_entries = []
                 all_team_issues.extend(project_issues)
 
+            project_normal_map[project_key] = normal_issues
+            project_sa_sd_map[project_key] = sa_sd_entries
+
             cycle_time = _compute_cycle_time_for_project(normal_issues, phases, filter_threshold_hours)
-            _merge_sa_sd_into_planning(cycle_time, normal_issues, sa_sd_hours)
+            _merge_sa_sd_into_planning(cycle_time, normal_issues, sa_sd_entries)
             throughput = compute_throughput(normal_issues, recent_days, num_weeks=trend_weeks)
 
             projects_output[project_key] = {
@@ -810,60 +905,42 @@ def aggregate(
                 "pr_metrics": None,  # PR 指標聚合在 team 層級，project 層級留空
             }
 
-        # Team 聚合（跨所有 project）
-        team_cycle_time = _compute_cycle_time_for_project(all_team_issues, phases, filter_threshold_hours)
+        # Team 聚合（全量）
+        team_agg = _compute_team_aggregated(
+            all_team_issues, all_team_sa_sd_entries, team_prs, team_builds,
+            phases, filter_threshold_hours, large_pr_threshold,
+            jira_base_url, num_weeks=trend_weeks, recent_days=recent_days,
+        )
 
-        # 先偵測瓶頸（在 SA/SD 合併之前，避免 planning p50 被 SA/SD 數據虛高汙染）
-        bottleneck_phase_id = None
-        max_p50 = 0.0
-        for phase in phases:
-            pid = phase["id"]
-            if pid in EXCLUDED_FROM_TOTAL:
-                continue
-            stat = team_cycle_time.get(pid)
-            if stat and stat["count"] > 0 and stat["p50"] > max_p50:
-                max_p50 = stat["p50"]
-                bottleneck_phase_id = pid
-
-        # 再合併 SA/SD → planning（不影響已偵測的 bottleneck）
-        _merge_sa_sd_into_planning(team_cycle_time, all_team_issues, all_team_sa_sd_hours)
-        team_throughput = compute_throughput(all_team_issues, recent_days, num_weeks=trend_weeks)
-        team_pr_metrics = _compute_pr_metrics(team_prs, large_pr_threshold)
-        team_build_metrics = _compute_build_metrics(team_builds, num_weeks=trend_weeks)
-
-        bottleneck_issues = []
-        if bottleneck_phase_id and jira_base_url:
-            bottleneck_issues = _find_bottleneck_issues(
-                all_team_issues, bottleneck_phase_id, jira_base_url,
+        # Windowed 聚合
+        by_window: dict = {}
+        for w in trend_windows:
+            cutoff = now - timedelta(weeks=w)
+            w_issues = [i for i in all_team_issues if i.resolved and i.resolved >= cutoff]
+            w_prs = [p for p in team_prs if p.merged_at and p.merged_at >= cutoff]
+            w_builds = [b for b in team_builds if b.timestamp >= cutoff]
+            w_sa_sd = _filter_sa_sd_by_window(all_team_sa_sd_entries, cutoff)
+            w_agg = _compute_team_aggregated(
+                w_issues, w_sa_sd, w_prs, w_builds,
+                phases, filter_threshold_hours, large_pr_threshold,
+                jira_base_url, num_weeks=w, recent_days=min(recent_days, w * 7),
             )
-
-        phase_insights = _compute_phase_insights(all_team_issues, phases, team_cycle_time)
-
-        # 統計 dev phase 數據來源（Jira vs GitHub commit time）
-        dev_issues = [
-            i for i in all_team_issues
-            if i.resolved is not None and i.phase_durations.get("dev", 0) > 0
-        ]
-        github_dev_count = sum(1 for i in dev_issues if i.dev_source == "github")
-        dev_source_stats = {
-            "jira_count": len(dev_issues) - github_dev_count,
-            "github_count": github_dev_count,
-            "total": len(dev_issues),
-        }
+            # project-level windowed cycle_time
+            w_projects: dict = {}
+            for pk, p_normal in project_normal_map.items():
+                p_w_issues = [i for i in p_normal if i.resolved and i.resolved >= cutoff]
+                p_w_sa_sd = _filter_sa_sd_by_window(project_sa_sd_map[pk], cutoff)
+                p_ct = _compute_cycle_time_for_project(p_w_issues, phases, filter_threshold_hours)
+                _merge_sa_sd_into_planning(p_ct, p_w_issues, p_w_sa_sd)
+                w_projects[pk] = {"cycle_time": p_ct}
+            w_agg["projects"] = w_projects
+            by_window[str(w)] = w_agg
 
         teams_output[team_id] = {
             "name": team_name,
             "projects": projects_output,
-            "aggregated": {
-                "cycle_time": team_cycle_time,
-                "throughput": team_throughput,
-                "pr_metrics": team_pr_metrics,
-                "build_metrics": team_build_metrics,
-                "bottleneck_phase": bottleneck_phase_id,
-                "bottleneck_issues": bottleneck_issues,
-                "phase_insights": phase_insights,
-                "dev_source_stats": dev_source_stats,
-            },
+            "aggregated": team_agg,
+            "by_window": by_window,
         }
 
         # 趨勢資料
@@ -871,9 +948,10 @@ def aggregate(
         team_cycle_p50_weekly = _compute_weekly_cycle_time_p50(all_team_issues, num_weeks=trend_weeks)
 
         # PR pickup trend：取 team pr_metrics 中的 p50（單一值，非週趨勢）
+        _team_pr_metrics = team_agg.get("pr_metrics")
         team_pr_pickup_p50 = (
-            team_pr_metrics["pickup_hours"]["p50"]
-            if team_pr_metrics and team_pr_metrics["pickup_hours"]["count"] > 0
+            _team_pr_metrics["pickup_hours"]["p50"]
+            if _team_pr_metrics and _team_pr_metrics["pickup_hours"]["count"] > 0
             else None
         )
 
