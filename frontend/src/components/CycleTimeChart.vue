@@ -42,8 +42,8 @@ const chartData = computed(() => {
     label: phase.label,
     data: projectKeys.map((pk) => {
       const stat = props.projects[pk].cycle_time[phase.id]
-      // dev phase：優先使用 filtered p50（排除 pass-through 後的真實值）
-      if (phase.id === 'dev' && stat?.filtered?.count > 0) {
+      // 優先使用 filtered p50（排除 pass-through 後的真實值）
+      if (stat?.filtered?.count > 0) {
         return stat.filtered.p50 ?? 0
       }
       return stat?.p50 ?? 0
@@ -77,13 +77,13 @@ const chartOptions = {
           const phaseId = props.phases.find((p) => p.label === phase.label)?.id
           const stat = phaseId ? props.projects[pk]?.cycle_time?.[phaseId] : null
 
-          // dev phase 有 filtered 數據時，顯示原始 vs 過濾後對比
+          // 有 filtered 數據時，顯示原始 vs 過濾後對比
           if (stat?.filtered?.count > 0) {
             const excl = stat.filtered.excluded_count
             const thr = stat.filtered.threshold_hours
             return [
               ` ${phase.label}: ${stat.filtered.p50}d (filtered p50, n=${stat.filtered.count})`,
-              ` 原始 p50: ${stat.p50}d  已排除 ${excl} 筆 (dev < ${thr}h)`,
+              ` 原始 p50: ${stat.p50}d  已排除 ${excl} 筆 (< ${thr}h)`,
             ]
           }
 

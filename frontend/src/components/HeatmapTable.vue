@@ -49,21 +49,31 @@ const props = defineProps({
   thresholds: { type: Object, required: true },
 })
 
+function effectiveP50(stat) {
+  return stat?.filtered?.count > 0 ? stat.filtered.p50 : stat?.p50
+}
+
 function cellClass(stat) {
   if (!stat || stat.count === 0) return 'cell-empty'
-  if (stat.p50 < props.thresholds.good) return 'cell-good'
-  if (stat.p50 < props.thresholds.warning) return 'cell-warning'
+  const p50 = effectiveP50(stat)
+  if (p50 < props.thresholds.good) return 'cell-good'
+  if (p50 < props.thresholds.warning) return 'cell-warning'
   return 'cell-bad'
 }
 
 function cellTitle(stat) {
   if (!stat || stat.count === 0) return 'No data'
+  if (stat.filtered?.count > 0) {
+    const excl = stat.filtered.excluded_count
+    const thr = stat.filtered.threshold_hours
+    return `p50: ${stat.filtered.p50}d (filtered)  原始 p50: ${stat.p50}d  排除: ${excl} 個 pass-through (< ${thr}h)  n=${stat.filtered.count}`
+  }
   return `p50: ${stat.p50}d  p75: ${stat.p75}d  p90: ${stat.p90}d  n=${stat.count}`
 }
 
 function formatDays(stat) {
   if (!stat || stat.count === 0) return '—'
-  return `${stat.p50}d`
+  return `${effectiveP50(stat)}d`
 }
 </script>
 

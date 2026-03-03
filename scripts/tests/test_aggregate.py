@@ -1179,7 +1179,7 @@ def test_cycle_time_filtered_dev():
     ]
 
     ct = _compute_cycle_time_for_project(
-        normal_issues + pass_through_issues, phases, dev_filter_threshold_hours=1.0
+        normal_issues + pass_through_issues, phases, filter_threshold_hours=1.0
     )
 
     assert "filtered" in ct["dev"]
@@ -1226,3 +1226,79 @@ def test_dev_source_stats_in_output():
     assert stats["github_count"] == 1  # issue1 被 GitHub commit 取代
     assert stats["jira_count"] == 1    # issue2 保留 Jira 值
     assert stats["total"] == 2
+
+
+def test_cycle_time_filtered_all_active_phases():
+    """所有 active phase 都應計算 filtered；backlog/done/unmapped 不計算。"""
+    from aggregate import _compute_cycle_time_for_project
+
+    resolved = datetime.now(timezone.utc) - timedelta(days=1)
+    phases = [
+        {"id": "planning", "label": "Planning"},
+        {"id": "dev", "label": "Development"},
+        {"id": "review", "label": "PR Review"},
+        {"id": "backlog", "label": "Backlog"},
+        {"id": "done", "label": "Done"},
+    ]
+
+    # 每個 phase：4 筆正常（>= 1h）+ 2 筆 pass-through（< 1h）
+    issues = [
+        make_issue(
+            f"A-{i}",
+            resolved=resolved,
+            phase_durations={
+                "planning": float(i * 8),   # 8h, 16h, 24h, 32h
+                "dev": float(i * 12),       # 12h, 24h, 36h, 48h
+                "review": float(i * 6),     # 6h, 12h, 18h, 24h
+                "backlog": float(i * 2),    # backlog 不 filter
+                "done": float(i * 1),       # done 不 filter
+            },
+        )
+        for i in range(1, 5)
+    ] + [
+        make_issue(
+            f"B-{j}",
+            resolved=resolved,
+            phase_durations={
+                "planning": 0.1,
+                "dev": 0.2,
+                "review": 0.3,
+                "backlog": 0.05,
+                "done": 0.05,
+            },
+        )
+        for j in range(2)
+    ]
+
+    ct = _compute_cycle_time_for_project(issues, phases, filter_threshold_hours=1.0)
+
+    # 所有 active phase 都有 filtered
+    for phase_id in ("planning", "dev", "review"):
+        assert "filtered" in ct[phase_id], f"{phase_id} 應有 filtered"
+        assert ct[phase_id]["filtered"]["excluded_count"] == 2
+        assert ct[phase_id]["filtered"]["count"] == 4
+        assert ct[phase_id]["filtered"]["threshold_hours"] == 1.0
+
+    # backlog / done 不應有 filtered
+    assert "filtered" not in ct["backlog"]
+    assert "filtered" not in ct["done"]
+
+
+def test_cycle_time_no_filtered_when_all_pass_threshold():
+    """當所有 issue 都 >= threshold，filtered 欄位不存在（無需重複）。"""
+    from aggregate import _compute_cycle_time_for_project
+
+    resolved = datetime.now(timezone.utc) - timedelta(days=1)
+    phases = [{"id": "dev", "label": "Development"}]
+
+    issues = [
+        make_issue(f"A-{i}", resolved=resolved, phase_durations={"dev": float(i * 10)})
+        for i in range(1, 4)  # 10h, 20h, 30h — 全部 >= 1h
+    ]
+
+    ct = _compute_cycle_time_for_project(issues, phases, filter_threshold_hours=1.0)
+
+    # 全部通過 threshold → excluded_count = 0 → filtered 也存在（filtered_values 非空）
+    assert "filtered" in ct["dev"]
+    assert ct["dev"]["filtered"]["excluded_count"] == 0
+    assert ct["dev"]["filtered"]["count"] == 3

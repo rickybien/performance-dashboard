@@ -168,21 +168,21 @@ def _compute_iso_week_label(now: datetime, weeks_ago: int) -> str:
 def _compute_cycle_time_for_project(
     issues: list[IssueMetrics],
     phases: list[dict],
-    dev_filter_threshold_hours: float = 1.0,
+    filter_threshold_hours: float = 1.0,
 ) -> dict:
     """計算單一專案的週期時間統計。
 
-    對 dev phase 額外計算 filtered 版本（排除 dev < threshold 的 issue），
+    對所有 active phase（排除 backlog/done/unmapped）額外計算 filtered 版本，
     以過濾掉 Jira 批次拖票造成的 pass-through 干擾。
 
     Args:
         issues: IssueMetrics 列表
         phases: config phases 列表
-        dev_filter_threshold_hours: 過濾 dev phase 的門檻（小時），預設 1 小時
+        filter_threshold_hours: 過濾各 phase 的門檻（小時），預設 1 小時
 
     Returns:
         {phase_id: {"p50": float, "p75": float, "p90": float, "count": int}, ..., "total": {...}}
-        dev phase 額外包含 "filtered": {"p50", ..., "excluded_count", "threshold_hours"}
+        active phase 額外包含 "filtered": {"p50", ..., "excluded_count", "threshold_hours"}
     """
     # 只計算已解決的 issue
     resolved_issues = [issue for issue in issues if issue.resolved is not None]
@@ -198,13 +198,14 @@ def _compute_cycle_time_for_project(
         ]
         stat = compute_percentile_stats(values)
 
-        # 對 dev phase 額外計算 filtered 版本
-        if phase_id == "dev" and values:
-            filtered_values = [v for v in values if v >= dev_filter_threshold_hours]
-            filtered_stat = compute_percentile_stats(filtered_values)
-            filtered_stat["excluded_count"] = len(values) - len(filtered_values)
-            filtered_stat["threshold_hours"] = dev_filter_threshold_hours
-            stat["filtered"] = filtered_stat
+        # 對所有 active phase 計算 filtered 版本（排除 pass-through issue）
+        if values and phase_id not in EXCLUDED_FROM_TOTAL:
+            filtered_values = [v for v in values if v >= filter_threshold_hours]
+            if filtered_values:
+                filtered_stat = compute_percentile_stats(filtered_values)
+                filtered_stat["excluded_count"] = len(values) - len(filtered_values)
+                filtered_stat["threshold_hours"] = filter_threshold_hours
+                stat["filtered"] = filtered_stat
 
         cycle_time[phase_id] = stat
 
@@ -703,7 +704,10 @@ def aggregate(
     collection_config = config.get("collection", {})
     lookback_days = collection_config.get("lookback_days", 90)
     recent_days = collection_config.get("recent_days", 30)
-    dev_filter_threshold_hours = collection_config.get("dev_filter_threshold_hours", 1.0)
+    filter_threshold_hours = collection_config.get(
+        "filter_threshold_hours",
+        collection_config.get("dev_filter_threshold_hours", 1.0),
+    )
     phases = config.get("phases", [])
     jira_base_url = config.get("jira", {}).get("base_url", "")
 
@@ -794,7 +798,7 @@ def aggregate(
                 sa_sd_hours = []
                 all_team_issues.extend(project_issues)
 
-            cycle_time = _compute_cycle_time_for_project(normal_issues, phases, dev_filter_threshold_hours)
+            cycle_time = _compute_cycle_time_for_project(normal_issues, phases, filter_threshold_hours)
             _merge_sa_sd_into_planning(cycle_time, normal_issues, sa_sd_hours)
             throughput = compute_throughput(normal_issues, recent_days)
 
@@ -805,7 +809,7 @@ def aggregate(
             }
 
         # Team 聚合（跨所有 project）
-        team_cycle_time = _compute_cycle_time_for_project(all_team_issues, phases, dev_filter_threshold_hours)
+        team_cycle_time = _compute_cycle_time_for_project(all_team_issues, phases, filter_threshold_hours)
 
         # 先偵測瓶頸（在 SA/SD 合併之前，避免 planning p50 被 SA/SD 數據虛高汙染）
         bottleneck_phase_id = None
