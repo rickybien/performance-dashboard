@@ -29414,5 +29414,18 @@
     "lines_deleted": 2,
     "is_large": false,
     "first_commit_authored_at": "2026-03-03T08:20:49+00:00"
+  },
+  "kkday-b2b-api#6975": {
+    "repo": "kkday-b2b-api",
+    "pr_number": 6975,
+    "title": "Release/260116",
+    "jira_keys": [],
+    "created_at": "2026-03-03T16:11:45+00:00",
+    "first_review_at": null,
+    "merged_at": "2026-03-03T16:34:12+00:00",
+    "lines_added": 1023,
+    "lines_deleted": 48,
+    "is_large": true,
+    "first_commit_authored_at": "2026-03-02T11:35:52+00:00"
   }
 }
