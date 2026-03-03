@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "chart.js": "^4.4.7",
@@ -16,6 +18,9 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.2.1",
-    "vite": "^6.1.0"
+    "@vue/test-utils": "^2.4.6",
+    "happy-dom": "^20.8.3",
+    "vite": "^6.1.0",
+    "vitest": "^4.0.18"
   }
 }

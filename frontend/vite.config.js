@@ -11,6 +11,9 @@ const base = '/performance-dashboard/'
 const projectRoot = resolve(fileURLToPath(import.meta.url), '../..')
 
 export default defineConfig({
+  test: {
+    environment: 'happy-dom',
+  },
   plugins: [
     vue(),
     {
