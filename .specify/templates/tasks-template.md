@@ -8,7 +8,10 @@ description: "Task list template for feature implementation"
 **Input**: Design documents from `/specs/[###-feature-name]/`
 **Prerequisites**: plan.md (required), spec.md (required for user stories), research.md, data-model.md, contracts/
 
-**Tests**: The examples below include test tasks. Tests are OPTIONAL - only include them if explicitly requested in the feature specification.
+**Tests**: 遵循憲法原則 VII（TDD）。
+- **後端邏輯**（aggregate.py、collect_*.py）：測試 MUST 先於實作撰寫，確認失敗後才進行實作。
+- **前端元件關鍵顯示邏輯**：測試 SHOULD 先於實作（vitest）。
+- 提交前 MUST 確認所有既有測試通過。
 
 **Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
 
