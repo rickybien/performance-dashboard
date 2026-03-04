@@ -10,8 +10,8 @@ description: "Task list for 001-s3-deploy: 前端部署遷移至 AWS S3"
 **Tests**: 本功能為純 CI/CD 與 Vite 設定變更，無可 TDD 的業務邏輯（plan.md Constitution Check VII 豁免）。
 驗收測試為手動觸發 workflow，依據 quickstart.md 逐項確認。
 提交前 MUST 確認既有測試仍通過：
-- Python：於 `scripts/` 目錄執行 `uv run --with jira --with pyyaml --with python-dateutil --with pytest --with PyGithub pytest tests/ -v`
-- 前端：於 `frontend/` 目錄執行 `npm test`
+- Python：`cd scripts && uv run --with jira --with pyyaml --with python-dateutil --with pytest --with PyGithub pytest tests/ -v`
+- 前端：`cd frontend && npm test`
 
 **Organization**: Tasks are grouped by user story to enable independent implementation and testing.
 
@@ -45,7 +45,7 @@ description: "Task list for 001-s3-deploy: 前端部署遷移至 AWS S3"
 
 **Goal**: 確保 Vite build 產物的所有路徑引用相容於 S3 domain root 存取
 
-**Independent Test**: 本地先執行 `npm run build`，再執行 `npm run preview`，瀏覽 `http://localhost:4173/`，確認三個路由正常載入且 console 無錯誤
+**Independent Test**: 本地 `npm run build && npm run preview`，瀏覽 `http://localhost:4173/`，確認三個路由正常載入且 console 無錯誤
 
 **注意**：US3 是 US1 的測試前置條件（build 產物 base 正確才能在 S3 正常運作），應在 US1 之前完成
 
@@ -99,7 +99,7 @@ description: "Task list for 001-s3-deploy: 前端部署遷移至 AWS S3"
 **Purpose**: 文件同步、既有測試確認、手動驗收（憲法修訂已提前至 Phase 3 T004）
 
 - [ ] T010 [P] 更新 `PROJECT_SPEC.md` §8 CI/CD 流程：反映 deploy workflow 改用 `aws s3 sync`，移除 gh-pages 相關描述（憲法開發工作流程，CI/CD workflow 修改需更新）
-- [ ] T011 執行既有測試確認無回歸：先於 `scripts/` 目錄執行 Python 測試，再於 `frontend/` 目錄執行前端測試
+- [ ] T011 執行既有測試確認無回歸：`cd scripts && uv run --with jira --with pyyaml --with python-dateutil --with pytest --with PyGithub pytest tests/ -v` 以及 `cd frontend && npm test`
 - [ ] T012 依 `specs/001-s3-deploy/quickstart.md` 逐項執行手動驗收測試（SC-001～SC-004），包含「首次部署前 data/latest/ 不存在」場景驗證（EC-002）
 
 **Checkpoint**: 所有驗收測試通過，文件同步完成
