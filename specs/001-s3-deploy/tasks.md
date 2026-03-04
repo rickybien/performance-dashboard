@@ -51,8 +51,8 @@ description: "Task list for 001-s3-deploy: 前端部署遷移至 AWS S3"
 
 ### Implementation for User Story 3
 
-- [ ] T003 [US3] 將 Vite base path 從 `/performance-dashboard/` 改為 `/` 於 `frontend/vite.config.js`（FR-005；同時自動適配 FR-006 useMetrics no-op、FR-007 dev server middleware prefix no-op）
-- [ ] T004 更新 `.specify/memory/constitution.md`：修訂「技術限制與規範」中的 Vite base 規則，由「固定為 `/performance-dashboard/`」改為「由部署目標決定；S3 domain root 使用 `/`，GitHub Pages 子路徑使用對應前綴」，版本號升至 v1.3.0（plan.md Constitution Check justified violation；須緊接 T003 之後執行，確保 codebase 與 constitution 不存在不一致窗口）
+- [x] T003 [US3] 將 Vite base path 從 `/performance-dashboard/` 改為 `/` 於 `frontend/vite.config.js`（FR-005；同時自動適配 FR-006 useMetrics no-op、FR-007 dev server middleware prefix no-op）
+- [x] T004 更新 `.specify/memory/constitution.md`：修訂「技術限制與規範」中的 Vite base 規則，由「固定為 `/performance-dashboard/`」改為「由部署目標決定；S3 domain root 使用 `/`，GitHub Pages 子路徑使用對應前綴」，版本號升至 v1.3.0（plan.md Constitution Check justified violation；須緊接 T003 之後執行，確保 codebase 與 constitution 不存在不一致窗口）
 
 **Checkpoint**: 執行 `npm run build`，確認 `frontend/dist/index.html` 中資源引用為 `/assets/...`（非 `/performance-dashboard/assets/...`）。constitution.md 版本號為 v1.3.0
 
@@ -68,10 +68,10 @@ description: "Task list for 001-s3-deploy: 前端部署遷移至 AWS S3"
 
 ### Implementation for User Story 1
 
-- [ ] T005 [US1] 移除 `.github/workflows/deploy-frontend.yml` 中的 `peaceiris/actions-gh-pages@v4` deploy 步驟，並將 `permissions: contents: write` 改為 `contents: read`（FR-004）
-- [ ] T006 [US1] 在 `.github/workflows/deploy-frontend.yml` 頂層新增 concurrency group：`group: deploy-frontend, cancel-in-progress: true`（FR-010）
-- [ ] T007 [US1] 修正 `.github/workflows/deploy-frontend.yml` 的 "Copy data files to dist" step：改用 `if [ -d data/latest ]; then cp -r data/latest frontend/dist/data/; fi`，確保 `data/latest/` 不存在時 step 靜默跳過而非 fail（EC-002：首次部署前 data 目錄可能不存在，MUST 仍成功部署前端）
-- [ ] T008 [US1] 在 `.github/workflows/deploy-frontend.yml` 新增 "Deploy to S3" step：`aws s3 sync frontend/dist/ s3://${{ secrets.AWS_S3_BUCKET }}/ --delete`，並在 step env 注入 `AWS_ACCESS_KEY_ID`、`AWS_SECRET_ACCESS_KEY`、`AWS_REGION`（FR-001、FR-002、FR-003、FR-011）
+- [x] T005 [US1] 移除 `.github/workflows/deploy-frontend.yml` 中的 `peaceiris/actions-gh-pages@v4` deploy 步驟，並將 `permissions: contents: write` 改為 `contents: read`（FR-004）
+- [x] T006 [US1] 在 `.github/workflows/deploy-frontend.yml` 頂層新增 concurrency group：`group: deploy-frontend, cancel-in-progress: true`（FR-010）
+- [x] T007 [US1] 修正 `.github/workflows/deploy-frontend.yml` 的 "Copy data files to dist" step：改用 `if [ -d data/latest ]; then cp -r data/latest frontend/dist/data/; fi`，確保 `data/latest/` 不存在時 step 靜默跳過而非 fail（EC-002：首次部署前 data 目錄可能不存在，MUST 仍成功部署前端）
+- [x] T008 [US1] 在 `.github/workflows/deploy-frontend.yml` 新增 "Deploy to S3" step：`aws s3 sync frontend/dist/ s3://${{ secrets.AWS_S3_BUCKET }}/ --delete`，並在 step env 注入 `AWS_ACCESS_KEY_ID`、`AWS_SECRET_ACCESS_KEY`、`AWS_REGION`（FR-001、FR-002、FR-003、FR-011）
 
 **Checkpoint**: workflow 執行成功，S3 bucket 有 `index.html`、`assets/`、`data/latest/dashboard.json`，內網可存取 dashboard
 
@@ -98,8 +98,8 @@ description: "Task list for 001-s3-deploy: 前端部署遷移至 AWS S3"
 
 **Purpose**: 文件同步、既有測試確認、手動驗收（憲法修訂已提前至 Phase 3 T004）
 
-- [ ] T010 [P] 更新 `PROJECT_SPEC.md` §8 CI/CD 流程：反映 deploy workflow 改用 `aws s3 sync`，移除 gh-pages 相關描述（憲法開發工作流程，CI/CD workflow 修改需更新）
-- [ ] T011 執行既有測試確認無回歸：`cd scripts && uv run --with jira --with pyyaml --with python-dateutil --with pytest --with PyGithub pytest tests/ -v` 以及 `cd frontend && npm test`
+- [x] T010 [P] 更新 `PROJECT_SPEC.md` §8 CI/CD 流程：反映 deploy workflow 改用 `aws s3 sync`，移除 gh-pages 相關描述（憲法開發工作流程，CI/CD workflow 修改需更新）
+- [x] T011 執行既有測試確認無回歸：`cd scripts && uv run --with jira --with pyyaml --with python-dateutil --with pytest --with PyGithub pytest tests/ -v` 以及 `cd frontend && npm test`
 - [ ] T012 依 `specs/001-s3-deploy/quickstart.md` 逐項執行手動驗收測試（SC-001～SC-004），包含「首次部署前 data/latest/ 不存在」場景驗證（EC-002）
 
 **Checkpoint**: 所有驗收測試通過，文件同步完成
