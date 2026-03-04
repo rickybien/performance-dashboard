@@ -39,7 +39,9 @@ jobs:
         run: npm run build
 
       - name: Copy data files to dist
-        run: mkdir -p frontend/dist/data && cp -r data/latest frontend/dist/data/
+        run: |
+          mkdir -p frontend/dist/data
+          if [ -d data/latest ]; then cp -r data/latest frontend/dist/data/; fi
 
       - name: Deploy to S3
         env:
