@@ -147,7 +147,7 @@ performance-dashboard/
 └── .github/
     └── workflows/
         ├── collect-metrics.yml        # cron 每日收集 + commit
-        └── deploy-frontend.yml        # 建置 + 部署 gh-pages
+        └── deploy-frontend.yml        # 建置 + 部署 AWS S3
 ```
 
 ---
@@ -743,8 +743,11 @@ git pull --rebase origin master && git push origin master
 |------|------|
 | 觸發 | push to `master`（paths: `frontend/**`, `data/latest/**`）+ `workflow_dispatch` |
 | Runner | `ubuntu-latest`，Node 20，npm cache |
-| Steps | `npm ci` → `npm run build` → `cp -r data/latest frontend/dist/data/` |
-| 部署 | `peaceiris/actions-gh-pages@v4`，`publish_dir: ./frontend/dist`，branch: `gh-pages` |
+| Permissions | `contents: read` |
+| Concurrency | group: `deploy-frontend`，`cancel-in-progress: true` |
+| Secrets | `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION`, `AWS_S3_BUCKET` |
+| Steps | `npm ci` → `npm run build` → `cp data/latest → dist/data/（若目錄存在）` → `aws s3 sync --delete` |
+| 部署 | `aws s3 sync frontend/dist/ s3://{AWS_S3_BUCKET}/ --delete` |
 
 ---
 
