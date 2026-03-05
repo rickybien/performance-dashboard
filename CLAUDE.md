@@ -108,3 +108,10 @@ engineering-metrics-dashboard/
 - Commit messages: conventional commits (feat:, fix:, chore:)
 - Keep files small and focused — one collector per data source
 - Always handle API errors gracefully with logging, never crash the pipeline on partial failures
+
+## Active Technologies
+- Python 3.12+, Node.js 20 (frontend build), GitHub Actions + AWS CLI v2（ubuntu-latest 內建）, Vite 5, Vue 3, vue-router (001-s3-deploy)
+- 無資料庫；靜態 JSON commit 至 repo，deploy 時 cp 至 `frontend/dist/data/` (001-s3-deploy)
+
+## Recent Changes
+- 001-s3-deploy: Added Python 3.12+, Node.js 20 (frontend build), GitHub Actions + AWS CLI v2（ubuntu-latest 內建）, Vite 5, Vue 3, vue-router
