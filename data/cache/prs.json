@@ -6749,51 +6749,6 @@
     "is_large": true,
     "first_commit_authored_at": "2025-12-11T06:32:34+00:00"
   },
-  "kkday-psi-web#823": {
-    "repo": "kkday-psi-web",
-    "pr_number": 823,
-    "title": "feat(PW-447): 新增庫存入庫匯入CSV (#820)",
-    "jira_keys": [
-      "PW-447"
-    ],
-    "created_at": "2025-09-08T05:22:59+00:00",
-    "first_review_at": null,
-    "merged_at": "2025-09-08T05:23:18+00:00",
-    "lines_added": 671,
-    "lines_deleted": 58,
-    "is_large": true,
-    "first_commit_authored_at": "2025-09-08T05:22:05+00:00"
-  },
-  "kkday-psi-web#820": {
-    "repo": "kkday-psi-web",
-    "pr_number": 820,
-    "title": "feat(PW-447): 新增庫存入庫匯入CSV",
-    "jira_keys": [
-      "PW-447"
-    ],
-    "created_at": "2025-08-28T06:05:36+00:00",
-    "first_review_at": "2025-09-08T05:21:08+00:00",
-    "merged_at": "2025-09-08T05:22:05+00:00",
-    "lines_added": 671,
-    "lines_deleted": 58,
-    "is_large": true,
-    "first_commit_authored_at": "2025-08-26T01:54:09+00:00"
-  },
-  "kkday-psi-web#822": {
-    "repo": "kkday-psi-web",
-    "pr_number": 822,
-    "title": "feat(PW-454): Add stock in mixpanel event",
-    "jira_keys": [
-      "PW-454"
-    ],
-    "created_at": "2025-09-08T03:02:15+00:00",
-    "first_review_at": "2025-09-08T03:09:12+00:00",
-    "merged_at": "2025-09-08T03:49:19+00:00",
-    "lines_added": 147,
-    "lines_deleted": 21,
-    "is_large": false,
-    "first_commit_authored_at": "2025-09-08T02:56:14+00:00"
-  },
   "kkday-pos-web#518": {
     "repo": "kkday-pos-web",
     "pr_number": 518,
@@ -8954,19 +8909,6 @@
     "first_review_at": "2025-09-16T03:22:40+00:00",
     "merged_at": "2025-09-16T03:33:21+00:00",
     "lines_added": 10977,
-    "lines_deleted": 1462,
-    "is_large": true,
-    "first_commit_authored_at": "2025-08-18T06:55:07+00:00"
-  },
-  "kkday-be2-b2b#480": {
-    "repo": "kkday-be2-b2b",
-    "pr_number": 480,
-    "title": "feat: PSP 介面",
-    "jira_keys": [],
-    "created_at": "2025-09-05T02:25:12+00:00",
-    "first_review_at": "2025-09-05T09:22:08+00:00",
-    "merged_at": "2025-09-08T00:46:33+00:00",
-    "lines_added": 11020,
     "lines_deleted": 1462,
     "is_large": true,
     "first_commit_authored_at": "2025-08-18T06:55:07+00:00"
@@ -19280,73 +19222,6 @@
     "is_large": true,
     "first_commit_authored_at": "2025-08-29T06:26:16+00:00"
   },
-  "kkday-b2b-api#6202": {
-    "repo": "kkday-b2b-api",
-    "pr_number": 6202,
-    "title": "Release/250825",
-    "jira_keys": [],
-    "created_at": "2025-09-08T17:34:43+00:00",
-    "first_review_at": null,
-    "merged_at": "2025-09-08T17:44:06+00:00",
-    "lines_added": 342,
-    "lines_deleted": 255,
-    "is_large": true,
-    "first_commit_authored_at": "2025-09-04T07:40:06+00:00"
-  },
-  "kkday-b2b-api#6200": {
-    "repo": "kkday-b2b-api",
-    "pr_number": 6200,
-    "title": "Feature/rob 3513 inspect api modify date range",
-    "jira_keys": [],
-    "created_at": "2025-09-08T06:47:53+00:00",
-    "first_review_at": null,
-    "merged_at": "2025-09-08T17:33:57+00:00",
-    "lines_added": 188,
-    "lines_deleted": 118,
-    "is_large": false,
-    "first_commit_authored_at": "2025-09-04T07:40:06+00:00"
-  },
-  "kkday-b2b-api#6201": {
-    "repo": "kkday-b2b-api",
-    "pr_number": 6201,
-    "title": "Feature/rob 3534 zo wo yoo add new supplier huafa snow",
-    "jira_keys": [],
-    "created_at": "2025-09-08T07:34:25+00:00",
-    "first_review_at": "2025-09-08T08:27:08+00:00",
-    "merged_at": "2025-09-08T08:29:31+00:00",
-    "lines_added": 154,
-    "lines_deleted": 137,
-    "is_large": false,
-    "first_commit_authored_at": "2025-09-05T10:20:55+00:00"
-  },
-  "kkday-b2b-api#6197": {
-    "repo": "kkday-b2b-api",
-    "pr_number": 6197,
-    "title": "ROB-3534 自我遊｜新增｜新增供應商帳號 35233 华发前海热雪奇迹",
-    "jira_keys": [
-      "ROB-3534"
-    ],
-    "created_at": "2025-09-08T03:15:57+00:00",
-    "first_review_at": "2025-09-08T03:25:26+00:00",
-    "merged_at": "2025-09-08T07:33:21+00:00",
-    "lines_added": 154,
-    "lines_deleted": 137,
-    "is_large": false,
-    "first_commit_authored_at": "2025-09-08T03:14:24+00:00"
-  },
-  "kkday-b2b-api#6180": {
-    "repo": "kkday-b2b-api",
-    "pr_number": 6180,
-    "title": "fix: 修正 inspect 取日期的邏輯",
-    "jira_keys": [],
-    "created_at": "2025-09-04T08:34:56+00:00",
-    "first_review_at": "2025-09-05T02:22:29+00:00",
-    "merged_at": "2025-09-08T06:32:02+00:00",
-    "lines_added": 188,
-    "lines_deleted": 118,
-    "is_large": false,
-    "first_commit_authored_at": "2025-09-04T07:40:06+00:00"
-  },
   "kkday-supplier-web#2342": {
     "repo": "kkday-supplier-web",
     "pr_number": 2342,
@@ -21330,21 +21205,6 @@
     "lines_deleted": 1,
     "is_large": false,
     "first_commit_authored_at": "2025-09-16T09:55:01+00:00"
-  },
-  "kkday-supplier-web#2198": {
-    "repo": "kkday-supplier-web",
-    "pr_number": 2198,
-    "title": "feat(SCMWEB-2385): fix conditions of pkg is active",
-    "jira_keys": [
-      "SCMWEB-2385"
-    ],
-    "created_at": "2025-09-08T01:32:42+00:00",
-    "first_review_at": "2025-09-08T04:11:24+00:00",
-    "merged_at": "2025-09-08T05:08:16+00:00",
-    "lines_added": 6,
-    "lines_deleted": 2,
-    "is_large": false,
-    "first_commit_authored_at": "2025-09-08T01:31:13+00:00"
   },
   "kkday-supplier-web#2199": {
     "repo": "kkday-supplier-web",
