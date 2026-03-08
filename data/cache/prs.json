@@ -4029,66 +4029,6 @@
     "is_large": true,
     "first_commit_authored_at": "2025-09-03T06:25:53+00:00"
   },
-  "kkday-product-service#6803": {
-    "repo": "kkday-product-service",
-    "pr_number": 6803,
-    "title": "fix(BE2PROD-5405): PackageBlock在拿ProductBlock資料時，不需要即時資料",
-    "jira_keys": [
-      "BE2PROD-5405"
-    ],
-    "created_at": "2025-09-09T10:20:38+00:00",
-    "first_review_at": null,
-    "merged_at": "2025-09-09T10:35:49+00:00",
-    "lines_added": 7,
-    "lines_deleted": 7,
-    "is_large": false,
-    "first_commit_authored_at": "2025-09-09T07:10:13+00:00"
-  },
-  "kkday-product-service#6801": {
-    "repo": "kkday-product-service",
-    "pr_number": 6801,
-    "title": "fix(BE2PROD-5405): PackageBlock在拿ProductBlock資料時，不需要即時資料",
-    "jira_keys": [
-      "BE2PROD-5405"
-    ],
-    "created_at": "2025-09-09T07:10:47+00:00",
-    "first_review_at": "2025-09-09T10:18:34+00:00",
-    "merged_at": "2025-09-09T10:20:04+00:00",
-    "lines_added": 7,
-    "lines_deleted": 7,
-    "is_large": false,
-    "first_commit_authored_at": "2025-09-09T07:10:13+00:00"
-  },
-  "kkday-product-service#6795": {
-    "repo": "kkday-product-service",
-    "pr_number": 6795,
-    "title": "fix(BE2PROD-5216): b2cbe system uuid 少一碼",
-    "jira_keys": [
-      "BE2PROD-5216"
-    ],
-    "created_at": "2025-09-04T08:00:48+00:00",
-    "first_review_at": "2025-09-09T10:11:18+00:00",
-    "merged_at": "2025-09-09T10:11:46+00:00",
-    "lines_added": 1,
-    "lines_deleted": 1,
-    "is_large": false,
-    "first_commit_authored_at": "2025-09-04T05:32:29+00:00"
-  },
-  "kkday-product-service#6802": {
-    "repo": "kkday-product-service",
-    "pr_number": 6802,
-    "title": "fix(BE2PROD-5275): [mkt-tag] 調整新增label 市場語系驗證 ",
-    "jira_keys": [
-      "BE2PROD-5275"
-    ],
-    "created_at": "2025-09-09T09:33:43+00:00",
-    "first_review_at": "2025-09-09T10:11:03+00:00",
-    "merged_at": "2025-09-09T10:11:30+00:00",
-    "lines_added": 365,
-    "lines_deleted": 27,
-    "is_large": false,
-    "first_commit_authored_at": "2025-09-09T09:31:56+00:00"
-  },
   "kkday-be2-web#3522": {
     "repo": "kkday-be2-web",
     "pr_number": 3522,
@@ -5847,36 +5787,6 @@
     "is_large": false,
     "first_commit_authored_at": "2025-08-25T02:07:39+00:00"
   },
-  "kkday-be2-web#3401": {
-    "repo": "kkday-be2-web",
-    "pr_number": 3401,
-    "title": "feat(BE2PROD-5396): Add cost price percentage mode",
-    "jira_keys": [
-      "BE2PROD-5396"
-    ],
-    "created_at": "2025-09-09T03:46:00+00:00",
-    "first_review_at": "2025-09-09T05:17:18+00:00",
-    "merged_at": "2025-09-09T05:54:03+00:00",
-    "lines_added": 422,
-    "lines_deleted": 33,
-    "is_large": true,
-    "first_commit_authored_at": "2025-09-09T03:31:24+00:00"
-  },
-  "kkday-be2-web#3400": {
-    "repo": "kkday-be2-web",
-    "pr_number": 3400,
-    "title": "fix(BE2PROD-5399): Fix rrule calendar issues",
-    "jira_keys": [
-      "BE2PROD-5399"
-    ],
-    "created_at": "2025-09-05T10:27:21+00:00",
-    "first_review_at": "2025-09-09T05:45:01+00:00",
-    "merged_at": "2025-09-09T05:53:01+00:00",
-    "lines_added": 3,
-    "lines_deleted": 1,
-    "is_large": false,
-    "first_commit_authored_at": "2025-09-05T10:26:32+00:00"
-  },
   "katalyst#2014": {
     "repo": "katalyst",
     "pr_number": 2014,
@@ -7243,81 +7153,6 @@
     "lines_deleted": 9,
     "is_large": false,
     "first_commit_authored_at": "2025-09-09T08:30:31+00:00"
-  },
-  "kkday-product-external-api#65": {
-    "repo": "kkday-product-external-api",
-    "pr_number": 65,
-    "title": "fix(BE2PROD-5402): 調整 Cache::tryCatchIncrement 的調用邏輯，移除不必要的增量計算，並更新單元…",
-    "jira_keys": [
-      "BE2PROD-5402"
-    ],
-    "created_at": "2025-09-09T07:21:41+00:00",
-    "first_review_at": "2025-09-09T07:37:32+00:00",
-    "merged_at": "2025-09-09T07:45:13+00:00",
-    "lines_added": 9,
-    "lines_deleted": 7,
-    "is_large": false,
-    "first_commit_authored_at": "2025-09-09T07:19:12+00:00"
-  },
-  "kkday-product-external-api#64": {
-    "repo": "kkday-product-external-api",
-    "pr_number": 64,
-    "title": "feat(BE2PROD-5402):修正可能明明ktimes到了，卻沒要求更新庫存",
-    "jira_keys": [
-      "BE2PROD-5402"
-    ],
-    "created_at": "2025-09-09T06:02:44+00:00",
-    "first_review_at": "2025-09-09T06:13:14+00:00",
-    "merged_at": "2025-09-09T06:23:20+00:00",
-    "lines_added": 703,
-    "lines_deleted": 8,
-    "is_large": true,
-    "first_commit_authored_at": "2025-09-09T03:57:05+00:00"
-  },
-  "kkday-product-external-api#63": {
-    "repo": "kkday-product-external-api",
-    "pr_number": 63,
-    "title": "feat(BE2PROD-5403): 新增運行時日誌功能以追蹤命令和查詢執行時間",
-    "jira_keys": [
-      "BE2PROD-5403"
-    ],
-    "created_at": "2025-09-09T05:50:32+00:00",
-    "first_review_at": "2025-09-09T05:53:47+00:00",
-    "merged_at": "2025-09-09T06:16:42+00:00",
-    "lines_added": 287,
-    "lines_deleted": 10,
-    "is_large": false,
-    "first_commit_authored_at": "2025-09-09T05:50:03+00:00"
-  },
-  "kkday-product-external-api#62": {
-    "repo": "kkday-product-external-api",
-    "pr_number": 62,
-    "title": "feat(BE2PROD-5402):修正可能明明ktimes到了，卻沒要求更新庫存",
-    "jira_keys": [
-      "BE2PROD-5402"
-    ],
-    "created_at": "2025-09-09T04:22:51+00:00",
-    "first_review_at": "2025-09-09T04:52:09+00:00",
-    "merged_at": "2025-09-09T05:52:36+00:00",
-    "lines_added": 106,
-    "lines_deleted": 4,
-    "is_large": false,
-    "first_commit_authored_at": "2025-09-09T03:57:05+00:00"
-  },
-  "kkday-product-external-api#61": {
-    "repo": "kkday-product-external-api",
-    "pr_number": 61,
-    "title": "fix(BE2PROD-5404): 修正多 SKU 查詢時第一個 SKU 被遺失的 bug",
-    "jira_keys": [
-      "BE2PROD-5404"
-    ],
-    "created_at": "2025-09-09T02:13:33+00:00",
-    "first_review_at": "2025-09-09T02:14:15+00:00",
-    "merged_at": "2025-09-09T05:52:24+00:00",
-    "lines_added": 217,
-    "lines_deleted": 37,
-    "is_large": false,
-    "first_commit_authored_at": "2025-09-09T01:55:35+00:00"
   },
   "kkday-robot-order-api#159": {
     "repo": "kkday-robot-order-api",
@@ -9302,19 +9137,6 @@
     "lines_deleted": 0,
     "is_large": false,
     "first_commit_authored_at": "2025-09-10T02:43:09+00:00"
-  },
-  "kkday-psp#656": {
-    "repo": "kkday-psp",
-    "pr_number": 656,
-    "title": "Update Master",
-    "jira_keys": [],
-    "created_at": "2025-09-09T07:11:02+00:00",
-    "first_review_at": null,
-    "merged_at": "2025-09-09T07:11:09+00:00",
-    "lines_added": 62,
-    "lines_deleted": 2,
-    "is_large": false,
-    "first_commit_authored_at": "2025-09-02T06:47:20+00:00"
   },
   "kkday-b2b-api#6958": {
     "repo": "kkday-b2b-api",
@@ -19123,105 +18945,6 @@
     "is_large": true,
     "first_commit_authored_at": "2025-09-03T02:10:01+00:00"
   },
-  "kkday-b2b-api#6211": {
-    "repo": "kkday-b2b-api",
-    "pr_number": 6211,
-    "title": "Release/250825",
-    "jira_keys": [],
-    "created_at": "2025-09-09T18:18:46+00:00",
-    "first_review_at": null,
-    "merged_at": "2025-09-09T18:23:20+00:00",
-    "lines_added": 135,
-    "lines_deleted": 13,
-    "is_large": false,
-    "first_commit_authored_at": "2025-08-29T06:26:16+00:00"
-  },
-  "kkday-b2b-api#6209": {
-    "repo": "kkday-b2b-api",
-    "pr_number": 6209,
-    "title": "Feature/rob 3515",
-    "jira_keys": [],
-    "created_at": "2025-09-09T07:43:02+00:00",
-    "first_review_at": null,
-    "merged_at": "2025-09-09T18:18:36+00:00",
-    "lines_added": 13,
-    "lines_deleted": 4,
-    "is_large": false,
-    "first_commit_authored_at": "2025-09-03T06:56:18+00:00"
-  },
-  "kkday-b2b-api#6204": {
-    "repo": "kkday-b2b-api",
-    "pr_number": 6204,
-    "title": "Feature/rob 3531 Common memory limit改Helper｜release PR",
-    "jira_keys": [
-      "ROB-3531"
-    ],
-    "created_at": "2025-09-09T01:58:08+00:00",
-    "first_review_at": null,
-    "merged_at": "2025-09-09T18:18:21+00:00",
-    "lines_added": 122,
-    "lines_deleted": 9,
-    "is_large": false,
-    "first_commit_authored_at": "2025-08-29T06:26:16+00:00"
-  },
-  "kkday-b2b-api#6168": {
-    "repo": "kkday-b2b-api",
-    "pr_number": 6168,
-    "title": "feat: singleton 時， Service 初始化變數",
-    "jira_keys": [],
-    "created_at": "2025-09-03T06:56:57+00:00",
-    "first_review_at": "2025-09-03T07:27:56+00:00",
-    "merged_at": "2025-09-09T07:42:23+00:00",
-    "lines_added": 13,
-    "lines_deleted": 4,
-    "is_large": false,
-    "first_commit_authored_at": "2025-09-03T06:56:18+00:00"
-  },
-  "kkday-b2b-api#6179": {
-    "repo": "kkday-b2b-api",
-    "pr_number": 6179,
-    "title": "ROB-3503 Seoul Pass v2｜修改｜[評估+開發]串旅規 ＆ 改訂購規則",
-    "jira_keys": [
-      "ROB-3503"
-    ],
-    "created_at": "2025-09-04T07:07:00+00:00",
-    "first_review_at": "2025-09-05T01:16:35+00:00",
-    "merged_at": "2025-09-09T02:56:37+00:00",
-    "lines_added": 2565,
-    "lines_deleted": 464,
-    "is_large": true,
-    "first_commit_authored_at": "2025-09-03T07:42:20+00:00"
-  },
-  "kkday-b2b-api#6203": {
-    "repo": "kkday-b2b-api",
-    "pr_number": 6203,
-    "title": "Feature/rob 3531 Common memory limit 解 conflict",
-    "jira_keys": [
-      "ROB-3531"
-    ],
-    "created_at": "2025-09-09T01:00:28+00:00",
-    "first_review_at": "2025-09-09T01:39:15+00:00",
-    "merged_at": "2025-09-09T01:56:35+00:00",
-    "lines_added": 342,
-    "lines_deleted": 256,
-    "is_large": true,
-    "first_commit_authored_at": "2025-09-04T07:40:06+00:00"
-  },
-  "kkday-b2b-api#6196": {
-    "repo": "kkday-b2b-api",
-    "pr_number": 6196,
-    "title": "Feature/rob 3531 Common memory limit改Helper｜review PR",
-    "jira_keys": [
-      "ROB-3531"
-    ],
-    "created_at": "2025-09-08T02:34:34+00:00",
-    "first_review_at": "2025-09-08T03:51:57+00:00",
-    "merged_at": "2025-09-09T00:53:04+00:00",
-    "lines_added": 260,
-    "lines_deleted": 146,
-    "is_large": true,
-    "first_commit_authored_at": "2025-08-29T06:26:16+00:00"
-  },
   "kkday-supplier-web#2342": {
     "repo": "kkday-supplier-web",
     "pr_number": 2342,
@@ -21206,21 +20929,6 @@
     "is_large": false,
     "first_commit_authored_at": "2025-09-16T09:55:01+00:00"
   },
-  "kkday-supplier-web#2199": {
-    "repo": "kkday-supplier-web",
-    "pr_number": 2199,
-    "title": "fix(SCMWEB-2387): fix copyText in msg detail page",
-    "jira_keys": [
-      "SCMWEB-2387"
-    ],
-    "created_at": "2025-09-08T06:13:14+00:00",
-    "first_review_at": "2025-09-09T01:53:02+00:00",
-    "merged_at": "2025-09-09T02:18:07+00:00",
-    "lines_added": 3,
-    "lines_deleted": 0,
-    "is_large": false,
-    "first_commit_authored_at": "2025-09-08T06:12:06+00:00"
-  },
   "kkday-supplier-web#2204": {
     "repo": "kkday-supplier-web",
     "pr_number": 2204,
@@ -21235,37 +20943,6 @@
     "lines_deleted": 2,
     "is_large": false,
     "first_commit_authored_at": "2025-09-09T05:37:53+00:00"
-  },
-  "kkday-supplier-web#2200": {
-    "repo": "kkday-supplier-web",
-    "pr_number": 2200,
-    "title": "[CL] SCMWEB-2384 SCMWEB-2385 庫存模式問題修正",
-    "jira_keys": [
-      "SCMWEB-2385",
-      "SCMWEB-2384"
-    ],
-    "created_at": "2025-09-09T02:39:08+00:00",
-    "first_review_at": null,
-    "merged_at": "2025-09-09T02:43:27+00:00",
-    "lines_added": 8,
-    "lines_deleted": 4,
-    "is_large": false,
-    "first_commit_authored_at": "2025-09-05T02:36:22+00:00"
-  },
-  "kkday-supplier-web#2201": {
-    "repo": "kkday-supplier-web",
-    "pr_number": 2201,
-    "title": "[CL] SCMWEB-2387 修正訊息內頁複製訂單號碼功能失效問題",
-    "jira_keys": [
-      "SCMWEB-2387"
-    ],
-    "created_at": "2025-09-09T02:40:16+00:00",
-    "first_review_at": null,
-    "merged_at": "2025-09-09T02:43:38+00:00",
-    "lines_added": 3,
-    "lines_deleted": 0,
-    "is_large": false,
-    "first_commit_authored_at": "2025-09-08T06:12:06+00:00"
   },
   "kkday-supplier-web#2203": {
     "repo": "kkday-supplier-web",
