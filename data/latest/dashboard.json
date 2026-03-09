@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-03-08T18:28:12.527636+00:00",
+  "generated_at": "2026-03-09T18:47:02.369186+00:00",
   "period": {
-    "start": "2025-09-09",
-    "end": "2026-03-08"
+    "start": "2025-09-10",
+    "end": "2026-03-09"
   },
   "meta": {
     "phases": [
@@ -43,8 +43,8 @@
     }
   },
   "summary": {
-    "total_completed_issues": 993,
-    "avg_cycle_time_days": 13.75,
+    "total_completed_issues": 988,
+    "avg_cycle_time_days": 13.8,
     "avg_cycle_time_prev_period": null,
     "total_prs_merged": 2056,
     "avg_pr_pickup_hours": 0.2
@@ -62,7 +62,7 @@
               "count": 160
             },
             "planning": {
-              "p50": 3.93,
+              "p50": 4.23,
               "p75": 30.2,
               "p90": 48.79,
               "count": 8
@@ -154,17 +154,17 @@
             "completed_issues": 34,
             "story_points": null,
             "weekly_trend": [
-              4,
-              7,
-              4,
-              10,
-              16,
+              9,
+              2,
+              6,
+              9,
+              15,
               5,
               13,
               2,
               8,
-              0,
-              20,
+              14,
+              6,
               6
             ]
           },
@@ -180,7 +180,7 @@
             "count": 160
           },
           "planning": {
-            "p50": 3.93,
+            "p50": 4.23,
             "p75": 30.2,
             "p90": 48.79,
             "count": 8
@@ -272,35 +272,35 @@
           "completed_issues": 34,
           "story_points": null,
           "weekly_trend": [
-            4,
-            7,
-            4,
-            10,
-            16,
+            9,
+            2,
+            6,
+            9,
+            15,
             5,
             13,
             2,
             8,
-            0,
-            20,
+            14,
+            6,
             6
           ]
         },
         "pr_metrics": {
-          "total_prs_merged": 492,
+          "total_prs_merged": 489,
           "pickup_hours": {
             "p50": 0.4,
             "p75": 23.9,
-            "p90": 116.4,
-            "count": 347
+            "p90": 117.5,
+            "count": 348
           },
           "merge_time_hours": {
-            "p50": 27.3,
-            "p75": 139.6,
-            "p90": 305.1,
-            "count": 492
+            "p50": 28.1,
+            "p75": 139.8,
+            "p90": 294.2,
+            "count": 489
           },
-          "large_pr_pct": 32.5
+          "large_pr_pct": 32.1
         },
         "build_metrics": null,
         "bottleneck_phase": "review",
@@ -521,26 +521,26 @@
             "story_points": null,
             "weekly_trend": [
               8,
-              0,
-              20,
+              14,
+              6,
               6
             ]
           },
           "pr_metrics": {
-            "total_prs_merged": 45,
+            "total_prs_merged": 40,
             "pickup_hours": {
-              "p50": 3.9,
-              "p75": 65.7,
-              "p90": 102.3,
-              "count": 29
+              "p50": 0.5,
+              "p75": 47.6,
+              "p90": 177.8,
+              "count": 27
             },
             "merge_time_hours": {
-              "p50": 25.9,
-              "p75": 142.7,
-              "p90": 286.0,
-              "count": 45
+              "p50": 39.1,
+              "p75": 167.2,
+              "p90": 333.2,
+              "count": 40
             },
-            "large_pr_pct": 11.1
+            "large_pr_pct": 10.0
           },
           "build_metrics": null,
           "bottleneck_phase": "qa",
@@ -691,10 +691,10 @@
         "8": {
           "cycle_time": {
             "backlog": {
-              "p50": 0.03,
+              "p50": 0.04,
               "p75": 1.95,
-              "p90": 8.4,
-              "count": 70
+              "p90": 8.54,
+              "count": 69
             },
             "planning": {
               "p50": 5.0,
@@ -704,28 +704,28 @@
             },
             "dev": {
               "p50": 0.05,
-              "p75": 1.03,
-              "p90": 81.88,
-              "count": 66,
+              "p75": 1.07,
+              "p90": 82.08,
+              "count": 65,
               "filtered": {
                 "p50": 0.99,
                 "p75": 66.71,
                 "p90": 96.65,
                 "count": 34,
-                "excluded_count": 32,
+                "excluded_count": 31,
                 "threshold_hours": 1.0
               }
             },
             "review": {
-              "p50": 3.72,
-              "p75": 6.87,
-              "p90": 12.57,
-              "count": 65,
+              "p50": 3.75,
+              "p75": 6.94,
+              "p90": 12.94,
+              "count": 64,
               "filtered": {
-                "p50": 3.84,
-                "p75": 7.17,
-                "p90": 14.19,
-                "count": 60,
+                "p50": 3.89,
+                "p75": 7.2,
+                "p90": 14.31,
+                "count": 59,
                 "excluded_count": 5,
                 "threshold_hours": 1.0
               }
@@ -733,14 +733,14 @@
             "dev_test": {
               "p50": 0.0,
               "p75": 0.0,
-              "p90": 1.42,
-              "count": 56,
+              "p90": 1.58,
+              "count": 55,
               "filtered": {
                 "p50": 6.77,
                 "p75": 6.87,
                 "p90": 8.96,
                 "count": 7,
-                "excluded_count": 49,
+                "excluded_count": 48,
                 "threshold_hours": 1.0
               }
             },
@@ -761,14 +761,14 @@
             "staging": {
               "p50": 0.2,
               "p75": 3.23,
-              "p90": 7.64,
-              "count": 60,
+              "p90": 8.25,
+              "count": 59,
               "filtered": {
                 "p50": 3.2,
                 "p75": 4.04,
                 "p90": 16.42,
                 "count": 32,
-                "excluded_count": 28,
+                "excluded_count": 27,
                 "threshold_hours": 1.0
               }
             },
@@ -776,44 +776,44 @@
               "p50": 0.0,
               "p75": 0.0,
               "p90": 17.02,
-              "count": 70
+              "count": 69
             },
             "total": {
-              "p50": 7.42,
-              "p75": 20.76,
-              "p90": 93.05,
-              "count": 66
+              "p50": 7.73,
+              "p75": 20.9,
+              "p90": 94.04,
+              "count": 65
             }
           },
           "throughput": {
             "completed_issues": 34,
             "story_points": null,
             "weekly_trend": [
-              16,
+              15,
               5,
               13,
               2,
               8,
-              0,
-              20,
+              14,
+              6,
               6
             ]
           },
           "pr_metrics": {
-            "total_prs_merged": 135,
+            "total_prs_merged": 123,
             "pickup_hours": {
               "p50": 0.2,
-              "p75": 23.8,
-              "p90": 96.7,
-              "count": 88
+              "p75": 22.5,
+              "p90": 96.1,
+              "count": 84
             },
             "merge_time_hours": {
               "p50": 20.6,
               "p75": 97.3,
-              "p90": 168.5,
-              "count": 135
+              "p90": 169.1,
+              "count": 123
             },
-            "large_pr_pct": 16.3
+            "large_pr_pct": 15.4
           },
           "build_metrics": null,
           "bottleneck_phase": "review",
@@ -903,14 +903,14 @@
             {
               "phase_id": "dev",
               "pass_through_count": 1,
-              "total_in_phase": 66,
+              "total_in_phase": 65,
               "pass_through_pct": 1.5
             },
             {
               "phase_id": "dev_test",
-              "pass_through_count": 45,
-              "total_in_phase": 56,
-              "pass_through_pct": 80.4
+              "pass_through_count": 44,
+              "total_in_phase": 55,
+              "pass_through_pct": 80.0
             },
             {
               "phase_id": "qa",
@@ -920,24 +920,24 @@
             },
             {
               "phase_id": "staging",
-              "pass_through_count": 22,
-              "total_in_phase": 60,
-              "pass_through_pct": 36.7
+              "pass_through_count": 21,
+              "total_in_phase": 59,
+              "pass_through_pct": 35.6
             }
           ],
           "dev_source_stats": {
-            "jira_count": 38,
+            "jira_count": 37,
             "github_count": 28,
-            "total": 66
+            "total": 65
           },
           "projects": {
             "BE2PROD": {
               "cycle_time": {
                 "backlog": {
-                  "p50": 0.03,
+                  "p50": 0.04,
                   "p75": 1.95,
-                  "p90": 8.4,
-                  "count": 70
+                  "p90": 8.54,
+                  "count": 69
                 },
                 "planning": {
                   "p50": 5.0,
@@ -947,28 +947,28 @@
                 },
                 "dev": {
                   "p50": 0.05,
-                  "p75": 1.03,
-                  "p90": 81.88,
-                  "count": 66,
+                  "p75": 1.07,
+                  "p90": 82.08,
+                  "count": 65,
                   "filtered": {
                     "p50": 0.99,
                     "p75": 66.71,
                     "p90": 96.65,
                     "count": 34,
-                    "excluded_count": 32,
+                    "excluded_count": 31,
                     "threshold_hours": 1.0
                   }
                 },
                 "review": {
-                  "p50": 3.72,
-                  "p75": 6.87,
-                  "p90": 12.57,
-                  "count": 65,
+                  "p50": 3.75,
+                  "p75": 6.94,
+                  "p90": 12.94,
+                  "count": 64,
                   "filtered": {
-                    "p50": 3.84,
-                    "p75": 7.17,
-                    "p90": 14.19,
-                    "count": 60,
+                    "p50": 3.89,
+                    "p75": 7.2,
+                    "p90": 14.31,
+                    "count": 59,
                     "excluded_count": 5,
                     "threshold_hours": 1.0
                   }
@@ -976,14 +976,14 @@
                 "dev_test": {
                   "p50": 0.0,
                   "p75": 0.0,
-                  "p90": 1.42,
-                  "count": 56,
+                  "p90": 1.58,
+                  "count": 55,
                   "filtered": {
                     "p50": 6.77,
                     "p75": 6.87,
                     "p90": 8.96,
                     "count": 7,
-                    "excluded_count": 49,
+                    "excluded_count": 48,
                     "threshold_hours": 1.0
                   }
                 },
@@ -1004,14 +1004,14 @@
                 "staging": {
                   "p50": 0.2,
                   "p75": 3.23,
-                  "p90": 7.64,
-                  "count": 60,
+                  "p90": 8.25,
+                  "count": 59,
                   "filtered": {
                     "p50": 3.2,
                     "p75": 4.04,
                     "p90": 16.42,
                     "count": 32,
-                    "excluded_count": 28,
+                    "excluded_count": 27,
                     "threshold_hours": 1.0
                   }
                 },
@@ -1019,13 +1019,13 @@
                   "p50": 0.0,
                   "p75": 0.0,
                   "p90": 17.02,
-                  "count": 70
+                  "count": 69
                 },
                 "total": {
-                  "p50": 7.42,
-                  "p75": 20.76,
-                  "p90": 93.05,
-                  "count": 66
+                  "p50": 7.73,
+                  "p75": 20.9,
+                  "p90": 94.04,
+                  "count": 65
                 }
               }
             }
@@ -1039,53 +1039,53 @@
         "ROB": {
           "cycle_time": {
             "backlog": {
-              "p50": 1.04,
-              "p75": 5.09,
-              "p90": 14.37,
-              "count": 359
+              "p50": 1.0,
+              "p75": 5.03,
+              "p90": 14.01,
+              "count": 356
             },
             "planning": {
               "p50": 0.0,
               "p75": 0.73,
-              "p90": 4.46,
-              "count": 363
+              "p90": 4.56,
+              "count": 360
             },
             "dev": {
-              "p50": 0.06,
-              "p75": 1.16,
-              "p90": 5.12,
-              "count": 359,
+              "p50": 0.07,
+              "p75": 1.19,
+              "p90": 5.09,
+              "count": 356,
               "filtered": {
                 "p50": 1.1,
-                "p75": 4.24,
-                "p90": 10.72,
+                "p75": 4.16,
+                "p90": 9.74,
                 "count": 186,
-                "excluded_count": 173,
+                "excluded_count": 170,
                 "threshold_hours": 1.0
               }
             },
             "review": {
               "p50": 0.2,
-              "p75": 2.0,
+              "p75": 2.01,
               "p90": 5.06,
-              "count": 266,
+              "count": 265,
               "filtered": {
-                "p50": 1.64,
-                "p75": 3.96,
-                "p90": 5.93,
-                "count": 151,
-                "excluded_count": 115,
+                "p50": 1.73,
+                "p75": 4.09,
+                "p90": 6.02,
+                "count": 152,
+                "excluded_count": 113,
                 "threshold_hours": 1.0
               }
             },
             "dev_test": {
               "p50": 0.0,
               "p75": 0.83,
-              "p90": 3.99,
+              "p90": 4.0,
               "count": 297,
               "filtered": {
-                "p50": 1.08,
-                "p75": 4.0,
+                "p50": 1.11,
+                "p75": 4.03,
                 "p90": 8.43,
                 "count": 115,
                 "excluded_count": 182,
@@ -1093,29 +1093,29 @@
               }
             },
             "qa": {
-              "p50": 1.43,
-              "p75": 4.49,
-              "p90": 7.0,
-              "count": 44,
+              "p50": 1.15,
+              "p75": 4.08,
+              "p90": 6.88,
+              "count": 43,
               "filtered": {
                 "p50": 2.0,
-                "p75": 5.42,
-                "p90": 7.4,
-                "count": 35,
+                "p75": 5.05,
+                "p90": 7.0,
+                "count": 34,
                 "excluded_count": 9,
                 "threshold_hours": 1.0
               }
             },
             "staging": {
-              "p50": 1.97,
-              "p75": 3.5,
+              "p50": 1.95,
+              "p75": 3.4,
               "p90": 5.24,
-              "count": 188,
+              "count": 187,
               "filtered": {
                 "p50": 2.02,
-                "p75": 3.86,
-                "p90": 5.68,
-                "count": 174,
+                "p75": 3.81,
+                "p90": 5.74,
+                "count": 173,
                 "excluded_count": 14,
                 "threshold_hours": 1.0
               }
@@ -1127,28 +1127,28 @@
               "count": 10
             },
             "total": {
-              "p50": 3.82,
-              "p75": 8.69,
-              "p90": 21.95,
-              "count": 359
+              "p50": 3.85,
+              "p75": 8.91,
+              "p90": 23.05,
+              "count": 356
             }
           },
           "throughput": {
-            "completed_issues": 28,
+            "completed_issues": 33,
             "story_points": null,
             "weekly_trend": [
-              28,
-              14,
-              4,
-              21,
-              27,
-              18,
-              24,
+              30,
+              11,
+              11,
+              17,
+              22,
+              22,
+              20,
               4,
               3,
-              0,
+              1,
               8,
-              17
+              21
             ]
           },
           "pr_metrics": null
@@ -1157,53 +1157,53 @@
       "aggregated": {
         "cycle_time": {
           "backlog": {
-            "p50": 1.04,
-            "p75": 5.09,
-            "p90": 14.37,
-            "count": 359
+            "p50": 1.0,
+            "p75": 5.03,
+            "p90": 14.01,
+            "count": 356
           },
           "planning": {
             "p50": 0.0,
             "p75": 0.73,
-            "p90": 4.46,
-            "count": 363
+            "p90": 4.56,
+            "count": 360
           },
           "dev": {
-            "p50": 0.06,
-            "p75": 1.16,
-            "p90": 5.12,
-            "count": 359,
+            "p50": 0.07,
+            "p75": 1.19,
+            "p90": 5.09,
+            "count": 356,
             "filtered": {
               "p50": 1.1,
-              "p75": 4.24,
-              "p90": 10.72,
+              "p75": 4.16,
+              "p90": 9.74,
               "count": 186,
-              "excluded_count": 173,
+              "excluded_count": 170,
               "threshold_hours": 1.0
             }
           },
           "review": {
             "p50": 0.2,
-            "p75": 2.0,
+            "p75": 2.01,
             "p90": 5.06,
-            "count": 266,
+            "count": 265,
             "filtered": {
-              "p50": 1.64,
-              "p75": 3.96,
-              "p90": 5.93,
-              "count": 151,
-              "excluded_count": 115,
+              "p50": 1.73,
+              "p75": 4.09,
+              "p90": 6.02,
+              "count": 152,
+              "excluded_count": 113,
               "threshold_hours": 1.0
             }
           },
           "dev_test": {
             "p50": 0.0,
             "p75": 0.83,
-            "p90": 3.99,
+            "p90": 4.0,
             "count": 297,
             "filtered": {
-              "p50": 1.08,
-              "p75": 4.0,
+              "p50": 1.11,
+              "p75": 4.03,
               "p90": 8.43,
               "count": 115,
               "excluded_count": 182,
@@ -1211,29 +1211,29 @@
             }
           },
           "qa": {
-            "p50": 1.43,
-            "p75": 4.49,
-            "p90": 7.0,
-            "count": 44,
+            "p50": 1.15,
+            "p75": 4.08,
+            "p90": 6.88,
+            "count": 43,
             "filtered": {
               "p50": 2.0,
-              "p75": 5.42,
-              "p90": 7.4,
-              "count": 35,
+              "p75": 5.05,
+              "p90": 7.0,
+              "count": 34,
               "excluded_count": 9,
               "threshold_hours": 1.0
             }
           },
           "staging": {
-            "p50": 1.97,
-            "p75": 3.5,
+            "p50": 1.95,
+            "p75": 3.4,
             "p90": 5.24,
-            "count": 188,
+            "count": 187,
             "filtered": {
               "p50": 2.02,
-              "p75": 3.86,
-              "p90": 5.68,
-              "count": 174,
+              "p75": 3.81,
+              "p90": 5.74,
+              "count": 173,
               "excluded_count": 14,
               "threshold_hours": 1.0
             }
@@ -1245,45 +1245,45 @@
             "count": 10
           },
           "total": {
-            "p50": 3.82,
-            "p75": 8.69,
-            "p90": 21.95,
-            "count": 359
+            "p50": 3.85,
+            "p75": 8.91,
+            "p90": 23.05,
+            "count": 356
           }
         },
         "throughput": {
-          "completed_issues": 28,
+          "completed_issues": 33,
           "story_points": null,
           "weekly_trend": [
-            28,
-            14,
-            4,
-            21,
-            27,
-            18,
-            24,
+            30,
+            11,
+            11,
+            17,
+            22,
+            22,
+            20,
             4,
             3,
-            0,
+            1,
             8,
-            17
+            21
           ]
         },
         "pr_metrics": {
-          "total_prs_merged": 907,
+          "total_prs_merged": 911,
           "pickup_hours": {
             "p50": 0.5,
-            "p75": 8.9,
-            "p90": 41.8,
-            "count": 391
+            "p75": 8.5,
+            "p90": 42.1,
+            "count": 392
           },
           "merge_time_hours": {
             "p50": 1.6,
             "p75": 19.3,
-            "p90": 69.6,
-            "count": 907
+            "p90": 69.7,
+            "count": 911
           },
-          "large_pr_pct": 33.7
+          "large_pr_pct": 33.6
         },
         "build_metrics": null,
         "bottleneck_phase": "staging",
@@ -1372,116 +1372,116 @@
         "phase_insights": [
           {
             "phase_id": "planning",
-            "pass_through_count": 214,
-            "total_in_phase": 359,
-            "pass_through_pct": 59.6
+            "pass_through_count": 211,
+            "total_in_phase": 356,
+            "pass_through_pct": 59.3
           },
           {
             "phase_id": "dev",
-            "pass_through_count": 115,
-            "total_in_phase": 359,
-            "pass_through_pct": 32.0
+            "pass_through_count": 113,
+            "total_in_phase": 356,
+            "pass_through_pct": 31.7
           },
           {
             "phase_id": "review",
-            "pass_through_count": 95,
-            "total_in_phase": 266,
-            "pass_through_pct": 35.7
+            "pass_through_count": 92,
+            "total_in_phase": 265,
+            "pass_through_pct": 34.7
           },
           {
             "phase_id": "dev_test",
-            "pass_through_count": 158,
+            "pass_through_count": 156,
             "total_in_phase": 297,
-            "pass_through_pct": 53.2
+            "pass_through_pct": 52.5
           }
         ],
         "dev_source_stats": {
-          "jira_count": 256,
-          "github_count": 103,
-          "total": 359
+          "jira_count": 251,
+          "github_count": 105,
+          "total": 356
         }
       },
       "by_window": {
         "4": {
           "cycle_time": {
             "backlog": {
-              "p50": 6.52,
-              "p75": 18.63,
-              "p90": 48.23,
-              "count": 28
+              "p50": 5.76,
+              "p75": 14.0,
+              "p90": 46.56,
+              "count": 33
             },
             "planning": {
               "p50": 0.0,
-              "p75": 1.11,
-              "p90": 18.99,
-              "count": 31
+              "p75": 1.08,
+              "p90": 17.87,
+              "count": 36
             },
             "dev": {
               "p50": 0.31,
-              "p75": 1.5,
-              "p90": 3.63,
-              "count": 28,
+              "p75": 2.2,
+              "p90": 3.39,
+              "count": 33,
               "filtered": {
                 "p50": 1.23,
-                "p75": 2.97,
-                "p90": 4.16,
-                "count": 16,
-                "excluded_count": 12,
+                "p75": 2.88,
+                "p90": 3.95,
+                "count": 20,
+                "excluded_count": 13,
                 "threshold_hours": 1.0
               }
             },
             "review": {
               "p50": 1.54,
-              "p75": 19.87,
-              "p90": 22.74,
-              "count": 17,
+              "p75": 22.66,
+              "p90": 22.81,
+              "count": 21,
               "filtered": {
-                "p50": 1.68,
-                "p75": 21.97,
-                "p90": 22.77,
-                "count": 14,
-                "excluded_count": 3,
+                "p50": 1.72,
+                "p75": 22.69,
+                "p90": 24.13,
+                "count": 17,
+                "excluded_count": 4,
                 "threshold_hours": 1.0
               }
             },
             "dev_test": {
-              "p50": 0.11,
-              "p75": 0.99,
-              "p90": 3.97,
-              "count": 20,
+              "p50": 0.08,
+              "p75": 1.11,
+              "p90": 5.16,
+              "count": 25,
               "filtered": {
-                "p50": 0.95,
-                "p75": 3.93,
-                "p90": 4.05,
-                "count": 11,
-                "excluded_count": 9,
+                "p50": 1.11,
+                "p75": 4.05,
+                "p90": 5.97,
+                "count": 13,
+                "excluded_count": 12,
                 "threshold_hours": 1.0
               }
             },
             "qa": {
-              "p50": 0.96,
-              "p75": 1.05,
-              "p90": 1.11,
-              "count": 3,
+              "p50": 0.49,
+              "p75": 1.0,
+              "p90": 1.09,
+              "count": 4,
               "filtered": {
                 "p50": 1.05,
                 "p75": 1.1,
                 "p90": 1.13,
                 "count": 2,
-                "excluded_count": 1,
+                "excluded_count": 2,
                 "threshold_hours": 1.0
               }
             },
             "staging": {
-              "p50": 1.82,
-              "p75": 2.78,
-              "p90": 6.37,
-              "count": 15,
+              "p50": 2.01,
+              "p75": 2.9,
+              "p90": 5.52,
+              "count": 17,
               "filtered": {
-                "p50": 2.01,
-                "p75": 2.86,
-                "p90": 7.21,
-                "count": 13,
+                "p50": 2.71,
+                "p75": 2.92,
+                "p90": 6.37,
+                "count": 15,
                 "excluded_count": 2,
                 "threshold_hours": 1.0
               }
@@ -1493,37 +1493,37 @@
               "count": 1
             },
             "total": {
-              "p50": 2.91,
-              "p75": 26.84,
-              "p90": 31.35,
-              "count": 28
+              "p50": 3.2,
+              "p75": 27.37,
+              "p90": 34.58,
+              "count": 33
             }
           },
           "throughput": {
-            "completed_issues": 28,
+            "completed_issues": 33,
             "story_points": null,
             "weekly_trend": [
               3,
-              0,
+              1,
               8,
-              17
+              21
             ]
           },
           "pr_metrics": {
-            "total_prs_merged": 108,
+            "total_prs_merged": 120,
             "pickup_hours": {
-              "p50": 1.2,
-              "p75": 18.9,
-              "p90": 45.0,
-              "count": 41
+              "p50": 1.1,
+              "p75": 15.9,
+              "p90": 53.3,
+              "count": 48
             },
             "merge_time_hours": {
-              "p50": 0.6,
-              "p75": 7.6,
-              "p90": 47.4,
-              "count": 108
+              "p50": 0.9,
+              "p75": 8.5,
+              "p90": 68.0,
+              "count": 120
             },
-            "large_pr_pct": 39.8
+            "large_pr_pct": 41.7
           },
           "build_metrics": null,
           "bottleneck_phase": "staging",
@@ -1551,6 +1551,22 @@
               "parent_summary": "be2-b2b｜價格規則 mapping",
               "phase_duration_days": 3.83,
               "url": "https://kkday.atlassian.net/browse/ROB-4069"
+            },
+            {
+              "key": "ROB-4137",
+              "summary": "JPH｜修改｜修正 customerName 旅規取值的空白",
+              "parent_key": "ROB-131",
+              "parent_summary": "JPH｜首次串接",
+              "phase_duration_days": 2.94,
+              "url": "https://kkday.atlassian.net/browse/ROB-4137"
+            },
+            {
+              "key": "ROB-4138",
+              "summary": "BMG｜修改｜成立訂單時即寫入 be2 供應商訂單編號",
+              "parent_key": "ROB-16",
+              "parent_summary": "BeMyGuest Product Sync 新商品版本",
+              "phase_duration_days": 2.9,
+              "url": "https://kkday.atlassian.net/browse/ROB-4138"
             },
             {
               "key": "ROB-4094",
@@ -1591,136 +1607,120 @@
               "parent_summary": "b2b-api 基礎建設",
               "phase_duration_days": 1.82,
               "url": "https://kkday.atlassian.net/browse/ROB-4134"
-            },
-            {
-              "key": "ROB-4132",
-              "summary": "Common｜新增｜claude code 自動化 實作Jira單",
-              "parent_key": "ROB-1339",
-              "parent_summary": "b2b-api 基礎建設",
-              "phase_duration_days": 1.12,
-              "url": "https://kkday.atlassian.net/browse/ROB-4132"
-            },
-            {
-              "key": "ROB-4102",
-              "summary": "Swiss Activity｜刷資料｜既有商品串接商品導入",
-              "parent_key": "ROB-1915",
-              "parent_summary": "Swiss Activities｜首次串接",
-              "phase_duration_days": 1.04,
-              "url": "https://kkday.atlassian.net/browse/ROB-4102"
             }
           ],
           "phase_insights": [
             {
               "phase_id": "planning",
-              "pass_through_count": 16,
-              "total_in_phase": 28,
-              "pass_through_pct": 57.1
+              "pass_through_count": 18,
+              "total_in_phase": 33,
+              "pass_through_pct": 54.5
             },
             {
               "phase_id": "dev",
-              "pass_through_count": 9,
-              "total_in_phase": 28,
-              "pass_through_pct": 32.1
+              "pass_through_count": 10,
+              "total_in_phase": 33,
+              "pass_through_pct": 30.3
             },
             {
               "phase_id": "dev_test",
-              "pass_through_count": 6,
-              "total_in_phase": 20,
-              "pass_through_pct": 30.0
+              "pass_through_count": 7,
+              "total_in_phase": 25,
+              "pass_through_pct": 28.0
             },
             {
               "phase_id": "qa",
               "pass_through_count": 1,
-              "total_in_phase": 3,
-              "pass_through_pct": 33.3
+              "total_in_phase": 4,
+              "pass_through_pct": 25.0
             }
           ],
           "dev_source_stats": {
-            "jira_count": 19,
-            "github_count": 9,
-            "total": 28
+            "jira_count": 22,
+            "github_count": 11,
+            "total": 33
           },
           "projects": {
             "ROB": {
               "cycle_time": {
                 "backlog": {
-                  "p50": 6.52,
-                  "p75": 18.63,
-                  "p90": 48.23,
-                  "count": 28
+                  "p50": 5.76,
+                  "p75": 14.0,
+                  "p90": 46.56,
+                  "count": 33
                 },
                 "planning": {
                   "p50": 0.0,
-                  "p75": 1.11,
-                  "p90": 18.99,
-                  "count": 31
+                  "p75": 1.08,
+                  "p90": 17.87,
+                  "count": 36
                 },
                 "dev": {
                   "p50": 0.31,
-                  "p75": 1.5,
-                  "p90": 3.63,
-                  "count": 28,
+                  "p75": 2.2,
+                  "p90": 3.39,
+                  "count": 33,
                   "filtered": {
                     "p50": 1.23,
-                    "p75": 2.97,
-                    "p90": 4.16,
-                    "count": 16,
-                    "excluded_count": 12,
+                    "p75": 2.88,
+                    "p90": 3.95,
+                    "count": 20,
+                    "excluded_count": 13,
                     "threshold_hours": 1.0
                   }
                 },
                 "review": {
                   "p50": 1.54,
-                  "p75": 19.87,
-                  "p90": 22.74,
-                  "count": 17,
+                  "p75": 22.66,
+                  "p90": 22.81,
+                  "count": 21,
                   "filtered": {
-                    "p50": 1.68,
-                    "p75": 21.97,
-                    "p90": 22.77,
-                    "count": 14,
-                    "excluded_count": 3,
+                    "p50": 1.72,
+                    "p75": 22.69,
+                    "p90": 24.13,
+                    "count": 17,
+                    "excluded_count": 4,
                     "threshold_hours": 1.0
                   }
                 },
                 "dev_test": {
-                  "p50": 0.11,
-                  "p75": 0.99,
-                  "p90": 3.97,
-                  "count": 20,
+                  "p50": 0.08,
+                  "p75": 1.11,
+                  "p90": 5.16,
+                  "count": 25,
                   "filtered": {
-                    "p50": 0.95,
-                    "p75": 3.93,
-                    "p90": 4.05,
-                    "count": 11,
-                    "excluded_count": 9,
+                    "p50": 1.11,
+                    "p75": 4.05,
+                    "p90": 5.97,
+                    "count": 13,
+                    "excluded_count": 12,
                     "threshold_hours": 1.0
                   }
                 },
                 "qa": {
-                  "p50": 0.96,
-                  "p75": 1.05,
-                  "p90": 1.11,
-                  "count": 3,
+                  "p50": 0.49,
+                  "p75": 1.0,
+                  "p90": 1.09,
+                  "count": 4,
                   "filtered": {
                     "p50": 1.05,
                     "p75": 1.1,
                     "p90": 1.13,
                     "count": 2,
-                    "excluded_count": 1,
+                    "excluded_count": 2,
                     "threshold_hours": 1.0
                   }
                 },
                 "staging": {
-                  "p50": 1.82,
-                  "p75": 2.78,
-                  "p90": 6.37,
-                  "count": 15,
+                  "p50": 2.01,
+                  "p75": 2.9,
+                  "p90": 5.52,
+                  "count": 17,
                   "filtered": {
-                    "p50": 2.01,
-                    "p75": 2.86,
-                    "p90": 7.21,
-                    "count": 13,
+                    "p50": 2.71,
+                    "p75": 2.92,
+                    "p90": 6.37,
+                    "count": 15,
                     "excluded_count": 2,
                     "threshold_hours": 1.0
                   }
@@ -1732,10 +1732,10 @@
                   "count": 1
                 },
                 "total": {
-                  "p50": 2.91,
-                  "p75": 26.84,
-                  "p90": 31.35,
-                  "count": 28
+                  "p50": 3.2,
+                  "p75": 27.37,
+                  "p90": 34.58,
+                  "count": 33
                 }
               }
             }
@@ -1744,129 +1744,129 @@
         "8": {
           "cycle_time": {
             "backlog": {
-              "p50": 1.03,
+              "p50": 0.96,
               "p75": 7.1,
               "p90": 26.85,
               "count": 101
             },
             "planning": {
               "p50": 0.0,
-              "p75": 1.1,
-              "p90": 6.96,
+              "p75": 1.07,
+              "p90": 8.15,
               "count": 104
             },
             "dev": {
-              "p50": 0.21,
-              "p75": 1.92,
+              "p50": 0.25,
+              "p75": 2.0,
               "p90": 5.19,
               "count": 101,
               "filtered": {
-                "p50": 1.23,
-                "p75": 4.13,
-                "p90": 18.03,
-                "count": 58,
-                "excluded_count": 43,
+                "p50": 1.27,
+                "p75": 4.06,
+                "p90": 17.75,
+                "count": 59,
+                "excluded_count": 42,
                 "threshold_hours": 1.0
               }
             },
             "review": {
-              "p50": 0.3,
-              "p75": 2.0,
-              "p90": 5.85,
+              "p50": 0.47,
+              "p75": 2.01,
+              "p90": 6.99,
               "count": 81,
               "filtered": {
                 "p50": 1.73,
-                "p75": 3.52,
-                "p90": 12.31,
-                "count": 48,
-                "excluded_count": 33,
+                "p75": 4.53,
+                "p90": 22.67,
+                "count": 50,
+                "excluded_count": 31,
                 "threshold_hours": 1.0
               }
             },
             "dev_test": {
-              "p50": 0.01,
-              "p75": 1.43,
-              "p90": 5.0,
+              "p50": 0.03,
+              "p75": 1.74,
+              "p90": 5.97,
               "count": 91,
               "filtered": {
-                "p50": 1.74,
-                "p75": 4.28,
-                "p90": 7.32,
-                "count": 44,
-                "excluded_count": 47,
+                "p50": 1.75,
+                "p75": 5.0,
+                "p90": 7.27,
+                "count": 45,
+                "excluded_count": 46,
                 "threshold_hours": 1.0
               }
             },
             "qa": {
-              "p50": 1.72,
-              "p75": 4.96,
+              "p50": 1.43,
+              "p75": 4.8,
               "p90": 6.99,
-              "count": 17,
+              "count": 18,
               "filtered": {
                 "p50": 1.99,
                 "p75": 5.35,
                 "p90": 7.0,
                 "count": 15,
-                "excluded_count": 2,
+                "excluded_count": 3,
                 "threshold_hours": 1.0
               }
             },
             "staging": {
               "p50": 1.13,
               "p75": 2.69,
-              "p90": 3.83,
+              "p90": 3.41,
               "count": 51,
               "filtered": {
                 "p50": 1.13,
                 "p75": 2.71,
-                "p90": 3.99,
+                "p90": 3.54,
                 "count": 48,
                 "excluded_count": 3,
                 "threshold_hours": 1.0
               }
             },
             "done": {
-              "p50": 3.49,
-              "p75": 5.17,
-              "p90": 6.18,
-              "count": 2
+              "p50": 0.12,
+              "p75": 0.12,
+              "p90": 0.12,
+              "count": 1
             },
             "total": {
-              "p50": 4.05,
-              "p75": 12.27,
-              "p90": 30.51,
+              "p50": 3.91,
+              "p75": 13.76,
+              "p90": 30.71,
               "count": 101
             }
           },
           "throughput": {
-            "completed_issues": 28,
+            "completed_issues": 33,
             "story_points": null,
             "weekly_trend": [
-              27,
-              18,
-              24,
+              22,
+              22,
+              20,
               4,
               3,
-              0,
+              1,
               8,
-              17
+              21
             ]
           },
           "pr_metrics": {
-            "total_prs_merged": 323,
+            "total_prs_merged": 329,
             "pickup_hours": {
               "p50": 0.4,
-              "p75": 4.9,
-              "p90": 21.7,
-              "count": 134
+              "p75": 5.3,
+              "p90": 22.3,
+              "count": 139
             },
             "merge_time_hours": {
-              "p50": 0.8,
-              "p75": 15.6,
-              "p90": 55.0,
-              "count": 323
+              "p50": 1.0,
+              "p75": 16.3,
+              "p90": 66.5,
+              "count": 329
             },
-            "large_pr_pct": 36.8
+            "large_pr_pct": 38.0
           },
           "build_metrics": null,
           "bottleneck_phase": "qa",
@@ -1955,129 +1955,129 @@
           "phase_insights": [
             {
               "phase_id": "planning",
-              "pass_through_count": 56,
+              "pass_through_count": 55,
               "total_in_phase": 101,
-              "pass_through_pct": 55.4
+              "pass_through_pct": 54.5
             },
             {
               "phase_id": "dev",
-              "pass_through_count": 27,
+              "pass_through_count": 26,
               "total_in_phase": 101,
-              "pass_through_pct": 26.7
+              "pass_through_pct": 25.7
             },
             {
               "phase_id": "review",
-              "pass_through_count": 28,
+              "pass_through_count": 25,
               "total_in_phase": 81,
-              "pass_through_pct": 34.6
+              "pass_through_pct": 30.9
             },
             {
               "phase_id": "dev_test",
-              "pass_through_count": 42,
+              "pass_through_count": 39,
               "total_in_phase": 91,
-              "pass_through_pct": 46.2
+              "pass_through_pct": 42.9
             }
           ],
           "dev_source_stats": {
-            "jira_count": 67,
-            "github_count": 34,
+            "jira_count": 66,
+            "github_count": 35,
             "total": 101
           },
           "projects": {
             "ROB": {
               "cycle_time": {
                 "backlog": {
-                  "p50": 1.03,
+                  "p50": 0.96,
                   "p75": 7.1,
                   "p90": 26.85,
                   "count": 101
                 },
                 "planning": {
                   "p50": 0.0,
-                  "p75": 1.1,
-                  "p90": 6.96,
+                  "p75": 1.07,
+                  "p90": 8.15,
                   "count": 104
                 },
                 "dev": {
-                  "p50": 0.21,
-                  "p75": 1.92,
+                  "p50": 0.25,
+                  "p75": 2.0,
                   "p90": 5.19,
                   "count": 101,
                   "filtered": {
-                    "p50": 1.23,
-                    "p75": 4.13,
-                    "p90": 18.03,
-                    "count": 58,
-                    "excluded_count": 43,
+                    "p50": 1.27,
+                    "p75": 4.06,
+                    "p90": 17.75,
+                    "count": 59,
+                    "excluded_count": 42,
                     "threshold_hours": 1.0
                   }
                 },
                 "review": {
-                  "p50": 0.3,
-                  "p75": 2.0,
-                  "p90": 5.85,
+                  "p50": 0.47,
+                  "p75": 2.01,
+                  "p90": 6.99,
                   "count": 81,
                   "filtered": {
                     "p50": 1.73,
-                    "p75": 3.52,
-                    "p90": 12.31,
-                    "count": 48,
-                    "excluded_count": 33,
+                    "p75": 4.53,
+                    "p90": 22.67,
+                    "count": 50,
+                    "excluded_count": 31,
                     "threshold_hours": 1.0
                   }
                 },
                 "dev_test": {
-                  "p50": 0.01,
-                  "p75": 1.43,
-                  "p90": 5.0,
+                  "p50": 0.03,
+                  "p75": 1.74,
+                  "p90": 5.97,
                   "count": 91,
                   "filtered": {
-                    "p50": 1.74,
-                    "p75": 4.28,
-                    "p90": 7.32,
-                    "count": 44,
-                    "excluded_count": 47,
+                    "p50": 1.75,
+                    "p75": 5.0,
+                    "p90": 7.27,
+                    "count": 45,
+                    "excluded_count": 46,
                     "threshold_hours": 1.0
                   }
                 },
                 "qa": {
-                  "p50": 1.72,
-                  "p75": 4.96,
+                  "p50": 1.43,
+                  "p75": 4.8,
                   "p90": 6.99,
-                  "count": 17,
+                  "count": 18,
                   "filtered": {
                     "p50": 1.99,
                     "p75": 5.35,
                     "p90": 7.0,
                     "count": 15,
-                    "excluded_count": 2,
+                    "excluded_count": 3,
                     "threshold_hours": 1.0
                   }
                 },
                 "staging": {
                   "p50": 1.13,
                   "p75": 2.69,
-                  "p90": 3.83,
+                  "p90": 3.41,
                   "count": 51,
                   "filtered": {
                     "p50": 1.13,
                     "p75": 2.71,
-                    "p90": 3.99,
+                    "p90": 3.54,
                     "count": 48,
                     "excluded_count": 3,
                     "threshold_hours": 1.0
                   }
                 },
                 "done": {
-                  "p50": 3.49,
-                  "p75": 5.17,
-                  "p90": 6.18,
-                  "count": 2
+                  "p50": 0.12,
+                  "p75": 0.12,
+                  "p90": 0.12,
+                  "count": 1
                 },
                 "total": {
-                  "p50": 4.05,
-                  "p75": 12.27,
-                  "p90": 30.51,
+                  "p50": 3.91,
+                  "p75": 13.76,
+                  "p90": 30.71,
                   "count": 101
                 }
               }
@@ -2093,9 +2093,9 @@
           "cycle_time": {
             "backlog": {
               "p50": 0.15,
-              "p75": 3.96,
+              "p75": 3.94,
               "p90": 14.0,
-              "count": 464
+              "count": 462
             },
             "planning": {
               "p50": 5.01,
@@ -2105,28 +2105,28 @@
             },
             "dev": {
               "p50": 0.07,
-              "p75": 1.74,
-              "p90": 5.66,
-              "count": 464,
+              "p75": 1.69,
+              "p90": 5.67,
+              "count": 462,
               "filtered": {
-                "p50": 1.47,
-                "p75": 4.9,
-                "p90": 8.2,
-                "count": 243,
+                "p50": 1.39,
+                "p75": 4.92,
+                "p90": 8.23,
+                "count": 241,
                 "excluded_count": 221,
                 "threshold_hours": 1.0
               }
             },
             "review": {
               "p50": 0.02,
-              "p75": 1.13,
-              "p90": 7.0,
-              "count": 463,
+              "p75": 0.98,
+              "p90": 6.98,
+              "count": 461,
               "filtered": {
-                "p50": 2.69,
-                "p75": 6.65,
+                "p50": 2.64,
+                "p75": 6.23,
                 "p90": 8.33,
-                "count": 210,
+                "count": 208,
                 "excluded_count": 253,
                 "threshold_hours": 1.0
               }
@@ -2147,28 +2147,28 @@
             },
             "qa": {
               "p50": 0.19,
-              "p75": 2.91,
-              "p90": 6.29,
-              "count": 450,
+              "p75": 2.9,
+              "p90": 6.22,
+              "count": 448,
               "filtered": {
-                "p50": 2.07,
+                "p50": 2.06,
                 "p75": 6.06,
                 "p90": 7.9,
-                "count": 263,
-                "excluded_count": 187,
+                "count": 262,
+                "excluded_count": 186,
                 "threshold_hours": 1.0
               }
             },
             "staging": {
-              "p50": 4.2,
-              "p75": 13.71,
-              "p90": 26.29,
-              "count": 463,
+              "p50": 4.19,
+              "p75": 13.73,
+              "p90": 26.88,
+              "count": 461,
               "filtered": {
-                "p50": 8.09,
-                "p75": 20.07,
-                "p90": 29.72,
-                "count": 298,
+                "p50": 8.35,
+                "p75": 20.27,
+                "p90": 29.73,
+                "count": 296,
                 "excluded_count": 165,
                 "threshold_hours": 1.0
               }
@@ -2180,28 +2180,28 @@
               "count": 17
             },
             "total": {
-              "p50": 8.61,
-              "p75": 20.69,
-              "p90": 38.14,
-              "count": 464
+              "p50": 8.53,
+              "p75": 20.61,
+              "p90": 38.15,
+              "count": 462
             }
           },
           "throughput": {
             "completed_issues": 53,
             "story_points": null,
             "weekly_trend": [
-              38,
-              7,
               36,
-              21,
+              5,
+              42,
+              13,
               18,
-              17,
-              83,
-              18,
-              6,
+              19,
+              81,
+              20,
+              4,
               0,
-              38,
-              9
+              40,
+              7
             ]
           },
           "pr_metrics": null
@@ -2211,9 +2211,9 @@
         "cycle_time": {
           "backlog": {
             "p50": 0.15,
-            "p75": 3.96,
+            "p75": 3.94,
             "p90": 14.0,
-            "count": 464
+            "count": 462
           },
           "planning": {
             "p50": 5.01,
@@ -2223,28 +2223,28 @@
           },
           "dev": {
             "p50": 0.07,
-            "p75": 1.74,
-            "p90": 5.66,
-            "count": 464,
+            "p75": 1.69,
+            "p90": 5.67,
+            "count": 462,
             "filtered": {
-              "p50": 1.47,
-              "p75": 4.9,
-              "p90": 8.2,
-              "count": 243,
+              "p50": 1.39,
+              "p75": 4.92,
+              "p90": 8.23,
+              "count": 241,
               "excluded_count": 221,
               "threshold_hours": 1.0
             }
           },
           "review": {
             "p50": 0.02,
-            "p75": 1.13,
-            "p90": 7.0,
-            "count": 463,
+            "p75": 0.98,
+            "p90": 6.98,
+            "count": 461,
             "filtered": {
-              "p50": 2.69,
-              "p75": 6.65,
+              "p50": 2.64,
+              "p75": 6.23,
               "p90": 8.33,
-              "count": 210,
+              "count": 208,
               "excluded_count": 253,
               "threshold_hours": 1.0
             }
@@ -2265,28 +2265,28 @@
           },
           "qa": {
             "p50": 0.19,
-            "p75": 2.91,
-            "p90": 6.29,
-            "count": 450,
+            "p75": 2.9,
+            "p90": 6.22,
+            "count": 448,
             "filtered": {
-              "p50": 2.07,
+              "p50": 2.06,
               "p75": 6.06,
               "p90": 7.9,
-              "count": 263,
-              "excluded_count": 187,
+              "count": 262,
+              "excluded_count": 186,
               "threshold_hours": 1.0
             }
           },
           "staging": {
-            "p50": 4.2,
-            "p75": 13.71,
-            "p90": 26.29,
-            "count": 463,
+            "p50": 4.19,
+            "p75": 13.73,
+            "p90": 26.88,
+            "count": 461,
             "filtered": {
-              "p50": 8.09,
-              "p75": 20.07,
-              "p90": 29.72,
-              "count": 298,
+              "p50": 8.35,
+              "p75": 20.27,
+              "p90": 29.73,
+              "count": 296,
               "excluded_count": 165,
               "threshold_hours": 1.0
             }
@@ -2298,43 +2298,43 @@
             "count": 17
           },
           "total": {
-            "p50": 8.61,
-            "p75": 20.69,
-            "p90": 38.14,
-            "count": 464
+            "p50": 8.53,
+            "p75": 20.61,
+            "p90": 38.15,
+            "count": 462
           }
         },
         "throughput": {
           "completed_issues": 53,
           "story_points": null,
           "weekly_trend": [
-            38,
-            7,
             36,
-            21,
+            5,
+            42,
+            13,
             18,
-            17,
-            83,
-            18,
-            6,
+            19,
+            81,
+            20,
+            4,
             0,
-            38,
-            9
+            40,
+            7
           ]
         },
         "pr_metrics": {
-          "total_prs_merged": 657,
+          "total_prs_merged": 656,
           "pickup_hours": {
             "p50": 0.1,
             "p75": 0.4,
             "p90": 4.3,
-            "count": 643
+            "count": 642
           },
           "merge_time_hours": {
             "p50": 0.3,
             "p75": 2.3,
             "p90": 21.4,
-            "count": 657
+            "count": 656
           },
           "large_pr_pct": 20.1
         },
@@ -2426,14 +2426,14 @@
           {
             "phase_id": "dev",
             "pass_through_count": 88,
-            "total_in_phase": 464,
+            "total_in_phase": 462,
             "pass_through_pct": 19.0
           },
           {
             "phase_id": "review",
             "pass_through_count": 175,
-            "total_in_phase": 463,
-            "pass_through_pct": 37.8
+            "total_in_phase": 461,
+            "pass_through_pct": 38.0
           },
           {
             "phase_id": "dev_test",
@@ -2444,24 +2444,24 @@
           {
             "phase_id": "qa",
             "pass_through_count": 149,
-            "total_in_phase": 450,
-            "pass_through_pct": 33.1
+            "total_in_phase": 448,
+            "pass_through_pct": 33.3
           }
         ],
         "dev_source_stats": {
-          "jira_count": 392,
-          "github_count": 72,
-          "total": 464
+          "jira_count": 391,
+          "github_count": 71,
+          "total": 462
         }
       },
       "by_window": {
         "4": {
           "cycle_time": {
             "backlog": {
-              "p50": 3.54,
+              "p50": 3.68,
               "p75": 9.05,
-              "p90": 49.79,
-              "count": 53
+              "p90": 49.99,
+              "count": 51
             },
             "planning": {
               "p50": 14.01,
@@ -2470,30 +2470,30 @@
               "count": 3
             },
             "dev": {
-              "p50": 0.29,
-              "p75": 3.0,
-              "p90": 7.66,
-              "count": 53,
+              "p50": 0.69,
+              "p75": 3.38,
+              "p90": 8.23,
+              "count": 51,
               "filtered": {
                 "p50": 2.72,
-                "p75": 4.98,
-                "p90": 21.01,
-                "count": 32,
-                "excluded_count": 21,
+                "p75": 5.03,
+                "p90": 21.24,
+                "count": 31,
+                "excluded_count": 20,
                 "threshold_hours": 1.0
               }
             },
             "review": {
-              "p50": 1.28,
+              "p50": 1.72,
               "p75": 3.28,
-              "p90": 12.83,
-              "count": 52,
+              "p90": 13.23,
+              "count": 50,
               "filtered": {
                 "p50": 3.28,
                 "p75": 8.03,
                 "p90": 15.05,
-                "count": 31,
-                "excluded_count": 21,
+                "count": 30,
+                "excluded_count": 20,
                 "threshold_hours": 1.0
               }
             },
@@ -2501,82 +2501,82 @@
               "p50": 2.22,
               "p75": 4.02,
               "p90": 4.02,
-              "count": 37,
+              "count": 36,
               "filtered": {
                 "p50": 4.02,
                 "p75": 4.02,
                 "p90": 4.02,
                 "count": 22,
-                "excluded_count": 15,
+                "excluded_count": 14,
                 "threshold_hours": 1.0
               }
             },
             "qa": {
-              "p50": 0.68,
-              "p75": 1.93,
+              "p50": 0.85,
+              "p75": 1.94,
               "p90": 2.04,
-              "count": 48,
+              "count": 46,
               "filtered": {
                 "p50": 1.92,
                 "p75": 2.02,
                 "p90": 2.97,
                 "count": 28,
-                "excluded_count": 20,
+                "excluded_count": 18,
                 "threshold_hours": 1.0
               }
             },
             "staging": {
-              "p50": 14.43,
+              "p50": 15.89,
               "p75": 21.81,
               "p90": 21.83,
-              "count": 52,
+              "count": 50,
               "filtered": {
-                "p50": 21.72,
+                "p50": 21.73,
                 "p75": 21.83,
                 "p90": 21.83,
-                "count": 36,
-                "excluded_count": 16,
+                "count": 35,
+                "excluded_count": 15,
                 "threshold_hours": 1.0
               }
             },
             "done": {
               "p50": 0.0,
               "p75": 0.07,
-              "p90": 0.84,
-              "count": 7
+              "p90": 1.03,
+              "count": 6
             },
             "total": {
-              "p50": 22.0,
-              "p75": 34.0,
+              "p50": 23.88,
+              "p75": 34.03,
               "p90": 38.09,
-              "count": 53
+              "count": 51
             }
           },
           "throughput": {
-            "completed_issues": 53,
+            "completed_issues": 51,
             "story_points": null,
             "weekly_trend": [
-              6,
+              4,
               0,
-              38,
-              9
+              40,
+              7
             ]
           },
           "pr_metrics": {
-            "total_prs_merged": 57,
+            "total_prs_merged": 52,
             "pickup_hours": {
               "p50": 0.1,
               "p75": 0.2,
-              "p90": 1.6,
-              "count": 57
+              "p90": 0.6,
+              "count": 52
             },
             "merge_time_hours": {
-              "p50": 0.2,
-              "p75": 0.9,
-              "p90": 10.9,
-              "count": 57
+              "p50": 0.3,
+              "p75": 0.8,
+              "p90": 10.8,
+              "count": 52
             },
-            "large_pr_pct": 31.6
+            "large_pr_pct": 34.6
           },
           "build_metrics": null,
           "bottleneck_phase": "staging",
@@ -2665,30 +2665,30 @@
           "phase_insights": [
             {
               "phase_id": "dev",
-              "pass_through_count": 7,
-              "total_in_phase": 53,
-              "pass_through_pct": 13.2
+              "pass_through_count": 6,
+              "total_in_phase": 51,
+              "pass_through_pct": 11.8
             },
             {
               "phase_id": "qa",
-              "pass_through_count": 14,
-              "total_in_phase": 48,
-              "pass_through_pct": 29.2
+              "pass_through_count": 13,
+              "total_in_phase": 46,
+              "pass_through_pct": 28.3
             }
           ],
           "dev_source_stats": {
-            "jira_count": 47,
-            "github_count": 6,
-            "total": 53
+            "jira_count": 46,
+            "github_count": 5,
+            "total": 51
           },
           "projects": {
             "SCMWEB": {
               "cycle_time": {
                 "backlog": {
-                  "p50": 3.54,
+                  "p50": 3.68,
                   "p75": 9.05,
-                  "p90": 49.79,
-                  "count": 53
+                  "p90": 49.99,
+                  "count": 51
                 },
                 "planning": {
                   "p50": 14.01,
@@ -2697,30 +2697,30 @@
                   "count": 3
                 },
                 "dev": {
-                  "p50": 0.29,
-                  "p75": 3.0,
-                  "p90": 7.66,
-                  "count": 53,
+                  "p50": 0.69,
+                  "p75": 3.38,
+                  "p90": 8.23,
+                  "count": 51,
                   "filtered": {
                     "p50": 2.72,
-                    "p75": 4.98,
-                    "p90": 21.01,
-                    "count": 32,
-                    "excluded_count": 21,
+                    "p75": 5.03,
+                    "p90": 21.24,
+                    "count": 31,
+                    "excluded_count": 20,
                     "threshold_hours": 1.0
                   }
                 },
                 "review": {
-                  "p50": 1.28,
+                  "p50": 1.72,
                   "p75": 3.28,
-                  "p90": 12.83,
-                  "count": 52,
+                  "p90": 13.23,
+                  "count": 50,
                   "filtered": {
                     "p50": 3.28,
                     "p75": 8.03,
                     "p90": 15.05,
-                    "count": 31,
-                    "excluded_count": 21,
+                    "count": 30,
+                    "excluded_count": 20,
                     "threshold_hours": 1.0
                   }
                 },
@@ -2728,55 +2728,55 @@
                   "p50": 2.22,
                   "p75": 4.02,
                   "p90": 4.02,
-                  "count": 37,
+                  "count": 36,
                   "filtered": {
                     "p50": 4.02,
                     "p75": 4.02,
                     "p90": 4.02,
                     "count": 22,
-                    "excluded_count": 15,
+                    "excluded_count": 14,
                     "threshold_hours": 1.0
                   }
                 },
                 "qa": {
-                  "p50": 0.68,
-                  "p75": 1.93,
+                  "p50": 0.85,
+                  "p75": 1.94,
                   "p90": 2.04,
-                  "count": 48,
+                  "count": 46,
                   "filtered": {
                     "p50": 1.92,
                     "p75": 2.02,
                     "p90": 2.97,
                     "count": 28,
-                    "excluded_count": 20,
+                    "excluded_count": 18,
                     "threshold_hours": 1.0
                   }
                 },
                 "staging": {
-                  "p50": 14.43,
+                  "p50": 15.89,
                   "p75": 21.81,
                   "p90": 21.83,
-                  "count": 52,
+                  "count": 50,
                   "filtered": {
-                    "p50": 21.72,
+                    "p50": 21.73,
                     "p75": 21.83,
                     "p90": 21.83,
-                    "count": 36,
-                    "excluded_count": 16,
+                    "count": 35,
+                    "excluded_count": 15,
                     "threshold_hours": 1.0
                   }
                 },
                 "done": {
                   "p50": 0.0,
                   "p75": 0.07,
-                  "p90": 0.84,
-                  "count": 7
+                  "p90": 1.03,
+                  "count": 6
                 },
                 "total": {
-                  "p50": 22.0,
-                  "p75": 34.0,
+                  "p50": 23.88,
+                  "p75": 34.03,
                   "p90": 38.09,
-                  "count": 53
+                  "count": 51
                 }
               }
             }
@@ -2791,7 +2791,7 @@
               "count": 189
             },
             "planning": {
-              "p50": 5.38,
+              "p50": 6.4,
               "p75": 22.81,
               "p90": 41.72,
               "count": 7
@@ -2884,30 +2884,30 @@
             "story_points": null,
             "weekly_trend": [
               18,
-              17,
-              83,
-              18,
-              6,
+              19,
+              81,
+              20,
+              4,
               0,
-              38,
-              9
+              40,
+              7
             ]
           },
           "pr_metrics": {
-            "total_prs_merged": 172,
+            "total_prs_merged": 161,
             "pickup_hours": {
               "p50": 0.1,
               "p75": 0.4,
-              "p90": 2.1,
-              "count": 169
+              "p90": 2.4,
+              "count": 158
             },
             "merge_time_hours": {
               "p50": 0.3,
               "p75": 1.7,
-              "p90": 18.7,
-              "count": 172
+              "p90": 20.0,
+              "count": 161
             },
-            "large_pr_pct": 25.6
+            "large_pr_pct": 27.3
           },
           "build_metrics": null,
           "bottleneck_phase": "staging",
@@ -3034,7 +3034,7 @@
                   "count": 189
                 },
                 "planning": {
-                  "p50": 5.38,
+                  "p50": 6.4,
                   "p75": 22.81,
                   "p90": 41.72,
                   "count": 7
@@ -3131,7 +3131,6 @@
   "trends": {
     "team-product": {
       "weeks": [
-        "2025-W51",
         "2025-W52",
         "2026-W01",
         "2026-W02",
@@ -3142,41 +3141,41 @@
         "2026-W07",
         "2026-W08",
         "2026-W09",
-        "2026-W10"
+        "2026-W10",
+        "2026-W11"
       ],
       "cycle_time_p50": [
-        10.23,
         13.26,
-        56.74,
+        3.84,
+        54.31,
         9.89,
-        8.25,
+        8.29,
         2.18,
         3.14,
         49.95,
         11.92,
-        null,
         6.96,
+        21.9,
         8.48
       ],
       "throughput": [
-        4,
-        7,
-        4,
-        10,
-        16,
+        9,
+        2,
+        6,
+        9,
+        15,
         5,
         13,
         2,
         8,
-        0,
-        20,
+        14,
+        6,
         6
       ],
       "pr_pickup_hours": 0.4
     },
     "team-b2b": {
       "weeks": [
-        "2025-W51",
         "2025-W52",
         "2026-W01",
         "2026-W02",
@@ -3187,41 +3186,41 @@
         "2026-W07",
         "2026-W08",
         "2026-W09",
-        "2026-W10"
+        "2026-W10",
+        "2026-W11"
       ],
       "cycle_time_p50": [
         5.93,
-        6.08,
-        2.96,
-        6.92,
-        4.36,
-        6.22,
-        3.5,
+        4.86,
+        12.58,
+        1.95,
+        4.09,
+        5.94,
+        2.95,
         1.38,
         0.76,
-        null,
+        0.0,
         27.02,
-        2.42
+        3.05
       ],
       "throughput": [
-        28,
-        14,
-        4,
-        21,
-        27,
-        18,
-        24,
+        30,
+        11,
+        11,
+        17,
+        22,
+        22,
+        20,
         4,
         3,
-        0,
+        1,
         8,
-        17
+        21
       ],
       "pr_pickup_hours": 0.5
     },
     "team-scm": {
       "weeks": [
-        "2025-W51",
         "2025-W52",
         "2026-W01",
         "2026-W02",
@@ -3232,35 +3231,36 @@
         "2026-W07",
         "2026-W08",
         "2026-W09",
-        "2026-W10"
+        "2026-W10",
+        "2026-W11"
       ],
       "cycle_time_p50": [
-        15.89,
+        16.34,
         0.0,
-        4.04,
-        5.95,
+        4.05,
+        5.87,
         0.98,
-        10.89,
-        35.64,
+        13.92,
+        29.74,
         0.51,
-        0.11,
+        0.08,
         null,
-        33.65,
+        33.54,
         0.69
       ],
       "throughput": [
-        38,
-        7,
         36,
-        21,
+        5,
+        42,
+        13,
         18,
-        17,
-        83,
-        18,
-        6,
+        19,
+        81,
+        20,
+        4,
         0,
-        38,
-        9
+        40,
+        7
       ],
       "pr_pickup_hours": 0.1
     }
